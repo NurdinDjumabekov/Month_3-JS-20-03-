@@ -1,0 +1,231 @@
+.everyOrder {
+  padding: 2px;
+  height: 100%;
+
+  @media (max-width: 770px) {
+    padding: 1px;
+  }
+
+  &__inner {
+    height: 100%;
+    position: relative;
+
+    h3 {
+      font-size: 11px;
+      font-weight: 400;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin: 0 0 1px 0;
+      padding: 0 3px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      @media (max-width: 600px) {
+        display: none;
+      }
+    }
+
+    h5 {
+      font-size: 11px;
+      font-weight: 400;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin: 0 0 2px 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      @media (max-width: 630px) {
+        > svg {
+          display: none;
+        }
+      }
+
+      .status {
+        @media (max-width: 630px) {
+          width: 100% !important;
+          height: 100% !important;
+          right: 0px !important;
+          top: 0px !important;
+
+          span {
+            display: block;
+            width: 100%;
+            height: 100%;
+          }
+
+          &__inner {
+            right: 0px !important;
+            top: 0px !important;
+            width: 100% !important;
+            height: 100% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 0 !important;
+
+            svg {
+              width: 80% !important;
+              height: 80% !important;
+            }
+          }
+        }
+      }
+
+      p {
+        font-size: 12px;
+        @media (max-width: 630px) {
+          display: none;
+        }
+      }
+
+      svg {
+        width: 15px;
+        height: 15px;
+      }
+    }
+
+    h6 {
+      font-size: 11px;
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin: 0 0 2px 0;
+      display: none;
+
+      @media (max-width: 600px) {
+        display: block;
+      }
+    }
+
+    .dayEvery {
+      font-size: 11px;
+      font-weight: 400;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .name {
+      font-size: 10px;
+      font-weight: 400;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      svg {
+        width: 15px;
+        height: 15px;
+        @media (max-width: 630px) {
+          display: none;
+        }
+      }
+
+      @media (max-width: 630px) {
+        display: none;
+        // font-size: 9px;
+        // font-weight: 500;
+      }
+    }
+  }
+
+  .hourTitle {
+    padding: 0 20px 0 0;
+    position: relative;
+
+    @media (max-width: 630px) {
+      padding: 0;
+    }
+
+    .titleHour {
+      padding: 0 20px 0 0;
+      .status {
+        position: absolute;
+        right: -4px;
+        top: -4px;
+        width: 22px;
+        height: 22px;
+        border-top-right-radius: 0; // Убираем закругление сверху справа
+        border-bottom-left-radius: 100px;
+
+        &__inner {
+          width: 22px;
+          height: 22px;
+          padding: 1px;
+          cursor: pointer;
+          display: flex;
+          align-items: flex-start;
+          justify-content: flex-end;
+          border-radius: 3px;
+
+          &:hover {
+            span {
+              display: block;
+            }
+          }
+
+          svg,
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+
+          // svg {
+          //   @media (max-width: 390px) {
+          //     width: 22px !important;
+          //     height: 22px !important;
+          //     position: absolute;
+          //     left: 0;
+          //     top: -2px;
+          //     left: 50%;
+          //     transform: translateX(-50%);
+          //   }
+          // }
+        }
+      }
+    }
+  }
+}
+
+.deActive {
+  background: transparent;
+  position: relative;
+
+  h6,
+  h3,
+  h5 {
+    text-decoration: line-through;
+  }
+
+  .name {
+    text-decoration: line-through;
+  }
+
+  &::after {
+    content: "";
+    width: 102%;
+    height: 105%;
+    background: #00000074;
+    position: absolute;
+    left: -2px;
+    top: -2px;
+    border-radius: 3px;
+
+    @media (max-width: 730px) {
+      width: 105%;
+    }
+  }
+}

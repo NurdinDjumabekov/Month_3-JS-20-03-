@@ -1,0 +1,162 @@
+.mapMenuInfo__parent {
+  width: 358px;
+  max-width: 358px;
+  min-width: 358px;
+  height: 100%;
+  overflow-y: scroll;
+  padding: 55px 0px 20px;
+
+  .time {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    text-align: left;
+    margin: 20px 0 0 0;
+    background: #fff;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .mapMenuInfo {
+    background: #fff;
+    width: 350px;
+    max-width: 350px;
+    min-width: 350px;
+    // height: 100%;
+    padding: 25px 0px 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    margin: 5px 0 0 0;
+
+    .camon {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin: 10px 0 0 2px;
+
+      input {
+        width: 16px;
+        height: 16px;
+      }
+
+      p {
+        font-size: 13px;
+        text-align: left;
+      }
+    }
+
+    &__title {
+      padding: 0 10px;
+
+      h5 {
+        font-size: 16px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+
+      .logo {
+        width: 60px;
+        min-width: 60px;
+        height: 60px;
+        margin: 10px 0 1px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 50%;
+
+        img {
+          object-fit: cover;
+          border-radius: 3px;
+          border-radius: 50%;
+        }
+      }
+
+      .userSeller {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-align: right;
+
+        .seller {
+          width: 100%;
+
+          p {
+            font-size: 14px;
+            font-weight: 400;
+            text-align: right;
+          }
+          &__inner {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 4px;
+            margin: 5px 0 0 0;
+
+            svg {
+              width: 20px;
+              height: 20px;
+            }
+
+            span {
+              font-size: 13px;
+              text-align: right;
+            }
+          }
+        }
+      }
+    }
+
+    .invoice {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      height: 40px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 0px 10px;
+      border-radius: 5px;
+      margin: 20px 10px;
+      width: 95%;
+
+      span {
+        font-size: 13px;
+      }
+
+      svg {
+        width: 22px;
+        height: 22px;
+        color: #222;
+      }
+    }
+
+    .comment {
+      display: flex;
+      align-items: flex-start;
+      gap: 5px;
+      margin: 10px 0 0 0;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      p {
+        font-size: 13px;
+        text-align: left;
+      }
+    }
+  }
+
+  .car {
+    padding: 10px 10px;
+    margin: 5px 0 0 0;
+  }
+
+  .slick-arrow {
+    display: none !important;
+  }
+}

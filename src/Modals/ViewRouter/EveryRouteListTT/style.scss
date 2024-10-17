@@ -1,0 +1,93 @@
+.everyRouteListTT {
+  padding: 10px 0 0 0;
+  height: 100%;
+  margin: 5px 0 0 0;
+  border-radius: 3px;
+  background: #fff;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.144) !important;
+
+  table {
+    thead {
+      tr {
+        th:first-child {
+          padding: 15px 8px 12px !important;
+        }
+        th {
+          padding: 15px 8px 12px !important;
+        }
+      }
+    }
+  }
+
+  .coords {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+
+    p {
+      font-size: 12px;
+      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    }
+
+    button {
+      background: transparent;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 5px 10px 15px;
+
+    .lookAllRoute {
+      button {
+        font-size: 14px;
+        padding: 8px 20px;
+        color: #fff;
+        background: #2196f399;
+        border-radius: 5px;
+      }
+    }
+
+    .choice {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      gap: 15px;
+
+      button {
+        font-size: 14px;
+        padding: 8px 20px;
+        color: #fff;
+        background: #00ab55;
+        border-radius: 5px;
+      }
+    }
+  }
+
+  .standartTable {
+    border-radius: 0px !important;
+    box-shadow: none !important;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 4px 0 0 0;
+
+    button {
+      background: transparent;
+      position: relative;
+    }
+  }
+
+  .checkboxTable {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

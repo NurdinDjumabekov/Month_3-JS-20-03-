@@ -1,0 +1,229 @@
+.mainCalendare {
+  padding: 10px 0px 10px 10px;
+  height: 100vh;
+  background: #fafafa;
+
+  @media (max-width: 1025px) {
+    padding: 3px;
+  }
+
+  .mainPage {
+    width: 100%;
+    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+
+    &__inner {
+      width: 100%;
+      margin: 0 auto;
+      height: 100%;
+      background: #fff;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+
+      @media (max-width: 1025px) {
+        padding: 125px 0 75px 0;
+
+        @media (max-width: 580px) {
+          padding: 135px 0 75px 0;
+        }
+      }
+
+      .custom-calendar {
+        height: 100vh;
+        width: 100%;
+        background-color: #f0f0f0;
+      }
+
+      .custom-header {
+        background-color: #333;
+        color: #fff;
+      }
+
+      .fc {
+        height: 100%;
+
+        .fc-toolbar-title {
+          font-size: 20px !important;
+        }
+
+        .fc-scrollgrid-sync-inner {
+          a {
+            font-size: 14px !important;
+            font-weight: 500 !important;
+          }
+        }
+
+        .fc-scrollgrid-shrink-cushion {
+          font-size: 14px !important;
+          font-weight: 400 !important;
+          text-align: center !important;
+        }
+
+        .fc-toolbar-ltr {
+          margin-bottom: 50px !important;
+        }
+
+        .fc-timegrid-event-harness .fc-timegrid-event-harness-inset {
+          inset: 0;
+        }
+
+        .fc-timegrid-slot-label-frame {
+          text-align: center !important;
+        }
+
+        .fc-daygrid-body-natural .fc-daygrid-day-events {
+          margin: 0 !important;
+        }
+
+        .fc-toolbar-chunk {
+          @media (max-width: 1025px) {
+            > button {
+              position: fixed;
+              top: 5px;
+              right: 3px;
+              display: none !important;
+            }
+          }
+        }
+
+        .fc-toolbar-ltr {
+          @media (max-width: 1025px) {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            gap: 10px;
+            justify-content: space-between;
+            width: 100%;
+            padding: 55px 3px 5px;
+            z-index: 10;
+            background: #f5f5f5;
+            border-bottom: 1px solid #ddd;
+
+            > div:nth-child(2) {
+              position: fixed;
+              top: 10px;
+              left: 3px;
+              display: none !important;
+            }
+          }
+        }
+      }
+
+      .listInfo {
+        display: flex;
+        align-items: center;
+        gap: 35px;
+        position: absolute;
+        left: 10px;
+        top: 65px;
+
+        @media (max-width: 1025px) {
+          top: 100px;
+          @media (max-width: 700px) {
+            gap: 10px;
+            @media (max-width: 580px) {
+              top: 102px;
+              left: 5px;
+            }
+          }
+        }
+
+        &__every {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+
+          svg {
+            color: gray;
+            width: 20px;
+            height: 20px;
+
+            @media (max-width: 790px) {
+              width: 20px;
+              height: 20px;
+            }
+          }
+
+          p {
+            font-size: 14px;
+            color: #222;
+
+            @media (max-width: 790px) {
+              font-size: 12px;
+              @media (max-width: 700px) {
+                font-size: 10px;
+                font-weight: 600;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.plan__header {
+  min-width: 100%;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  z-index: 99;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px 0 rgba(38, 38, 38, 0.5);
+  padding: 5px 5px;
+  background: #f3f3f3;
+
+  .userInfo {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    h1 {
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 5px;
+      color: #2c3e50;
+      max-height: 30px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 75%;
+    }
+
+    svg {
+      width: 35px;
+      height: 35px;
+    }
+  }
+
+  > button {
+    width: 90px;
+    height: 30px;
+    background: #fff;
+    display: flex;
+    box-shadow: 0 1px 3px 0 rgba(38, 38, 38, 0.5);
+    border-radius: 3px;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 5px;
+    gap: 5px;
+
+    p {
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 5px;
+      color: #2c3e50;
+    }
+
+    > svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}

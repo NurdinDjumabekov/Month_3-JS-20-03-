@@ -1,0 +1,23 @@
+.notFound {
+  background: #f9fafd;
+  height: 100vh;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  div {
+    img {
+      width: 520px;
+      height: 190px;
+      display: block;
+      margin: 0 auto 60px;
+    }
+    h1 {
+      color: #5e6e82;
+      font-size: 45px;
+      font-weight: 700;
+      font-family: "Montserrat", sans-serif;
+      text-transform: uppercase;
+    }
+  }
+}

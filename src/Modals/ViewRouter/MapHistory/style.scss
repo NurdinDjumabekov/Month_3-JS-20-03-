@@ -1,0 +1,163 @@
+.mapHistory {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__header {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 99;
+    width: 100%;
+    padding: 12px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+    .select {
+      width: 300px;
+    }
+
+    .date {
+      width: 170px;
+
+      input:last-child {
+        height: 30px;
+        border-radius: 5px;
+        border: 1px solid #e1dede !important;
+        padding: 2px 10px;
+        width: 100%;
+        font-size: 12px;
+
+        &::placeholder {
+          color: #6b72809e;
+        }
+
+        &:focus {
+          border: 1px solid rgba(89, 89, 89, 0.529);
+          outline: none;
+        }
+      }
+    }
+
+    .infoRoute {
+      display: flex;
+      gap: 50px;
+      align-items: center;
+      margin: 0 0 0 50px;
+
+      > div {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+
+        .vialetRoute,
+        .bluetoute,
+        .greenRoute,
+        .redRoute {
+          display: flex;
+          align-items: center;
+
+          &::before {
+            content: "";
+            display: block;
+            width: 10px;
+            min-width: 10px;
+            height: 10px;
+            background: rgb(79, 0, 128);
+            margin: 0 10px 0 0;
+          }
+
+          font-size: 12px;
+        }
+
+        .bluetoute {
+          &::before {
+            background: rgba(0, 157, 255, 0.656);
+          }
+        }
+        .greenRoute {
+          &::before {
+            background: green;
+          }
+        }
+        .redRoute {
+          &::before {
+            background: red;
+          }
+        }
+      }
+    }
+  }
+
+  .customMarker {
+    background: transparent;
+
+    &::before {
+      content: "";
+    }
+
+    &__inner {
+      animation: blink 2s infinite;
+    }
+
+    &__point {
+      width: 25px;
+      height: 35px;
+      background-image: url("../../../assets/images/map.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    &__name {
+      background: rgb(220, 43, 43);
+
+      p {
+        font-size: 12px;
+        font-weight: 400;
+        color: #fff;
+      }
+    }
+
+    .active {
+      background: rgb(31, 187, 31);
+    }
+
+    .workShop {
+      background: #2196f3;
+      p {
+        color: #fff;
+      }
+    }
+  }
+
+  #mapContainerHistory {
+    height: 100%;
+    width: 100%;
+
+    .mapgl_RyvsmCnoVe7ui2MClLMS {
+      margin: 80px 10px 0 0;
+    }
+  }
+}
+
+.hiddenMarker {
+  display: none;
+}
+
+#reset {
+  padding: 4px 10px;
+  background: red;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px 0 rgba(38, 38, 38, 1);
+  border: none;
+  color: #fff;
+  font-size: 122px;
+  cursor: pointer;
+}

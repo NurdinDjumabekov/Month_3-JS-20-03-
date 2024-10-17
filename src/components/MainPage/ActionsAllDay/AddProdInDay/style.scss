@@ -1,0 +1,92 @@
+.addProdInDay {
+  width: 40%;
+  position: relative;
+  max-height: 100%;
+
+  .daySelects {
+    position: absolute;
+    left: 0;
+    top: -55px;
+    width: 100%;
+    z-index: 10;
+
+    .myInputs {
+      width: 25% !important;
+      max-width: 400px !important;
+
+      .input {
+        height: 27px;
+        border-radius: 3px;
+        border: 1px solid #e1dede !important;
+        padding: 2px 10px;
+        width: 100%;
+        font-size: 13px;
+
+        &::placeholder {
+          color: #a9afb8;
+        }
+
+        &:focus {
+          border: 1px solid #6a696987;
+          outline: none;
+        }
+      }
+    }
+
+    > button {
+      height: 30px;
+      background: #299b31;
+      padding: 2px 10px 3px 10px;
+      border-radius: 5px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+
+      p {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .input {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    input {
+      width: 50px;
+      height: 18px;
+      border-radius: 3px;
+      border: 1px solid #e1dede;
+      font-size: 11px;
+      padding: 0 3px;
+
+      &::placeholder {
+        color: #a9afb8;
+      }
+
+      &:focus {
+        border: 1px solid #6a696987;
+        outline: none;
+      }
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+    }
+  }
+}
+
+.indridients {
+  .daySelects {
+    display: flex;
+    align-items: flex-end;
+    width: 134%;
+    gap: 7px;
+  }
+}

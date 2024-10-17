@@ -1,0 +1,23 @@
+.listProdCRUD {
+  height: 100%;
+
+  > div {
+    max-height: 100%;
+  }
+
+  .standartTable table tbody tr td .counts {
+    height: 24px;
+    font-weight: 500;
+  }
+
+  .checkboxTable {
+    input {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  .counterRow {
+    padding: 4px !important;
+  }
+}

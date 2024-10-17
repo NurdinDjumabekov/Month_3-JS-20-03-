@@ -1,0 +1,68 @@
+.modal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 99;
+  width: 100%;
+  height: 100vh;
+
+  &__shadow {
+    position: absolute;
+    z-index: 999;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.667);
+    cursor: pointer;
+  }
+
+  &__inner {
+    position: absolute;
+    z-index: 999;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(237, 242, 249);
+    background: #fff;
+
+    opacity: 1;
+    transition: background-color 0.5s, opacity 0.5s;
+    border-radius: 5px;
+    width: 400px;
+
+    @media (max-width: 430px) {
+      width: 96%;
+      top: 42%;
+    }
+
+    h6 {
+      width: 100%;
+      font-size: 17px;
+      font-weight: 500;
+      background: #fbfbfb;
+      border-radius: 5px 5px 0 0;
+      padding: 15px 40px 15px 12px;
+    }
+
+    .krest {
+      width: 35px;
+      height: 35px;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background-color: transparent;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      img {
+        width: 25px;
+        height: 25px;
+      }
+    }
+
+    .content {
+      padding: 5px 12px 15px 12px;
+    }
+  }
+}

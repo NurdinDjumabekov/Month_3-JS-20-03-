@@ -1,0 +1,54 @@
+.listProdCRUD_SI {
+  height: 100%;
+
+  > div {
+    max-height: 100%;
+
+    .actionsDel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+    }
+
+    .footerTable {
+      font-weight: bold !important;
+      height: 30px !important;
+    }
+  }
+
+  .mobileBtn {
+    display: none;
+
+    @media (max-width: 500px) {
+      display: flex;
+      width: 100%;
+      height: 44px;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px;
+      margin: 10px 0 0 0;
+      background: #299b31;
+
+      p {
+        font-size: 16px;
+        color: #fff;
+
+        @media (max-width: 700px) {
+          font-size: 16px;
+          font-weight: 600;
+        }
+      }
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
+
+.acceptSI {
+  max-height: 92%;
+}

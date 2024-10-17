@@ -1,0 +1,100 @@
+.mainBlockIngrid {
+  width: 100%;
+  padding: 130px 25px 2px;
+  height: 100vh;
+  position: relative;
+
+  &__inner {
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    right: 0px;
+    top: 0px;
+
+    .actionsBtns {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        padding: 2px 6px 2px;
+        background: transparent;
+        border-radius: 5px;
+        border: 1px solid #d5d2d2;
+
+        p {
+          font-size: 13px;
+          font-weight: 400;
+          color: #fff;
+        }
+      }
+      .activeBtn {
+        background: #fff;
+
+        p {
+          color: #1976d2;
+        }
+      }
+    }
+  }
+
+  &__table {
+    height: 100%;
+
+    .listsInvoice {
+      display: flex;
+      gap: 10px;
+      height: 100%;
+
+      table {
+        thead {
+          tr {
+            th:first-child {
+              padding: 5px 8px !important;
+            }
+          }
+        }
+
+        tbody {
+          tr {
+            th:first-child {
+              padding: 5px 8px !important;
+            }
+          }
+        }
+      }
+    }
+    > section {
+      display: flex;
+      margin: 5px 0 10px 0;
+      position: absolute;
+      right: 0px;
+      width: 60%;
+      top: 85px;
+      padding: 0 25px;
+      justify-content: flex-end;
+
+      .action {
+        button {
+          height: 30px;
+          background: #299b31;
+          padding: 2px 10px 3px 10px;
+          border-radius: 5px;
+          color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 5px;
+
+          p {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+}

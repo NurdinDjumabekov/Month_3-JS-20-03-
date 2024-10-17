@@ -1,0 +1,15 @@
+.returnHistoryPage {
+  height: 100vh;
+  padding: 50px 0 0 0;
+
+  .listBlock {
+    min-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    padding: 0 0 20px 0;
+  }
+}

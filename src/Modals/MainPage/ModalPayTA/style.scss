@@ -1,0 +1,102 @@
+.modalPayTA {
+  height: 100vh;
+  padding: 10px;
+  position: relative;
+  padding: 75px 20px 10px;
+
+  &__header {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+
+    .menu {
+      display: flex;
+      width: 100%;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 10px;
+
+      button {
+        align-items: center;
+        background: #0000;
+        border: 1px solid #d5d2d2;
+        border-radius: 5px;
+        display: flex;
+        gap: 5px;
+        justify-content: center;
+        padding: 4px 10px;
+
+        p {
+          color: #fff;
+          font-size: 13px;
+          font-weight: 500;
+        }
+      }
+
+      .active {
+        background: #fff;
+
+        p {
+          color: #1976d2;
+        }
+
+        svg {
+          color: #1976d2;
+        }
+      }
+    }
+  }
+
+  &__main {
+    height: 100%;
+    display: flex;
+    gap: 10px;
+
+    .listAgentsInfo {
+      width: 330px;
+      max-width: 330px;
+      min-width: 330px;
+      margin: 0;
+
+      &__inner {
+        width: 300px;
+        max-width: 300px;
+        min-width: 300px;
+        button {
+          padding: 8px !important;
+
+          .logo {
+            width: 35px;
+            height: 35px;
+
+            img {
+              width: 35px;
+              height: 35px;
+            }
+          }
+
+          .content {
+            p {
+              font-size: 13px;
+              font-weight: 500;
+            }
+
+            span {
+              font-size: 11px;
+            }
+          }
+        }
+
+        .active {
+          .content {
+            span {
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+  }
+}

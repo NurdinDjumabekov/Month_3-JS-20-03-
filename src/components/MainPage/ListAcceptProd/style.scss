@@ -1,0 +1,28 @@
+.listAcceptProd {
+  height: 100%;
+
+  .actionsDel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+  }
+
+  .footerTable {
+    font-weight: bold !important;
+    height: 30px !important;
+  }
+
+  > div {
+    max-height: 100%;
+  }
+
+  .standartTable table tbody tr td .counts {
+    height: 24px;
+    font-weight: 500;
+  }
+
+  .counterRow {
+    padding: 4px !important;
+  }
+}

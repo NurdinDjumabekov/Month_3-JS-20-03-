@@ -1,0 +1,31 @@
+.leftoversPage {
+  height: 100vh;
+
+  &__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 60px 5px 5px;
+    position: relative;
+    z-index: 20;
+
+    .myInputs {
+      width: 100%;
+      h6 {
+        font-size: 13px;
+        font-weight: 500;
+        margin: 0 0 3px 0;
+      }
+    }
+  }
+
+  &__table {
+    margin: 5px 0 20px 0;
+    height: calc(100% - 200px);
+
+    > div {
+      height: 100%;
+    }
+  }
+}

@@ -1,0 +1,28 @@
+.actionMapRoute {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+
+  .modal__inner {
+    height: 88vh !important;
+    min-width: 85% !important;
+
+    h6 {
+      padding: 5px;
+    }
+
+    .krest {
+      top: 1px !important;
+      right: 5px !important;
+      display: none !important;
+    }
+
+    .content {
+      height: 97%;
+      padding-top: 0px;
+    }
+  }
+}

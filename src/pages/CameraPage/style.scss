@@ -1,0 +1,128 @@
+.cameraPage {
+  height: 100%;
+  position: relative;
+  z-index: 1;
+
+  &__inner {
+    height: 100%;
+
+    video {
+      width: 100%;
+      height: 100vh;
+      position: fixed;
+      left: 0px;
+      top: 0px;
+      padding: 0 0 60px 0;
+      z-index: 9;
+    }
+
+    .loadFiles {
+      .download {
+        position: fixed;
+        right: 20px;
+        bottom: 160px;
+        z-index: 10;
+        background: rgb(255, 255, 255);
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+          width: 55%;
+          height: 55%;
+        }
+      }
+
+      .prev {
+        position: fixed;
+        left: 20px;
+        top: 20px;
+        z-index: 10;
+        background: rgb(255, 255, 255);
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+          width: 55%;
+          height: 55%;
+        }
+      }
+    }
+  }
+
+  .photoSettings {
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    background: #222;
+    padding: 20px 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+
+    .createPhoto {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      position: relative;
+      border: 2px solid #fff;
+      background: transparent;
+
+      &::after {
+        content: "";
+        background: #fff;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .chageCamera {
+      width: 40px;
+      height: 40px;
+      background: #6b696939;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+
+      img {
+        width: 60%;
+        height: 60%;
+      }
+    }
+  }
+
+  .imgActive {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: 20;
+  }
+
+  .clickPhoto {
+    background: rgba(255, 255, 255, 0.713);
+    min-width: 100%;
+    height: 100vh;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: 99;
+  }
+}

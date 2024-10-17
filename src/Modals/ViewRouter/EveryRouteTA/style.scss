@@ -1,0 +1,70 @@
+.everyRouteTA {
+  padding: 10px 0 0 0;
+  height: 100%;
+  margin: 5px 0 0 0;
+  border-radius: 3px;
+  background: #fff;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.144) !important;
+
+  .choice {
+    padding: 5px 0 15px 0px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 15px;
+    margin: 0px 10px;
+
+    .myInputs {
+      z-index: 10;
+      width: 320px;
+    }
+
+    button {
+      font-size: 14px;
+      padding: 8px 20px;
+      color: #fff;
+      background: #00ab55;
+      border-radius: 5px;
+    }
+  }
+
+  table {
+    thead {
+      tr {
+        th:first-child {
+          padding: 15px 8px 12px !important;
+        }
+        th {
+          padding: 15px 8px 12px !important;
+        }
+      }
+    }
+  }
+
+  .standartTable {
+    border-radius: 0px !important;
+    box-shadow: none !important;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 4px 0 0 0;
+
+    button {
+      background: transparent;
+    }
+
+    button:last-child {
+      position: relative;
+    }
+  }
+
+  .checkboxTable {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

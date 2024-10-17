@@ -1,0 +1,162 @@
+.productionData {
+  height: 100%;
+
+  &__inner {
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+
+    .invoices {
+      width: 24%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      padding: 0px 0px 12px 0;
+      margin: 5px 0 0 0;
+      overflow-y: scroll;
+      height: 100%;
+
+      &::-webkit-scrollbar {
+        min-width: 7px;
+        max-width: 7px;
+      }
+
+      &__every {
+        width: 100%;
+        border-bottom: 1px solid #e0e6ed66;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 20px;
+        padding: 5px 0px;
+        cursor: pointer;
+
+        &:first-child {
+          border-top: 1px solid #e0e6ed66;
+        }
+
+        h6 {
+          font-size: 15px;
+          color: #222;
+          font-weight: 500;
+        }
+
+        p {
+          color: #888ea8;
+          font-size: 14px;
+        }
+      }
+    }
+
+    .prods {
+      height: 100%;
+      width: 75%;
+      padding: 10px 0 10px 0;
+      margin: 5px 0 0 0;
+      border-radius: 3px;
+      background: #fff;
+      box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.144) !important;
+
+      &__sortDate {
+        display: flex;
+        justify-content: space-between;
+        margin: 0px 0 10px 0;
+        padding: 0 10px;
+
+        .myInputs {
+          width: 250px;
+          cursor: pointer;
+          position: relative;
+          z-index: 10;
+
+          h6 {
+            font-size: 13px;
+            font-weight: 500;
+            margin: 0 0 3px 0;
+          }
+
+          .select {
+            .css-qbdosj-Input {
+              height: 30px;
+              cursor: pointer;
+            }
+
+            .css-13cymwt-control {
+              border: 1px solid #e1dede !important;
+              box-shadow: none !important;
+              cursor: pointer;
+
+              &:hover {
+                border: 1px solid #6361615b !important;
+                cursor: pointer;
+              }
+            }
+
+            .css-t3ipsp-control {
+              border: 1px solid #6361615b !important;
+              box-shadow: none !important;
+              cursor: pointer;
+            }
+          }
+        }
+
+        .sendData {
+          height: 32px;
+          background: #299b31;
+          padding: 2px 10px 3px 10px;
+          border-radius: 5px;
+          color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 5px;
+
+          p {
+            font-size: 12px;
+          }
+        }
+
+        .generatePdf {
+          background: #1976d2;
+        }
+      }
+
+      > div {
+        .countsBlock {
+          display: flex;
+          align-items: flex-end;
+          gap: 5px;
+
+          > div {
+            width: 23px;
+            height: 23px;
+            cursor: pointer;
+          }
+
+          .counts {
+            height: 23px;
+          }
+        }
+
+        .actionsDel {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: transparent;
+        }
+
+        .footerTable {
+          font-weight: bold !important;
+          height: 30px !important;
+        }
+      }
+
+      .standartTable {
+        box-shadow: none !important;
+      }
+    }
+  }
+}

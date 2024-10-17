@@ -1,0 +1,38 @@
+.headerParent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+
+    > img {
+        width: 35px;
+        height: 35px;
+    }
+
+    .userRole {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 15px;
+        max-width: 240px;
+        display: -webkit-box; /* Для поддержки старых версий Safari */
+        -webkit-box-orient: vertical; /* Определяет направление текста */
+        -webkit-line-clamp: 1; /* Максимум 4 строки */
+        overflow: hidden; /* Скрыть излишек текста */
+        text-overflow: ellipsis;
+    }
+    
+    .userName {
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 15px;
+        color: rgba(47, 71, 190, 0.987);
+        max-width: 240px;
+        display: -webkit-box; /* Для поддержки старых версий Safari */
+        -webkit-box-orient: vertical; /* Определяет направление текста */
+        -webkit-line-clamp: 1; /* Максимум 4 строки */
+        overflow: hidden; /* Скрыть излишек текста */
+        text-overflow: ellipsis;
+    }
+    
+  }
+  

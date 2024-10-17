@@ -1,0 +1,24 @@
+.createPay {
+  .myInputs {
+    margin-bottom: 5px;
+
+    h6 {
+      padding: 15px 40px 5px 0px;
+      background: transparent;
+      font-size: 16px;
+      font-weight: 400;
+    }
+  }
+
+  .sendData {
+    width: 100%;
+    background-color: #0ca946e6;
+    border: 1px solid #d9dfe8;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 500;
+    margin-top: 20px;
+    min-width: 100%;
+    padding: 13px 10px;
+  }
+}

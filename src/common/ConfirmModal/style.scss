@@ -1,0 +1,43 @@
+.confirmModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  @media (max-width: 899px) {
+    &__inner {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #c0c0c09c;
+    }
+
+    &__block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border-radius: 5px;
+    }
+  }
+
+  * {
+    background: transparent;
+  }
+
+  .send {
+    background: green !important;
+  }
+
+  .end {
+    background: red;
+  }
+}
+
+@media (max-width: 899px) {
+  .css-1epvpsb-MuiPaper-root-MuiDialog-paper {
+    // background: transparent !important;
+  }
+}
