@@ -40,84 +40,84 @@
       width: 58%;
       gap: 5px;
     }
-  }
 
-  .titleDate {
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: 5px;
-    line-height: 17px;
-    text-align: left;
-    color: #222;
-  }
-
-  .role {
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: 5px;
-    line-height: 17px;
-    color: rgba(47, 71, 190, 0.672);
-    display: -webkit-box; /* Для поддержки старых версий Safari */
-    -webkit-box-orient: vertical; /* Определяет направление текста */
-    -webkit-line-clamp: 1; /* Максимум 4 строки */
-    overflow: hidden; /* Скрыть излишек текста */
-    text-overflow: ellipsis;
-  }
-
-  .totalPrice {
-    font-size: 16px;
-    font-weight: 400;
-    color: #222;
-  }
-
-  .comments {
-    // max-width: 230px;
-    display: -webkit-box; /* Для поддержки старых версий Safari */
-    -webkit-box-orient: vertical; /* Определяет направление текста */
-    -webkit-line-clamp: 4; /* Максимум 4 строки */
-    overflow: hidden; /* Скрыть излишек текста */
-    text-overflow: ellipsis;
-    font-size: 14px;
-    font-weight: 400;
-    text-align: left;
-    color: #222;
-    padding: 0 0 0 5px;
-  }
-
-  .mainData {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-  }
-
-  .mainDataArrow {
-    display: flex;
-    justify-content: space-between;
-    padding-right: 15px;
-    align-items: center;
-    width: 37%;
-
-    p {
-      font-size: 13px;
+    .titleDate {
+      font-size: 14px;
       font-weight: 500;
+      border-radius: 5px;
+      line-height: 17px;
       text-align: left;
+      color: #222;
     }
 
-    span {
-      font-size: 13px;
+    .role {
+      font-size: 14px;
       font-weight: 500;
-      line-height: 12px;
-      text-align: left;
+      border-radius: 5px;
+      line-height: 17px;
+      color: rgba(47, 71, 190, 0.672);
+      display: -webkit-box; /* Для поддержки старых версий Safari */
+      -webkit-box-orient: vertical; /* Определяет направление текста */
+      -webkit-line-clamp: 1; /* Максимум 4 строки */
+      overflow: hidden; /* Скрыть излишек текста */
+      text-overflow: ellipsis;
     }
 
-    .arrows {
+    .totalPrice {
+      font-size: 16px;
+      font-weight: 400;
+      color: #222;
+    }
+
+    .comments {
+      // max-width: 230px;
+      display: -webkit-box; /* Для поддержки старых версий Safari */
+      -webkit-box-orient: vertical; /* Определяет направление текста */
+      -webkit-line-clamp: 4; /* Максимум 4 строки */
+      overflow: hidden; /* Скрыть излишек текста */
+      text-overflow: ellipsis;
+      font-size: 14px;
+      font-weight: 400;
+      text-align: left;
+      color: #222;
+      padding: 0 0 0 5px;
+    }
+
+    .mainData {
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: row;
+      gap: 10px;
+    }
 
-      svg {
-        width: 18px;
-        height: 18px;
+    .mainDataArrow {
+      display: flex;
+      justify-content: space-between;
+      padding-right: 15px;
+      align-items: center;
+      width: 37%;
+
+      p {
+        font-size: 13px;
+        font-weight: 500;
+        text-align: left;
+      }
+
+      span {
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 12px;
+        text-align: left;
+      }
+
+      .arrows {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+          width: 18px;
+          height: 18px;
+        }
       }
     }
   }

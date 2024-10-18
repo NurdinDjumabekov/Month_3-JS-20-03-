@@ -355,8 +355,9 @@ export const historySendInvoice = createAsyncThunk(
 ////// getInvoiceReturn - get накладные возврата
 export const getInvoiceReturn = createAsyncThunk(
   "getInvoiceReturn",
-  async function (guid, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/get_return_invoice?route_guid=&reciever_guid=b85094a9-d70a-46ab-a724-5f3d7a506b37&sender_guid=61EF6C06-496A-11E9-82E6-000C2986F897&date_from=2024-09-10&date_to=2024-10-14&is_admin=1&reciever_type=3`;
+  async function (props, { dispatch, rejectWithValue }) {
+    const { reciever_guid, sender_guid, date_from, date_to } = props;
+    const url = `${REACT_APP_API_URL}/ta/get_return_invoice?route_guid=&reciever_guid=${reciever_guid}&sender_guid=${sender_guid}&date_from=${date_from}&date_to=${date_to}&is_admin=0&reciever_type=4`;
     try {
       const response = await axiosInstance(url);
       if (response.status >= 200 && response.status < 300) {
@@ -374,9 +375,28 @@ export const getInvoiceReturn = createAsyncThunk(
 export const getProdsReturn = createAsyncThunk(
   "getProdsReturn",
   async function (guid, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/get_return_invoice?route_guid=&reciever_guid=b85094a9-d70a-46ab-a724-5f3d7a506b37&sender_guid=61EF6C06-496A-11E9-82E6-000C2986F897&date_from=2024-09-10&date_to=2024-10-14&is_admin=1&reciever_type=3`;
+    const url = `${REACT_APP_API_URL}/ta/get_invoice?invoice_guid=${guid}`;
     try {
       const response = await axiosInstance(url);
+      if (response.status >= 200 && response.status < 300) {
+        console.log(response, "response");
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+////// createInvoiceReturn - создание накладных возврата
+export const createInvoiceReturn = createAsyncThunk(
+  "createInvoiceReturn",
+  async function (data, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/create_invoice`;
+    try {
+      const response = await axiosInstance.post(url, data);
       if (response.status >= 200 && response.status < 300) {
         return response?.data;
       } else {
@@ -388,28 +408,59 @@ export const getProdsReturn = createAsyncThunk(
   }
 );
 
-// ////// acceptInvoice - принятие накладной ТА
-// export const acceptInvoice = createAsyncThunk(
-//   "acceptInvoice",
-//   async function ({ data, navigate }, { dispatch, rejectWithValue }) {
-//     const url = `${REACT_APP_API_URL}/ta/update_invoice`;
-//     try {
-//       const response = await axiosInstance.put(url, data);
-//       if (response.status >= 200 && response.status < 300) {
-//         if (response?.data?.result == 1) {
-//           myAlert("Накладная принята");
-//           dispatch(setInvoiceInfo({ guid: "", action: 0 }));
-//           dispatch(getMyInvoice(data?.user_guid));
-//         }
-//         return response?.data;
-//       } else {
-//         throw Error(`Error: ${response.status}`);
-//       }
-//     } catch (error) {
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
+////// createProdsReturn - создание товаров возврата
+export const createProdsReturn = createAsyncThunk(
+  "createInvoiceReturn",
+  async function (data, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/create_invoice_product`;
+    try {
+      const response = await axiosInstance.post(url, data);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+////// changeStatusInvoiceReturn - изменение статуса накладной возврата
+export const changeStatusInvoiceReturn = createAsyncThunk(
+  "changeStatusInvoiceReturn",
+  async function (data, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/update_return_invoice`;
+    try {
+      const response = await axiosInstance.put(url, data);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+////// delProdInInvoiceReturn - удаление товаров с заявок возврата
+export const delProdInInvoiceReturn = createAsyncThunk(
+  "delProdInInvoiceReturn",
+  async function (data, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/update_application_product`;
+    try {
+      const response = await axiosInstance.put(url, data);
+      if (response.status >= 200 && response.status < 300) {
+        return response.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 const invoiceSlice = createSlice({
   name: "invoiceSlice",

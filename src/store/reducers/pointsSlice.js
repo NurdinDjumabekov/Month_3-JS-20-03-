@@ -4,6 +4,7 @@ import axios from "axios";
 import axiosInstance from "../../axiosInstance";
 import { myAlert } from "../../helpers/MyAlert";
 import { setStateLoad } from "./mapSlice";
+import { transformDate } from "../../helpers/transformDate";
 
 const { REACT_APP_API_URL, REACT_APP_MAP_KEY } = process.env;
 
@@ -27,6 +28,8 @@ const initialState = {
     route_sheet_guid: "",
     position: { label: "", value: "" },
   }, //// для добавление в маршрут новой точки от имени ТА
+
+  listsTasks: [], /// список задач для ТА
 };
 
 ////// getAddres - get наименование точки
@@ -106,6 +109,26 @@ export const addNewPontToday = createAsyncThunk(
   }
 );
 
+////// getTasks - get наименование точки
+export const getTasks = createAsyncThunk(
+  "getTasks",
+  async function (props, { dispatch, rejectWithValue }) {
+    const date = transformDate(new Date());
+    const { agent_guid, point_guid } = props;
+    const url = `${REACT_APP_API_URL}/ta/get_tasks?agent_guid=${agent_guid}&date=${date}&point_guid=${point_guid}&is_admin`;
+    try {
+      const response = await axiosInstance(url);
+      if (response.status >= 200 && response.status < 300) {
+        return response.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const pointsSlice = createSlice({
   name: "pointsSlice",
   initialState,
@@ -141,6 +164,19 @@ const pointsSlice = createSlice({
       state.preloader = false;
     });
     builder.addCase(addNewPonts.pending, (state, action) => {
+      state.preloader = true;
+    });
+
+    ///////////// getTasks
+    builder.addCase(getTasks.fulfilled, (state, action) => {
+      state.preloader = false;
+      state.listsTasks = action.payload;
+    });
+    builder.addCase(getTasks.rejected, (state, action) => {
+      state.error = action.payload;
+      state.preloader = false;
+    });
+    builder.addCase(getTasks.pending, (state, action) => {
       state.preloader = true;
     });
   },

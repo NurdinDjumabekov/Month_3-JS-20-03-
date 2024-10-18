@@ -30,6 +30,7 @@ import AllCategPage from "../pages/AllCategPage/AllCategPage";
 import LeftoversPage from "../pages/LeftoversPage/LeftoversPage";
 import ReturnPage from "../pages/ReturnPage/ReturnPage";
 import ReturnHistoryPage from "../pages/ReturnHistoryPage/ReturnHistoryPage";
+import TasksPage from "../pages/TasksPage/TasksPage";
 
 const MainRoutes = () => {
   const dispatch = useDispatch();
@@ -78,6 +79,10 @@ const MainRoutes = () => {
           <Route
             path="/take_money/:route_guid/:guid_point/:type"
             element={<TakeMoneyPage />}
+          />
+          <Route
+            path="/tasks/:route_guid/:guid_point/:type"
+            element={<TasksPage />}
           />
           <Route
             path="/return/:route_guid/:guid_point/:type"

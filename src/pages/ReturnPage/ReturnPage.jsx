@@ -1,54 +1,62 @@
 /////// hooks
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 /////// components
 import NavMenu from "../../common/NavMenu/NavMenu";
-import EveryMyInvoice from "../../components/ReturnPage/EveryMyInvoice/EveryMyInvoice";
 import CreateInvoiceReturn from "../../components/ReturnPage/CreateInvoiceReturn/CreateInvoiceReturn";
 
 /////// fns
-import { getInvoiceReturn } from "../../store/reducers/invoiceSlice";
-
-////// helpers
-import { listInvReturn } from "../../helpers/LocalData";
+import { createInvoiceReturn } from "../../store/reducers/invoiceSlice";
+import { getListWorkShop } from "../../store/reducers/mainSlice";
 
 ////// style
 import "./style.scss";
 
 ////// icons
-import arrow from "../../assets/icons/arrowNav.svg";
-import AddBoxIcon from "@mui/icons-material/AddBox";
 
 const ReturnPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [invoiceGuid, setInvoiceGuid] = useState("");
+
   const { route_guid, guid_point, type } = useParams(); //// в guid_point лежит guid продавца
   const oldComment = location.state?.comment;
   const guidRoute = location.state?.guid; // guid каждого маршрута
 
-  const [create, setCreate] = useState(false);
+  const { dataSave } = useSelector((state) => state.saveDataSlice);
 
   useEffect(() => {
-    dispatch(getInvoiceReturn());
-  }, []);
+    const data = {
+      sender_guid: dataSave?.guid, // guid отпровителя
+      sender_type: 1,
+      reciever_guid: guid_point, // guid получателя
+      reciever_type: 4,
+      user_guid: dataSave?.guid, // guid человека кто создает
+      user_type: 1,
+      comment: "RETURN INVOICE",
+      invoice_type: 4, // всегда 4!
+      route_guid: route_guid,
+    };
 
-  const nav = () => navigate("/return_history");
+    dispatch(getListWorkShop());
+
+    const getData = async () => {
+      const res = await dispatch(createInvoiceReturn(data)).unwrap();
+      setInvoiceGuid(res?.invoice_guid);
+    };
+
+    getData();
+  }, []);
 
   return (
     <>
       <NavMenu navText={"Возврат товара"} />
-      <div className="returnPage">
-        <div className="listBlock">
-          {listInvReturn?.map((item, index) => (
-            <EveryMyInvoice obj={item} key={item?.guid} index={index} />
-          ))}
-        </div>
-      </div>
-      <CreateInvoiceReturn setCreate={setCreate} create={create} />
+      <div className="returnPage"></div>
+      <CreateInvoiceReturn invoice_guid={invoiceGuid} />
     </>
   );
 };

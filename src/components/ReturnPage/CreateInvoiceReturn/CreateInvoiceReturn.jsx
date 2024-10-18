@@ -1,80 +1,94 @@
 //// hooks
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import React from "react";
 import { useState } from "react";
 
 ///// fns
 
 ///// components
-import { Table, TableBody, TableCell } from "@mui/material";
-import { TableContainer, TableHead } from "@mui/material";
-import { TableRow, Paper } from "@mui/material";
-import { BottomSheet } from "react-spring-bottom-sheet";
+import Dialog from "@mui/material/Dialog";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import CloseIcon from "@mui/icons-material/Close";
+import Slide from "@mui/material/Slide";
 
 ////// style
 import "./style.scss";
 import { useEffect } from "react";
+import ContentPasteSearchOutlinedIcon from "@mui/icons-material/ContentPasteSearchOutlined";
+import ListInvoiceAcceptReturn from "../ListInvoiceAcceptReturn/ListInvoiceAcceptReturn";
+import ListInvoicesReturn from "../ListInvoicesReturn/ListInvoicesReturn";
 
-const CreateInvoiceReturn = ({ create, setCreate }) => {
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const CreateInvoiceReturn = ({ invoice_guid }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  useEffect(() => {}, []);
+  const [viewApp, setViewApp] = useState(true);
+
+  const handleClose = () => navigate(-1);
 
   return (
     <div className="createInvoiceReturn">
-      <BottomSheet
-        open={create}
-        onDismiss={() => setCreate(false)}
-        defaultSnap={({ maxHeight }) => maxHeight * 0.9}
-        snapPoints={({ maxHeight }) => maxHeight * 0.9}
+      <Dialog
+        fullScreen
+        open={true}
+        onClose={handleClose}
+        TransitionComponent={Transition}
       >
-        <div className="listProdCRUD_SI leftoversPage__table h100">
-          <TableContainer
-            component={Paper}
-            sx={{ maxHeight: "100%" }}
-            className="scroll_table standartTable"
-          >
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  <TableCell style={{ width: "46%" }}>Продукт</TableCell>
-                  <TableCell align="left" style={{ width: "18%" }}>
-                    Кг
-                  </TableCell>
-                  <TableCell align="left" style={{ width: "18%" }}>
-                    Шт
-                  </TableCell>
-                  <TableCell align="left" style={{ width: "18%" }}>
-                    Цена
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {[]?.map((row) => (
-                  <TableRow key={row?.product_guid}>
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      style={{ width: "46%" }}
+        <div className={`mainOrders ${viewApp ? "" : "mainOrdersDesctop"} `}>
+          <div className="mainOrders__inner">
+            <AppBar sx={{ position: "relative" }}>
+              <Toolbar>
+                <Typography sx={{ flex: 1 }} variant="h6" component="div">
+                  <div className="actionsBtns">
+                    <button
+                      className={viewApp ? "activeBtn" : ""}
+                      onClick={() => setViewApp(true)}
                     >
-                      {row?.product_name}
-                    </TableCell>
-                    <TableCell align="left" style={{ width: "18%" }}>
-                      {row?.amount}
-                    </TableCell>
-                    <TableCell align="left" style={{ width: "18%" }}>
-                      {row?.amount_per}
-                    </TableCell>
-                    <TableCell align="left" style={{ width: "18%" }}>
-                      {row?.price}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                      <ContentPasteSearchOutlinedIcon
+                        sx={{ color: viewApp ? "#1976d2" : "#fff", width: 16 }}
+                      />
+                      <p>Заявка</p>
+                    </button>
+                    <button
+                      className={viewApp ? "" : "activeBtn"}
+                      onClick={() => setViewApp(false)}
+                    >
+                      <ContentPasteSearchOutlinedIcon
+                        sx={{ color: viewApp ? "#fff" : "#1976d2", width: 16 }}
+                      />
+                      <p>Выбранные товары</p>
+                    </button>
+                  </div>
+                </Typography>
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  onClick={handleClose}
+                  aria-label="close"
+                >
+                  <CloseIcon />
+                </IconButton>
+              </Toolbar>
+            </AppBar>
+          </div>
+
+          <div className={`listsCRUD mobile`}>
+            {viewApp ? (
+              <ListInvoicesReturn invoice_guid={invoice_guid} />
+            ) : (
+              <ListInvoiceAcceptReturn invoice_guid={invoice_guid} />
+            )}
+          </div>
         </div>
-      </BottomSheet>
+      </Dialog>
     </div>
   );
 };

@@ -1,54 +1,46 @@
-/////// hooks
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
-/////// components
+import React, { useEffect } from "react";
 import NavMenu from "../../common/NavMenu/NavMenu";
-import { BottomSheet } from "react-spring-bottom-sheet";
-import { Table, TableBody, TableCell } from "@mui/material";
-import { TableContainer, TableHead } from "@mui/material";
-import { TableRow, Paper } from "@mui/material";
-
-/////// fns
-
-////// helpers
-import { listInvReturn, listProdsReturn } from "../../helpers/LocalData";
-import { roundingNum } from "../../helpers/totals";
+import { getTasks } from "../../store/reducers/pointsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import ArrowNav from "@mui/icons-material/ArrowForwardIosSharp";
 
 ////// style
 import "./style.scss";
+import { useState } from "react";
 
-const ReturnHistoryPage = () => {
+import { BottomSheet } from "react-spring-bottom-sheet";
+import SendInput from "../../common/SendInput/SendInput";
+import Modals from "../../components/Modals/Modals";
+
+const TasksPage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const [look, setLook] = useState(false);
+  const { dataSave } = useSelector((state) => state.saveDataSlice);
+  const { listsTasks } = useSelector((state) => state.pointsSlice);
 
-  useEffect(() => {}, []);
+  const { route_guid, guid_point } = useParams();
 
-  const objType = {
-    0: { text: "Ожидание", color: "red" },
-    1: { text: "В наличии", color: "red" },
-    2: { text: "Отгружено в цех", color: "green" },
-  };
+  const [active, setActive] = useState({});
+  const [comm, setComm] = useState("");
 
-  const lookInvoice = () => {
-    setLook(true);
-  };
+  useEffect(() => {
+    dispatch(getTasks({ agent_guid: dataSave?.guid, point_guid: guid_point }));
+  }, []);
 
   return (
     <>
-      <NavMenu navText={"История возврата товара"} />
-      <div className="returnHistoryPage">
-        <div className="listBlock">
-          {listInvReturn?.map((item, index) => (
-            <button className="invoiceParent" onClick={lookInvoice}>
+      <NavMenu navText={"Задания от руководителя"} />
+
+      <div className="tasksPage">
+        <div className="tasksPage__lists">
+          {listsTasks?.map((item, index) => (
+            <button className="invoiceParent" onClick={() => setActive(item)}>
               <div className="invoiceParent__inner">
                 <div className="mainData">
                   <p className="indexNums">{index + 1}</p>
                   <div>
-                    <p className="role">{item?.agent}</p>
+                    <p className="titleDate role">{item?.user}</p>
                     <p className="titleDate">{item.date}</p>
                   </div>
                 </div>
@@ -60,26 +52,35 @@ const ReturnHistoryPage = () => {
               </div>
               <div className="mainDataArrow">
                 <div>
-                  <p style={{ color: "green" }}>{"Отгружено в цех"}</p>
+                  <p>{item?.status_name}</p>
                   <span className="totalPrice">
-                    {roundingNum(item?.total_price)} сом
+                    {/* {roundingNum(item?.total_price, 2)} сом */}
                   </span>
                 </div>
-                <div className="arrow"></div>
+                <div className="arrows">
+                  <ArrowNav sx={{ color: "rgba(162, 178, 238, 0.839)" }} />
+                </div>
               </div>
             </button>
           ))}
         </div>
       </div>
 
-      <BottomSheet
-        open={look}
-        onDismiss={() => setLook(false)}
-        defaultSnap={({ maxHeight }) => maxHeight * 0.9}
-        snapPoints={({ maxHeight }) => maxHeight * 0.9}
+      <Modals
+        openModal={!!active?.codeid}
+        closeModal={() => setActive({})}
+        title={"Оплата"}
       >
-        <div className="listProdCRUD_SI leftoversPage__table h100">
-          <TableContainer
+        <div className="listProdCRUD_SI ">
+          <SendInput
+            value={comm}
+            onChange={(e) => setComm(e.target.value)}
+            title={"Ваш комментарий"}
+            name={"comment"}
+            type="text"
+            typeInput="textarea"
+          />
+          {/* <TableContainer
             component={Paper}
             sx={{ maxHeight: "100%" }}
             className="scroll_table standartTable"
@@ -122,11 +123,19 @@ const ReturnHistoryPage = () => {
                 ))}
               </TableBody>
             </Table>
-          </TableContainer>
+          </TableContainer> */}
+
+          <SendInput
+            value={comm}
+            onChange={(e) => setComm(e.target.value)}
+            // title={"Ваш комментарий"}
+            name={"comment"}
+            type="file"
+          />
         </div>
-      </BottomSheet>
+      </Modals>
     </>
   );
 };
 
-export default ReturnHistoryPage;
+export default TasksPage;

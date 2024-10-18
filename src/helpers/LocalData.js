@@ -221,7 +221,7 @@ export const listActions_TA = [
     name: "Задания от руководителя",
     icon: <TaskIcon />,
     color: "#4361ee",
-    link: "/",
+    link: "/tasks",
   },
   {
     id: 5,

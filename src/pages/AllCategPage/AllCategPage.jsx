@@ -20,6 +20,7 @@ import { dataCategory } from "../../helpers/LocalData";
 import UserInfo from "../../components/AllCategPage/UserInfo/UserInfo";
 import { LogOut } from "../../components/AllCategPage/LogOut/LogOut";
 import NavMenu from "../../common/NavMenu/NavMenu";
+import { useState } from "react";
 
 const AllCategPage = () => {
   const dispatch = useDispatch();
@@ -59,7 +60,6 @@ const AllCategPage = () => {
               <p>Баланс</p>
               <div></div>
             </div>
-            {/* <p className="balance__num">{balance || 0} сом</p> */}
           </div>
           <p className="balance__history">История</p>
         </div>

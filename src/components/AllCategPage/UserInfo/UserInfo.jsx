@@ -11,9 +11,12 @@ import userImg from "../../../assets/images/user.png";
 
 ////style
 import "./style.scss";
+import { useState } from "react";
 
 const UserInfo = () => {
   const dispatch = useDispatch();
+
+  const [look, setLook] = useState(false);
 
   const { dataSave } = useSelector((state) => state.saveDataSlice);
 
@@ -22,7 +25,9 @@ const UserInfo = () => {
       <img src={userImg} alt="()" />
       <div>
         <p className="userRole">{dataSave?.fio}</p>
-        <p className="userName">{dataSave?.phone}</p>
+        <p onClick={() => setLook(!look)} className="userName">
+          {look ? "Долг: 10000 сом" : dataSave?.phone}
+        </p>
       </div>
     </div>
   );
