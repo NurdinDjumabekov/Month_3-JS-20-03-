@@ -24,6 +24,7 @@ import {
   setActiveCategs,
   setActiveWorkShop,
 } from "../../store/reducers/selectsSlice";
+import ViewProds from "../../common/ViewProds/ViewProds";
 
 const LeftoversPage = () => {
   const dispatch = useDispatch();
@@ -67,11 +68,16 @@ const LeftoversPage = () => {
     }, 500);
   }, []);
 
-  console.log(listProdsSI, "listProdsSI");
+  const keys = {
+    key1: "product_name",
+    key2: "amount",
+    key3: "amount_per",
+    key4: "price",
+  };
 
   return (
     <>
-      <NavMenu navText={"Список принятых накладных"} />
+      <NavMenu navText={"Список остатков"} />
       <div className="leftoversPage">
         <div className="leftoversPage__header">
           <div className="myInputs">
@@ -94,52 +100,7 @@ const LeftoversPage = () => {
           </div>
         </div>
 
-        <div className="listProdCRUD_SI leftoversPage__table">
-          <TableContainer
-            component={Paper}
-            sx={{ maxHeight: "100%" }}
-            className="scroll_table standartTable"
-          >
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  <TableCell style={{ width: "46%" }}>Продукт</TableCell>
-                  <TableCell align="left" style={{ width: "18%" }}>
-                    Кг
-                  </TableCell>
-                  <TableCell align="left" style={{ width: "18%" }}>
-                    Шт
-                  </TableCell>
-                  <TableCell align="left" style={{ width: "18%" }}>
-                    Цена
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {listProdsSI?.map((row) => (
-                  <TableRow key={row?.product_guid}>
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      style={{ width: "46%" }}
-                    >
-                      {row?.product_name}
-                    </TableCell>
-                    <TableCell align="left" style={{ width: "18%" }}>
-                      {row?.amount}
-                    </TableCell>
-                    <TableCell align="left" style={{ width: "18%" }}>
-                      {row?.amount_per}
-                    </TableCell>
-                    <TableCell align="left" style={{ width: "18%" }}>
-                      {row?.price}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
+        <ViewProds list={listProdsSI} keys={keys} total_price={""} />
       </div>
     </>
   );

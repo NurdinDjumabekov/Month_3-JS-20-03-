@@ -58,3 +58,26 @@ export const checkNum = (value) => {
     return true;
   }
 };
+
+export const checkDates = (date_from, date_to) => {
+  //// проверка на дату, если остался 1 день или дата прошла, то нельзя редактировать или доабвить заявку
+  const today = new Date();
+  const fromDate = new Date(date_from);
+  const toDate = new Date(date_to);
+
+  const differenceFromDate = fromDate - today;
+  const differenceToDate = toDate - today;
+
+  const oneDayInMs = 24 * 60 * 60 * 1000;
+
+  if (
+    differenceFromDate < 0 ||
+    differenceToDate < 0 ||
+    differenceFromDate <= oneDayInMs ||
+    differenceToDate <= oneDayInMs
+  ) {
+    return true; // Даты прошли или наступят через день
+  }
+
+  return false; // Даты еще не наступили
+};

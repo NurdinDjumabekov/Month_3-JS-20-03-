@@ -42,12 +42,12 @@ const SettingsPage = () => {
   useEffect(() => {
     dispatch(getWorkPlanEveryTA({ guid }));
     dispatch(getEveryDebt({ agent_guid: guid }));
-    dispatch(
-      setListWorkPlan([
-        { name: "Осталось выполнить", value: 95 },
-        { name: "Выполнено", value: 5 },
-      ])
-    ); //// check
+    // dispatch(
+    //   setListWorkPlan([
+    //     { name: "Осталось выполнить", value: 95 },
+    //     { name: "Выполнено", value: 5 },
+    //   ])
+    // ); //// check
     dispatch(clearDataPay()); /// clear поля ввода данных для оплаты
     dispatch(getPointsRouteAgent({ guid, first: false }));
   }, []);
@@ -78,6 +78,8 @@ const SettingsPage = () => {
       dispatch(setDataPay({ ...dataPay, point }));
     }
   };
+
+  console.log(debtEveryTA, "debtEveryTA");
 
   return (
     <>
@@ -119,7 +121,6 @@ const SettingsPage = () => {
         </div>
         {/* <GraphicsEveryTA /> */}
       </div>
-
       <AddPayPoint viewApp={viewApp} setViewApp={setViewApp} />
     </>
   );

@@ -1,0 +1,29 @@
+.viewProdsPage {
+  height: 100%;
+
+  &__inner {
+    height: calc(100% - 40px);
+    margin: 60px 0 0 0;
+    padding: 0px 0px 15px;
+
+    .lookPdf {
+      position: fixed;
+      right: 30px;
+      top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      z-index: 101;
+      width: 30px;
+      height: 30px;
+      background: transparent;
+
+      svg {
+        width: 30px;
+        height: 30px;
+        color: grey;
+      }
+    }
+  }
+}

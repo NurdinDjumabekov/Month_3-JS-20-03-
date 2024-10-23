@@ -12,12 +12,12 @@ import ruLocale from "@fullcalendar/core/locales/ru";
 import ModalOrderCRUD from "../../components/MainPage/Modals/ModalOrderCRUD/ModalOrderCRUD";
 import EveryDateInfo from "../../components/MainPage/EveryDateInfo/EveryDateInfo";
 import ModaIngridients from "../../components/MainPage/Modals/ModaIngridients/ModaIngridients";
-import MenuLeft from "../../components/Menu/MenuLeft/MenuLeft";
 import ModalProduction from "../../Modals/MainPage/ModalProduction/ModalProduction";
 import ModalWareHome from "../../Modals/MainPage/ModalWareHome/ModalWareHome";
 import ViewRouter from "../../Modals/ViewRouter/ViewRouter";
 import ModalPayTA from "../../Modals/MainPage/ModalPayTA/ModalPayTA";
 import ModalAppTA from "../../Modals/MainPage/ModalAppTA/ModalAppTA";
+import NavMenu from "../../common/NavMenu/NavMenu";
 
 ////// helpers
 import { confirmAllDay } from "../../helpers/LocalData";
@@ -26,6 +26,7 @@ import { myAlert } from "../../helpers/MyAlert";
 import { searchActiveOrdersTA } from "../../helpers/searchActiveOrdersTA";
 import { getMonthRange, getMyWeek } from "../../helpers/weeks";
 import { listStatusOrders } from "../../helpers/objs";
+import { checkDates } from "../../helpers/validations";
 
 ////// fns
 import { editInvoice, setInvoiceInfo } from "../../store/reducers/mainSlice";
@@ -34,11 +35,9 @@ import { getListOrders } from "../../store/reducers/mainSlice";
 import { createInvoice } from "../../store/reducers/mainSlice";
 
 ////// icons
-import UserIcon from "@mui/icons-material/AccountCircle";
 
 /////// style
 import "./style.scss";
-import NavMenu from "../../common/NavMenu/NavMenu";
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -77,6 +76,11 @@ const MainPage = () => {
     }
 
     if (user_type == 1) {
+      if (checkDates(date_from, date_to)) {
+        myAlert("На это число нельзя создать заявку", "error");
+        return;
+      }
+
       /// создаю заявку для цеха от имени ТА
       dispatch(createInvoice({ date_from, date_to }));
     }

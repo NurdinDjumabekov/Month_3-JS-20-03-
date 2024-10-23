@@ -20,6 +20,7 @@ import "./style.scss";
 
 ////// helpers
 import { transformLists } from "../../helpers/transformLists";
+import { myAlert } from "../../helpers/MyAlert";
 
 const AddPayPoint = ({ viewApp, setViewApp }) => {
   const navigate = useNavigate();
@@ -28,14 +29,39 @@ const AddPayPoint = ({ viewApp, setViewApp }) => {
   const { dataPay } = useSelector((state) => state.paySlice);
   const { listPointsEveryTA } = useSelector((state) => state.mapSlice);
 
-  const sendPay = () => {
+  const sendPayForAdmin = () => {
+    if (!!!dataPay?.amount) {
+      return myAlert("Введите сумму", "error");
+    }
+    if (!!!dataPay?.comment) {
+      return myAlert("Введите комментарий", "error");
+    }
+    /// оплачиваю админу
     const data = {
       ...dataPay,
-      user_type: "1",
-      create_user_guid: "B85094A9-D70A-46AB-A724-5F3D7A506B37",
-      create_user_type: "2", /// данные админа
+      user_guid_to: "B85094A9-D70A-46AB-A724-5F3D7A506B37",
+      user_type_to: "2", /// данные админа
     };
     dispatch(sendPayFN(data));
+  };
+
+  const sendPayForTT = () => {
+    if (!!!dataPay?.amount) {
+      return myAlert("Введите сумму", "error");
+    }
+    if (!!!dataPay?.comment) {
+      return myAlert("Введите комментарий", "error");
+    }
+    /// беру опалту у ТТ
+    const { amount, comment } = dataPay;
+    const data = {
+      amount,
+      comment,
+      user_guid_to: dataPay?.point?.value,
+      user_type_to: "4", /// данные ТТ
+    };
+    dispatch(sendPayFN(data));
+    setViewApp(false);
   };
 
   const onChange = (e) => {
@@ -48,8 +74,6 @@ const AddPayPoint = ({ viewApp, setViewApp }) => {
   };
 
   const list_point = transformLists(listPointsEveryTA, "guid", "text");
-
-  console.log(dataPay);
 
   if (!!dataPay?.user_guid) {
     return (
@@ -77,7 +101,7 @@ const AddPayPoint = ({ viewApp, setViewApp }) => {
               typeInput="textarea"
             />
 
-            <button className="sendData" onClick={sendPay}>
+            <button className="sendData" onClick={sendPayForAdmin}>
               Произвести оплату
             </button>
           </div>
@@ -97,7 +121,7 @@ const AddPayPoint = ({ viewApp, setViewApp }) => {
         <Modals openModal={viewApp} closeModal={closeModal} title={"Оплата"}>
           <div className="createPay">
             <div className="myInputs">
-              <h6>Цех</h6>
+              <h6>Торговые точки</h6>
               <Select
                 options={list_point}
                 className="select"
@@ -123,7 +147,7 @@ const AddPayPoint = ({ viewApp, setViewApp }) => {
               typeInput="textarea"
             />
 
-            <button className="sendData" onClick={sendPay}>
+            <button className="sendData" onClick={sendPayForTT}>
               Произвести оплату
             </button>
           </div>

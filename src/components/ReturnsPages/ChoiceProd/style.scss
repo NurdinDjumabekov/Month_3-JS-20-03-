@@ -1,0 +1,21 @@
+.choiceProdReturn {
+  .createReturn {
+    position: fixed;
+    left: 50%;
+    bottom: 15px;
+    transform: translateX(-50%);
+    width: 95%;
+    height: 45px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #00ab55;
+
+    p {
+      color: #fff;
+      font-size: 16px;
+    }
+  }
+}

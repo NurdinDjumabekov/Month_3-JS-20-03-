@@ -7,7 +7,7 @@ const { REACT_APP_API_URL } = process.env;
 
 const initialState = {
   debtEveryTA: { vozvrat: [], dolg: [] }, /// долг каждого агента
-  dataPay: { comment: "", amount: "", user_guid: "" },
+  dataPay: { comment: "", amount: "", user_guid_to: "", user_type_to: "" },
 };
 
 ////// getEveryDebt - get список долгов каждого ТА
@@ -37,9 +37,9 @@ export const sendPayFN = createAsyncThunk(
       const response = await axiosInstance.post(url, data);
       if (response.status >= 200 && response.status < 300) {
         if (response?.data?.result == 1) {
-          dispatch(getEveryDebt({ agent_guid: data?.user_guid }));
-          myAlert("Оплата успешно произведена");
           dispatch(clearDataPay());
+          myAlert("Оплата успешно произведена");
+          dispatch(getEveryDebt({ agent_guid: data?.user_guid }));
         }
         return response?.data?.result;
       } else {
@@ -64,7 +64,12 @@ const paySlice = createSlice({
     },
 
     clearDataPay: (state, action) => {
-      state.dataPay = { comment: "", amount: "", user_guid: "" };
+      state.dataPay = {
+        comment: "",
+        amount: "",
+        user_guid_to: "",
+        user_type_to: "",
+      };
     },
   },
   extraReducers: (builder) => {

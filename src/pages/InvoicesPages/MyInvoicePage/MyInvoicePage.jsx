@@ -5,15 +5,15 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 ////// helpers
-import { roundingNum } from "../../helpers/totals";
-import { objTypeInvoice } from "../../helpers/objs";
+import { roundingNum } from "../../../helpers/totals";
+import { objTypeInvoice } from "../../../helpers/objs";
 
 ////// style
 import "./style.scss";
 
 ////// components
-import EveryInvoiceModal from "../../components/MyInvoicePage/Modals/EveryInvoiceModal/EveryInvoiceModal";
-import NavMenu from "../../common/NavMenu/NavMenu";
+import EveryInvoiceModal from "../../../components/MyInvoicePage/Modals/EveryInvoiceModal/EveryInvoiceModal";
+import NavMenu from "../../../common/NavMenu/NavMenu";
 
 ////// imgs
 import ArrowNav from "@mui/icons-material/ArrowForwardIosSharp";
@@ -21,8 +21,8 @@ import ChecklistRtlIcon from "@mui/icons-material/ChecklistRtl";
 import SummarizeIcon from "@mui/icons-material/Summarize";
 
 ////// fns
-import { setInvoiceInfo } from "../../store/reducers/mainSlice";
-import { getMyInvoice } from "../../store/reducers/invoiceSlice";
+import { setInvoiceInfo } from "../../../store/reducers/mainSlice";
+import { getMyInvoice } from "../../../store/reducers/invoiceSlice";
 
 const MyInvoicePage = () => {
   const dispatch = useDispatch();
@@ -44,13 +44,13 @@ const MyInvoicePage = () => {
       text: "Принятые",
       icon: <ChecklistRtlIcon sx={{ width: 20, height: 20 }} />,
       color: "#4361ee",
-      url: "/accept_invoice",
+      url: "/invoice/accept_invoice",
     },
     {
       text: "Отпускные",
       icon: <SummarizeIcon sx={{ width: 20, height: 20 }} />,
       color: "#805dca",
-      url: "/send_invoice",
+      url: "/invoice/send_invoice",
     },
   ];
 

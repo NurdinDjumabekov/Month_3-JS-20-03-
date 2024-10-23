@@ -66,8 +66,12 @@ const AllCategPage = () => {
       </div>
 
       <div className="allCateg">
-        {dataCategory?.map((item) => (
-          <button className="parentCateg" onClick={() => clickCateg(item)}>
+        {dataCategory?.map((item, index) => (
+          <button
+            key={index}
+            className="parentCateg"
+            onClick={() => clickCateg(item)}
+          >
             <div className="shadow"></div>
             <img src={item?.img} className="backgroundImage" />
             <div className="main">

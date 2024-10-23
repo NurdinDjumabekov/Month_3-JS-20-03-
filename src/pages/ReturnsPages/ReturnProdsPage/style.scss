@@ -73,7 +73,6 @@
       }
 
       .comments {
-        // max-width: 230px;
         display: -webkit-box; /* Для поддержки старых версий Safari */
         -webkit-box-orient: vertical; /* Определяет направление текста */
         -webkit-line-clamp: 4; /* Максимум 4 строки */
@@ -83,7 +82,6 @@
         font-weight: 400;
         text-align: left;
         color: #222;
-        padding: 0 0 0 5px;
       }
 
       .mainData {

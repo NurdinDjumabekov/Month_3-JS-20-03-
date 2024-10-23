@@ -1,0 +1,42 @@
+.listReturn {
+  height: 100%;
+
+  &__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 10px;
+    position: relative;
+    z-index: 20;
+
+    .myInputs {
+      width: 100%;
+      h6 {
+        font-size: 13px;
+        font-weight: 500;
+        margin: 0 0 3px 0;
+      }
+    }
+  }
+
+  .createReturn {
+    position: fixed;
+    left: 50%;
+    bottom: 15px;
+    transform: translateX(-50%);
+    width: 95%;
+    height: 45px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #00ab55;
+
+    p {
+      color: #fff;
+      font-size: 16px;
+    }
+  }
+}

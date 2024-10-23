@@ -357,7 +357,9 @@ export const getInvoiceReturn = createAsyncThunk(
   "getInvoiceReturn",
   async function (props, { dispatch, rejectWithValue }) {
     const { reciever_guid, sender_guid, date_from, date_to } = props;
-    const url = `${REACT_APP_API_URL}/ta/get_return_invoice?route_guid=&reciever_guid=${reciever_guid}&sender_guid=${sender_guid}&date_from=${date_from}&date_to=${date_to}&is_admin=0&reciever_type=4`;
+    const { reciever_type } = props;
+
+    const url = `${REACT_APP_API_URL}/ta/get_return_invoice?route_guid=&reciever_guid=${reciever_guid}&sender_guid=${sender_guid}&date_from=${date_from}&date_to=${date_to}&is_admin=0&reciever_type=${reciever_type}`;
     try {
       const response = await axiosInstance(url);
       if (response.status >= 200 && response.status < 300) {
@@ -379,7 +381,6 @@ export const getProdsReturn = createAsyncThunk(
     try {
       const response = await axiosInstance(url);
       if (response.status >= 200 && response.status < 300) {
-        console.log(response, "response");
         return response?.data;
       } else {
         throw Error(`Error: ${response.status}`);

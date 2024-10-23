@@ -4,51 +4,46 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 ////// fns
-import { historySendInvoice } from "../../store/reducers/invoiceSlice";
+import { historyAcceptInvoice } from "../../../store/reducers/invoiceSlice";
 
 ////// icons
 import ArrowNav from "@mui/icons-material/ArrowForwardIosSharp";
 
 ////// helpers
-import { roundingNum } from "../../helpers/totals";
-import { transformActionDate } from "../../helpers/transformDate";
+import { roundingNum } from "../../../helpers/totals";
 
 ////// style
 import "./style.scss";
-import NavMenu from "../../common/NavMenu/NavMenu";
+import NavMenu from "../../../common/NavMenu/NavMenu";
 
-const SenderInvoicePage = () => {
+const AcceptInvoicePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { dataSave } = useSelector((state) => state.saveDataSlice);
-  const { listHistorySendInvoice } = useSelector((state) => state.invoiceSlice);
+  const { listHistoryAcceptInvoice } = useSelector(
+    (state) => state.invoiceSlice
+  );
 
   useEffect(() => {
-    // История отпущенных накладных ТА в виде PDF
-    const send = {
-      sender_guid: dataSave?.guid,
-      reciver_type: 4,
-      date: transformActionDate(new Date()),
-    };
-    dispatch(historySendInvoice(send));
+    // История принятых накладных ТА в виде PDF
+    dispatch(historyAcceptInvoice({ agent_guid: dataSave?.guid }));
   }, [dispatch, dataSave?.guid]);
 
-  const clickInvoice = ({ file }) => {
-    const encodedFile = encodeURIComponent(file); // Кодирование URL
-    navigate(`/view/${encodedFile}`);
+  const clickInvoice = (item) => {
+    navigate(`/invoice/view`, { state: item });
   };
 
   return (
     <>
       <NavMenu navText={"Список принятых накладных"} />
-      {listHistorySendInvoice?.length == 0 ? (
+      {listHistoryAcceptInvoice?.length == 0 ? (
         <div className="emptyData">
           <p>Список пустой</p>
         </div>
       ) : (
         <div className="acceptInvoicePage">
-          {listHistorySendInvoice?.map((item) => (
+          {listHistoryAcceptInvoice?.map((item) => (
             <button
               key={item?.codeid}
               className="invoiceParent"
@@ -59,7 +54,7 @@ const SenderInvoicePage = () => {
                   <p className="indexNums">{item?.codeid}</p>
                   <div>
                     <p className="titleDate role">{item?.sender}</p>
-                    <p className="titleDate">{item?.date}</p>
+                    <p className="titleDate">{item?.date_create}</p>
                   </div>
                 </div>
                 {!!item?.comment ? (
@@ -87,4 +82,4 @@ const SenderInvoicePage = () => {
   );
 };
 
-export default SenderInvoicePage;
+export default AcceptInvoicePage;

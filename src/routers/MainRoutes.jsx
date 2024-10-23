@@ -19,18 +19,15 @@ import SettingsPage from "../pages/SettingsPage/SettingsPage";
 import MapsPage from "../pages/MapsPage/MapsPage";
 import CameraPage from "../pages/CameraPage/CameraPage";
 import SendInvoicePage from "../pages/SendInvoicePage/SendInvoicePage";
-import MyInvoicePage from "../pages/MyInvoicePage/MyInvoicePage";
-import AcceptInvoicePage from "../pages/AcceptInvoicePage/AcceptInvoicePage";
-import LookPdfPage from "../pages/LookPdfPage/LookPdfPage";
 import AddPointsPage from "../pages/AddPointsPage/AddPointsPage";
 import AddPointInRoutePage from "../pages/AddPointInRoutePage/AddPointInRoutePage";
 import TakeMoneyPage from "../pages/TakeMoneyPage/TakeMoneyPage";
-import SenderInvoicePage from "../pages/SenderInvoicePage/SenderInvoicePage";
 import AllCategPage from "../pages/AllCategPage/AllCategPage";
 import LeftoversPage from "../pages/LeftoversPage/LeftoversPage";
 import ReturnPage from "../pages/ReturnPage/ReturnPage";
-import ReturnHistoryPage from "../pages/ReturnHistoryPage/ReturnHistoryPage";
 import TasksPage from "../pages/TasksPage/TasksPage";
+import InvoicesPages from "../pages/InvoicesPages/InvoicesPages";
+import ReturnsPages from "../pages/ReturnsPages/ReturnsPages";
 
 const MainRoutes = () => {
   const dispatch = useDispatch();
@@ -55,17 +52,13 @@ const MainRoutes = () => {
           <Route element={<MainLayouts />}>
             <Route path="/" element={<AllCategPage />} />
             <Route path="/main" element={<MainPage />} />
-            <Route path="/my_invoice" element={<MyInvoicePage />} />
-            <Route path="/accept_invoice" element={<AcceptInvoicePage />} />
-            <Route path="/send_invoice" element={<SenderInvoicePage />} />
-            <Route path="/view/:url" element={<LookPdfPage />} />
+            <Route path="/invoice/*" element={<InvoicesPages />} />
             <Route path="/leftovers" element={<LeftoversPage />} />
             <Route path="/camera" element={<CameraPage />} />
             <Route path="/maps" element={<MapsPage />} />
             <Route path="/create_points" element={<AddPointsPage />} />
             <Route path="/add_points_route" element={<AddPointInRoutePage />} />
-            {/* <Route path="/settings" element={<SettingsPage />} /> */}
-            <Route path="/return_history" element={<ReturnHistoryPage />} />
+            <Route path="/return/*" element={<ReturnsPages />} />
             <Route path="/pay" element={<SettingsPage />} />
           </Route>
           <Route

@@ -160,8 +160,6 @@ const MapWrapper = ({ searchMe }) => {
     }
   };
 
-  // console.log(everyRoutes_TA, "everyRoutes_TA");
-
   return (
     <div className="mapBlock">
       <MapMain />

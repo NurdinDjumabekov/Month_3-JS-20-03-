@@ -34,7 +34,6 @@ import { createEditProdInInvoice } from "../../../store/reducers/mainSlice";
 
 ////// icons
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
-import { searchActiveOrdersTA } from "../../../helpers/searchActiveOrdersTA";
 
 const ListInvoice = () => {
   const dispatch = useDispatch();
