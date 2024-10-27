@@ -4,13 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 /////  components
-// import EveryCategory from "../../components/AllCategory/EveryCategory";
-// import NavMenu from "../../common/NavMenu/NavMenu";
-// import { LogOut } from "../../components/Header/LogOut/LogOut";
-// import UserInfo from "../../components/Header/UserInfo/UserInfo";
 
 ////// helpers
-// import { dataCategory } from "../../helpers/Data";
 
 ///// fns
 

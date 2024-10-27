@@ -53,10 +53,8 @@ const TakeMoneyPage = () => {
   const sendPay = () => {
     const send = {
       ...dataPay,
-      user_guid: guid_point, // check тут продавец или точка ?
-      user_type: "4", // check
-      create_user_guid: dataSave?.guid,
-      create_user_type: "1",
+      user_guid_to: guid_point, // check тут продавец или точка ?
+      user_type_to: "4", // check
     };
     dispatch(sendPayFN(send));
     prevNav();

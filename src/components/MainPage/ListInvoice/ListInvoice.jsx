@@ -17,16 +17,9 @@ import { myAlert } from "../../../helpers/MyAlert";
 import { chechEmptyCount, checkBoolFN } from "../../../helpers/validations";
 
 ////// fns
-import {
-  setActiveTA,
-  setActiveWorkShop,
-} from "../../../store/reducers/selectsSlice";
+import { setActiveWorkShop } from "../../../store/reducers/selectsSlice";
 import { setActiveCategs } from "../../../store/reducers/selectsSlice";
-import {
-  createInvoice,
-  getListCategs,
-  setListTA,
-} from "../../../store/reducers/mainSlice";
+import { getListCategs } from "../../../store/reducers/mainSlice";
 import { getListProds } from "../../../store/reducers/mainSlice";
 import { getListWorkShop } from "../../../store/reducers/mainSlice";
 import { searchListProds } from "../../../store/reducers/mainSlice";
@@ -44,19 +37,14 @@ const ListInvoice = () => {
   const { listWorkshop } = useSelector((state) => state.mainSlice);
   const { listCategs } = useSelector((state) => state.mainSlice);
   const { listProds, listTA } = useSelector((state) => state.mainSlice);
-  const { activeDate, invoiceInfo } = useSelector((state) => state.mainSlice);
-  const { guid, action } = useSelector((state) => state.mainSlice.invoiceInfo);
-  const { activeTA } = useSelector((state) => state.selectsSlice);
+  const { activeDate } = useSelector((state) => state.mainSlice);
+  const { guid } = useSelector((state) => state.mainSlice.invoiceInfo);
   const { activeWorkShop } = useSelector((state) => state.selectsSlice);
   const { activeCategs } = useSelector((state) => state.selectsSlice);
   const { checkInvoice } = useSelector((state) => state.mainSlice);
-  const { dataSave } = useSelector((state) => state.saveDataSlice);
 
   const workShop = transformLists(listWorkshop, "guid", "name");
   const categs = transformLists(listCategs, "category_guid", "category_name");
-  const TAListCateg = transformLists(listTA, "guid", "fio");
-
-  const adminCheck = dataSave?.user_type == 2;
 
   const onChangeWS = (item) => {
     dispatch(setActiveWorkShop(item)); ///// выбор селекта цехов
@@ -112,40 +100,13 @@ const ListInvoice = () => {
       return;
     }
 
-    //// если это админ и он не выбрал никакого ТА
-    if (adminCheck && guid == "временно создан") {
-      myAlert("Выберите торгового агента", "error");
-      return;
-    }
-
     const forCreate = { listProds, comment };
 
-    const newListTA = adminCheck
-      ? [...listTA, { is_checked: 1, guid: activeTA?.guid }]
-      : listTA;
-
-    const forGetInvoice = { activeDate, listTA: newListTA };
+    const forGetInvoice = { activeDate, listTA };
     const obj = { forGetInvoice, forCreate };
     const invoiceInfo = { guid, action: 1 }; //// добавление товара(action: 1)
     dispatch(createEditProdInInvoice({ ...obj, invoiceInfo }));
     ///// добавление и редактирование товаров в заявке
-
-    if (adminCheck) {
-      // у админа checkbox в true и отправляю запроca
-      dispatch(setListTA(activeTA?.guid));
-    }
-  };
-
-  // console.log(listTA, "listTA"); /// is_checked
-
-  //// только для админа
-  const onChangeTA = (item) => {
-    dispatch(setActiveTA(item)); /// для активного ТА
-    const { date_from, date_to } = invoiceInfo;
-    const { guid } = item;
-    const data = { date_from, date_to, agent_guid: guid, user_guid: guid };
-    dispatch(createInvoice({ ...data, user_type: 1 }));
-    //// создаю накладную от имени ТА (создает админ)
   };
 
   return (
@@ -153,17 +114,6 @@ const ListInvoice = () => {
       <div className="selectsAll selectsAllActive">
         <div className="selectsAll__inner">
           <div className="choiceSel">
-            {adminCheck && action == 1 && (
-              <div className="myInputs selectPosition noMobile">
-                <h6>Торговые агенты</h6>
-                <Select
-                  options={TAListCateg}
-                  className="select"
-                  onChange={onChangeTA}
-                  value={activeTA}
-                />
-              </div>
-            )}
             <div className="myInputs selectPosition">
               <h6>Цех</h6>
               <Select

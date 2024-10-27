@@ -18,7 +18,7 @@ export const sendPhotos = createAsyncThunk(
   async function ({ data }, { dispatch, rejectWithValue }) {
     const url = `${REACT_APP_API_URL}/ta/add_file`;
     try {
-      const response = await axiosInstance.post(url, data);
+      const response = await axios.post(url, data);
       if (response.status >= 200 && response.status < 300) {
       } else {
         throw Error(`Error: ${response.status}`);

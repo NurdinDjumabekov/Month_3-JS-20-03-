@@ -1,0 +1,48 @@
+.expensePage {
+  padding: 50px 0 0 0;
+
+  &__inner {
+    .list {
+      padding: 0px 8px;
+
+      > div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        background-color: #d4dfee78;
+        border: 1px solid rgba(47, 71, 190, 0.107);
+        border-radius: 5px;
+        margin: 8px auto;
+        padding: 10px;
+        width: 100%;
+
+        .mainData {
+          width: 70%;
+
+          p {
+            color: rgba(47, 71, 190, 0.687);
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 17px;
+          }
+          span {
+            display: block;
+            font-size: 13px;
+            font-weight: 400;
+            margin-top: 5px;
+          }
+        }
+
+        .status {
+          width: 30%;
+          p {
+            color: #0ca946e6;
+            font-size: 13px;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}

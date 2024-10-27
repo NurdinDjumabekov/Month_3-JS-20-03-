@@ -35,8 +35,10 @@ const MyInvoicePage = () => {
     dispatch(getMyInvoice(dataSave?.guid)); /// run
   }, []);
 
-  const clickSeller = ({ invoice_guid }, index) => {
-    dispatch(setInvoiceInfo({ guid: invoice_guid, action: 8, index }));
+  const clickSeller = ({ invoice_guid, sender_type }, index) => {
+    dispatch(
+      setInvoiceInfo({ guid: invoice_guid, action: 8, index, sender_type })
+    );
   };
 
   const listNav = [

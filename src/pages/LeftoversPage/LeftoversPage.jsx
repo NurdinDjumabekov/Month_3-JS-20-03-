@@ -1,3 +1,4 @@
+/////// hooks
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -9,22 +10,16 @@ import { transformLists } from "../../helpers/transformLists";
 /////// components
 import Select from "react-select";
 import NavMenu from "../../common/NavMenu/NavMenu";
-import { Table, TableBody, TableCell } from "@mui/material";
-import { TableContainer, TableHead } from "@mui/material";
-import { TableRow, Paper } from "@mui/material";
+import ViewProds from "../../common/ViewProds/ViewProds";
+
+////// fns
+import { getListCategs, getListProds } from "../../store/reducers/invoiceSlice";
+import { getListWorkShop } from "../../store/reducers/invoiceSlice";
+import { setActiveWorkShop } from "../../store/reducers/selectsSlice";
+import { setActiveCategs } from "../../store/reducers/selectsSlice";
 
 ////// style
 import "./style.scss";
-import {
-  getListCategs,
-  getListProds,
-  getListWorkShop,
-} from "../../store/reducers/invoiceSlice";
-import {
-  setActiveCategs,
-  setActiveWorkShop,
-} from "../../store/reducers/selectsSlice";
-import ViewProds from "../../common/ViewProds/ViewProds";
 
 const LeftoversPage = () => {
   const dispatch = useDispatch();
@@ -37,11 +32,8 @@ const LeftoversPage = () => {
   const { listWorkshopSI } = useSelector((state) => state.invoiceSlice);
   const { listProdsSI } = useSelector((state) => state.invoiceSlice);
 
-  const workShop = transformLists(
-    listWorkshopSI,
-    "workshop_guid",
-    "workshop_name"
-  );
+  const text = "workshop_guid";
+  const workShop = transformLists(listWorkshopSI, text, "workshop_name");
   const categs = transformLists(listCategsSI, "category_guid", "category_name");
 
   const onChangeWS = (item) => {
@@ -70,10 +62,12 @@ const LeftoversPage = () => {
 
   const keys = {
     key1: "product_name",
-    key2: "amount",
-    key3: "amount_per",
+    key2: "amount_kg",
+    key3: "amount",
     key4: "price",
   };
+
+  console.log(listProdsSI, "listProdsSI");
 
   return (
     <>

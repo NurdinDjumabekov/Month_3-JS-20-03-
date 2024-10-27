@@ -28,6 +28,7 @@ import { acceptInvoice } from "../../../../store/reducers/invoiceSlice";
 ////// icons
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import { useNavigate } from "react-router-dom";
+import { roundingNum } from "../../../../helpers/totals";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -64,6 +65,8 @@ const EveryInvoiceModal = () => {
 
     // return () => handleClose();
   }, [invoiceInfo?.action]);
+
+  console.log(invoiceInfo?.sender_type, "invoiceInfo");
 
   return (
     <Dialog
@@ -132,20 +135,22 @@ const EveryInvoiceModal = () => {
                       {row?.product_name}
                     </TableCell>
                     <TableCell align="left" style={{ width: "20%" }}>
-                      {row?.price} сом
+                      {roundingNum(row?.price)} сом
                     </TableCell>
                     <TableCell align="left" style={{ width: "20%" }}>
-                      {row?.count} кг
+                      {roundingNum(row?.count)} шт
                     </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
-          <button className="saveAction" onClick={acceptFN}>
-            <LibraryAddIcon sx={{ width: 16, height: 16 }} />
-            <p>Принять накладную</p>
-          </button>
+          {invoiceInfo?.sender_type == 1 && (
+            <button className="saveAction" onClick={acceptFN}>
+              <LibraryAddIcon sx={{ width: 16, height: 16 }} />
+              <p>Принять накладную</p>
+            </button>
+          )}
         </div>
       </div>
     </Dialog>

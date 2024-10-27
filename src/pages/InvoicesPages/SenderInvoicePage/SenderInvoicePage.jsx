@@ -15,6 +15,8 @@ import { transformActionDate } from "../../../helpers/transformDate";
 
 ////// style
 import "./style.scss";
+
+////// components
 import NavMenu from "../../../common/NavMenu/NavMenu";
 
 const SenderInvoicePage = () => {
@@ -23,7 +25,6 @@ const SenderInvoicePage = () => {
 
   const { dataSave } = useSelector((state) => state.saveDataSlice);
   const { listHistorySendInvoice } = useSelector((state) => state.invoiceSlice);
-
   useEffect(() => {
     // История отпущенных накладных ТА
     const send = {
@@ -34,9 +35,7 @@ const SenderInvoicePage = () => {
     dispatch(historySendInvoice(send));
   }, [dispatch, dataSave?.guid]);
 
-  const clickInvoice = (item) => {
-    navigate(`/invoice/view`, { state: item });
-  };
+  const clickInvoice = (item) => navigate(`/invoice/view`, { state: item });
 
   return (
     <>

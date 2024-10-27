@@ -46,10 +46,18 @@ const ModalOrderCRUD = () => {
       //// срабатывает только тогда, когда модалка открывается
       dispatch(clearListOrders());
       ///// очищаю временный список для отправки создания заказа от ТА
+
+      if (invoiceInfo?.action == 1) {
+        setViewApp(true); /// создание, сразу подставляю список товаров на выбор
+      } else if (invoiceInfo?.action == 2) {
+        setViewApp(false); /// редактирование, сразу подставляю накладную с выбраныым списком
+      }
     } else {
       dispatch(clearSelects());
     }
   }, [invoiceInfo?.guid]);
+
+  console.log(invoiceInfo, "invoiceInfo");
 
   const { guid, action } = invoiceInfo;
 

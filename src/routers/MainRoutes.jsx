@@ -4,7 +4,6 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 //// pages
-import NotFoundPage from "../pages/NotFound/NotFoundPage";
 import MainLayouts from "../layouts/MainLayouts/MainLayouts";
 
 //// components
@@ -28,6 +27,7 @@ import ReturnPage from "../pages/ReturnPage/ReturnPage";
 import TasksPage from "../pages/TasksPage/TasksPage";
 import InvoicesPages from "../pages/InvoicesPages/InvoicesPages";
 import ReturnsPages from "../pages/ReturnsPages/ReturnsPages";
+import ExpensePage from "../pages/ExpensePage/ExpensePage";
 
 const MainRoutes = () => {
   const dispatch = useDispatch();
@@ -60,6 +60,7 @@ const MainRoutes = () => {
             <Route path="/add_points_route" element={<AddPointInRoutePage />} />
             <Route path="/return/*" element={<ReturnsPages />} />
             <Route path="/pay" element={<SettingsPage />} />
+            <Route path="/expense" element={<ExpensePage />} />
           </Route>
           <Route
             path="/send_app/:route_guid/:guid_point/:type"

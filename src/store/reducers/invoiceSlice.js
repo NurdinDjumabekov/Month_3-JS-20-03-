@@ -258,7 +258,7 @@ export const sendInvoiceForTT = createAsyncThunk(
 export const getMyInvoice = createAsyncThunk(
   "getMyInvoice",
   async function (guid, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/get_invoices?date=0&reciever_guid=${guid}`;
+    const url = `${REACT_APP_API_URL}/ta/get_invoices?date=0&reciever_guid=${guid}&page=main`;
     try {
       const response = await axiosInstance(url);
       if (response.status >= 200 && response.status < 300) {
@@ -317,7 +317,7 @@ export const acceptInvoice = createAsyncThunk(
 export const historyAcceptInvoice = createAsyncThunk(
   "historyAcceptInvoice",
   async function ({ agent_guid }, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/get_invoice_files?reciever_guid=${agent_guid}`;
+    const url = `${REACT_APP_API_URL}/ta/get_invoices?date=0&reciever_guid=${agent_guid}&page=accepted`;
     try {
       const response = await axiosInstance(url);
       if (response.status >= 200 && response.status < 300) {
@@ -336,7 +336,7 @@ export const historySendInvoice = createAsyncThunk(
   "historySendInvoice",
   async function (props, { dispatch, rejectWithValue }) {
     const { sender_guid, reciver_type, date } = props;
-    const url = `${REACT_APP_API_URL}/ta/get_invoices?sender_guid=${sender_guid}&reciver_type=${reciver_type}&date=${date}`;
+    const url = `${REACT_APP_API_URL}/ta/get_invoices?date=0&reciever_guid=${sender_guid}&page=otpusk_tt`;
     try {
       const response = await axiosInstance(url);
       if (response.status >= 200 && response.status < 300) {

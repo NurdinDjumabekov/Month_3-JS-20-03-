@@ -16,12 +16,9 @@ import "./style.scss";
 
 ////// helpers
 import { validNums } from "../../../helpers/validations";
-import { sumCountsFN, totalSum } from "../../../helpers/totals";
 
 ////// icons
 import DeleteIcon from "@mui/icons-material/Delete";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
 
 const ListAcceptProd = () => {
   const dispatch = useDispatch();
@@ -57,6 +54,8 @@ const ListAcceptProd = () => {
     const obj = { listTA, activeDate, action: 3 };
     dispatch(delProdInInvoice({ data, ...obj, guid }));
   };
+
+  console.log(listSendOrders, "listSendOrders");
 
   return (
     <div className="listAcceptProd">
@@ -154,15 +153,12 @@ const ListAcceptProd = () => {
               <TableCell colSpan={2} align="left" className="footerTable">
                 Итого
               </TableCell>
-              <TableCell align="left" className="footerTable">
-                {totalSum(listSendOrders, "count", "price")} сом
+
+              <TableCell align="left" style={{ fontWeight: "bold" }}>
+                {listSendOrders?.[0]?.total_count} шт
               </TableCell>
-              <TableCell
-                colSpan={2}
-                align="left"
-                style={{ fontWeight: "bold" }}
-              >
-                {sumCountsFN(listSendOrders, "count")} шт
+              <TableCell colSpan={2} align="left" className="footerTable">
+                {listSendOrders?.[0]?.total_price} сом
               </TableCell>
             </TableRow>
           </TableBody>

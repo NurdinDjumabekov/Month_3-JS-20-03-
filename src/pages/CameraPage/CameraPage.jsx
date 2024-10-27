@@ -42,10 +42,11 @@ const CameraPage = () => {
 
       if (file) {
         const formData = new FormData();
-        formData?.append("agent_guid", dataSave?.guid);
-        formData?.append("point_guid", guid_point);
-        formData?.append("route_guid", route_guid);
-        formData?.append("file", file);
+        formData.append("agent_guid", dataSave?.guid);
+        formData.append("point_guid", guid_point);
+        formData.append("route_guid", route_guid);
+        formData.append("files", file); // Помещаем файл как элемент массива
+
         dispatch(sendPhotos({ data: formData }));
       }
     }
@@ -58,23 +59,21 @@ const CameraPage = () => {
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
-  const handleFileChange = async (e) => {
+  const handleFileChange = (e) => {
     const files = e?.target?.files;
 
-    if (files && files.length > 0) {
-      const formData = new FormData();
-      formData.append("agent_guid", dataSave?.guid);
-      formData.append("point_guid", guid_point);
-      formData.append("route_guid", route_guid);
-      formData.append("file", files[0]);
-      try {
-        await dispatch(sendPhotos({ data: formData })).unwrap();
-        console.log("File uploaded successfully");
-        e.target.value = null;
-      } catch (error) {
-        console.error("Error uploading file:", error);
-      }
-    }
+    console.log(files, e);
+
+    const formData = new FormData();
+    formData.append("agent_guid", dataSave?.guid);
+    formData.append("point_guid", guid_point);
+    formData.append("route_guid", route_guid);
+
+    formData.append("files", files);
+    // if (files && files.length > 0) {
+    //   files?.forEach((file) => {});
+    // }
+    dispatch(sendPhotos({ data: formData })).unwrap();
   };
 
   const viewAllPhotos = () => {

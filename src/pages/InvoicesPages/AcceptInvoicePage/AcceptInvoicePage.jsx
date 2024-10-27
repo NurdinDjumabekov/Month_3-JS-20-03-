@@ -53,8 +53,8 @@ const AcceptInvoicePage = () => {
                 <div className="mainData">
                   <p className="indexNums">{item?.codeid}</p>
                   <div>
-                    <p className="titleDate role">{item?.sender}</p>
-                    <p className="titleDate">{item?.date_create}</p>
+                    <p className="titleDate role">Админ</p>
+                    <p className="titleDate">{item?.date}</p>
                   </div>
                 </div>
                 {!!item?.comment ? (

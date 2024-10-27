@@ -422,10 +422,10 @@ export const dataCategory = [
   },
   // {
   //   codeid: 3,
-  //   name: "Продажа",
-  //   link: "sale/main",
+  //   name: "Траты",
+  //   link: "expense",
   //   img: "https://img.freepik.com/free-vector/finance-department-employees-are-calculating-expenses-company-s-business_1150-41782.jpg?t=st=1711965120~exp=1711968720~hmac=96a672de3602a7397d6e0b7452abfa17eaa700d42fd08a2a3e244eb154b7bd30&w=1380",
-  //   pathApi: "sale/main",
+  //   pathApi: "expense",
   // },
 ];
 

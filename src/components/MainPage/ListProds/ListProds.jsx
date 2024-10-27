@@ -56,6 +56,8 @@ const ListProds = () => {
     dispatch(changeCountCheckedListProds({ ...item, count }));
   };
 
+  console.log(listProds, "listProds");
+
   return (
     <div className="listProdCRUD">
       <TableContainer
@@ -69,12 +71,15 @@ const ListProds = () => {
               <TableCell align="center" style={{ width: "8%" }}>
                 №
               </TableCell>
-              <TableCell style={{ width: "58%" }}>Продукт</TableCell>
+              <TableCell style={{ width: "52%" }}>Продукт</TableCell>
               <TableCell align="left" style={{ width: "14%" }}>
                 Кол-во
               </TableCell>
-              <TableCell align="left" style={{ width: "20%" }}>
+              <TableCell align="left" style={{ width: "16%" }}>
                 Цена
+              </TableCell>
+              <TableCell align="left" style={{ width: "10%" }}>
+                Вакуум
               </TableCell>
               {/* <TableCell
                 align="left"
@@ -100,7 +105,7 @@ const ListProds = () => {
                 <TableCell
                   component="th"
                   scope="row"
-                  style={{ width: "58%" }}
+                  style={{ width: "52%" }}
                   onClick={() => handleDecrement(row)}
                 >
                   {row?.product_name}
@@ -140,10 +145,24 @@ const ListProds = () => {
                 </TableCell>
                 <TableCell
                   align="left"
-                  style={{ width: "20%" }}
+                  style={{ width: "16%" }}
                   onClick={() => handleIncrement(row)}
                 >
                   {row?.workshop_price} сом
+                </TableCell>
+                <TableCell
+                  align="left"
+                  style={{ width: "10%" }}
+                  onClick={() => handleIncrement(row)}
+                >
+                  <div className="checkboxTh">
+                    <input
+                      type="checkbox"
+                      checked={!!row?.is_vakuum}
+                      className="checkbox"
+                      readOnly={!checkInvoice}
+                    />
+                  </div>
                 </TableCell>
                 {/* <TableCell align="left" style={{ width: "10%" }}>
                   <div className="checkboxTable">
