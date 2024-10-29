@@ -11,12 +11,8 @@ import interactionPlugin from "@fullcalendar/interaction";
 import ruLocale from "@fullcalendar/core/locales/ru";
 import ModalOrderCRUD from "../../components/MainPage/Modals/ModalOrderCRUD/ModalOrderCRUD";
 import EveryDateInfo from "../../components/MainPage/EveryDateInfo/EveryDateInfo";
-import ModaIngridients from "../../components/MainPage/Modals/ModaIngridients/ModaIngridients";
-import ModalProduction from "../../Modals/MainPage/ModalProduction/ModalProduction";
-import ModalWareHome from "../../Modals/MainPage/ModalWareHome/ModalWareHome";
 import ViewRouter from "../../Modals/ViewRouter/ViewRouter";
 import ModalPayTA from "../../Modals/MainPage/ModalPayTA/ModalPayTA";
-import ModalAppTA from "../../Modals/MainPage/ModalAppTA/ModalAppTA";
 import NavMenu from "../../common/NavMenu/NavMenu";
 
 ////// helpers
@@ -220,11 +216,7 @@ const MainPage = () => {
             </div>
           </div>
         </div>
-        <ModalAppTA />
-        <ModalOrderCRUD />
-        <ModaIngridients />
-        <ModalProduction />
-        <ModalWareHome />
+        {/* <ModalOrderCRUD /> */}
         <ModalPayTA />
         <ViewRouter />
       </div>
