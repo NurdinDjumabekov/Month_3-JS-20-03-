@@ -129,6 +129,42 @@ export const getTasks = createAsyncThunk(
   }
 );
 
+////// updateTasks - обновление тасков
+export const updateTasks = createAsyncThunk(
+  "updateTasks",
+  async function (data, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/update_task_status`;
+    try {
+      const response = await axiosInstance.put(url, data);
+      if (response.status >= 200 && response.status < 300) {
+        return response.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+////// addFileInTasks - добавление файлов в списки задач
+export const addFileInTasks = createAsyncThunk(
+  "addFileInTasks",
+  async function ({ data }, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/add_file`;
+    try {
+      const response = await axios.post(url, data);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const pointsSlice = createSlice({
   name: "pointsSlice",
   initialState,

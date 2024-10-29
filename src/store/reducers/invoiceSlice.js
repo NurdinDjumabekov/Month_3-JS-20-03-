@@ -185,6 +185,8 @@ export const createEditProdInInvoiceSI = createAsyncThunk(
           dispatch(sendInvoiceForTT({ data: forSendTT }));
           /// редактирую в нынешнем запросе и сразу меняю статус чтобы накладная оправилась ТТ
         }
+
+        return response.data;
       } else {
         throw Error(`Error: ${response.status}`);
       }
@@ -293,16 +295,11 @@ export const getMyEveryInvoice = createAsyncThunk(
 ////// acceptInvoice - принятие накладной ТА
 export const acceptInvoice = createAsyncThunk(
   "acceptInvoice",
-  async function ({ data, navigate }, { dispatch, rejectWithValue }) {
+  async function ({ data }, { dispatch, rejectWithValue }) {
     const url = `${REACT_APP_API_URL}/ta/update_invoice`;
     try {
       const response = await axiosInstance.put(url, data);
       if (response.status >= 200 && response.status < 300) {
-        if (response?.data?.result == 1) {
-          myAlert("Накладная принята");
-          dispatch(setInvoiceInfo({ guid: "", action: 0 }));
-          dispatch(getMyInvoice(data?.user_guid));
-        }
         return response?.data;
       } else {
         throw Error(`Error: ${response.status}`);
@@ -359,7 +356,7 @@ export const getInvoiceReturn = createAsyncThunk(
     const { reciever_guid, sender_guid, date_from, date_to } = props;
     const { reciever_type } = props;
 
-    const url = `${REACT_APP_API_URL}/ta/get_return_invoice?route_guid=&reciever_guid=${reciever_guid}&sender_guid=${sender_guid}&date_from=${date_from}&date_to=${date_to}&is_admin=0&reciever_type=${reciever_type}`;
+    const url = `${REACT_APP_API_URL}/ta/get_return_invoice?sender_guid=${sender_guid}&is_admin=1&page=main`;
     try {
       const response = await axiosInstance(url);
       if (response.status >= 200 && response.status < 300) {
@@ -454,6 +451,42 @@ export const delProdInInvoiceReturn = createAsyncThunk(
       const response = await axiosInstance.put(url, data);
       if (response.status >= 200 && response.status < 300) {
         return response.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+////// historyAcceptInvoiceReturn - история принятых накладных возврата ТА в виде пдф
+export const historyAcceptInvoiceReturn = createAsyncThunk(
+  "historyAcceptInvoiceReturn",
+  async function ({ agent_guid }, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/get_return_invoice?sender_guid=${agent_guid}&is_admin=1&page=accepted`;
+    try {
+      const response = await axiosInstance(url);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+////// historySendInvoiceReturn - история отправденный накладных возврата ТА в виде пдф
+export const historySendInvoiceReturn = createAsyncThunk(
+  "historySendInvoiceReturn",
+  async function ({ sender_guid }, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/get_return_invoice?sender_guid=${sender_guid}&is_admin=1&page=otpusk_tt`;
+    try {
+      const response = await axiosInstance(url);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
       } else {
         throw Error(`Error: ${response.status}`);
       }
@@ -679,6 +712,32 @@ const invoiceSlice = createSlice({
       state.preloader = false;
     });
     builder.addCase(getProdsReturn.pending, (state, action) => {
+      state.preloader = true;
+    });
+
+    ///////////// historyAcceptInvoiceReturn
+    builder.addCase(historyAcceptInvoiceReturn.fulfilled, (state, action) => {
+      state.preloader = false;
+      state.listInvoiceReturn = action.payload;
+    });
+    builder.addCase(historyAcceptInvoiceReturn.rejected, (state, action) => {
+      state.error = action.payload;
+      state.preloader = false;
+    });
+    builder.addCase(historyAcceptInvoiceReturn.pending, (state, action) => {
+      state.preloader = true;
+    });
+
+    ///////////// historySendInvoiceReturn
+    builder.addCase(historySendInvoiceReturn.fulfilled, (state, action) => {
+      state.preloader = false;
+      state.listInvoiceReturn = action.payload;
+    });
+    builder.addCase(historySendInvoiceReturn.rejected, (state, action) => {
+      state.error = action.payload;
+      state.preloader = false;
+    });
+    builder.addCase(historySendInvoiceReturn.pending, (state, action) => {
       state.preloader = true;
     });
   },

@@ -41,8 +41,6 @@ const MainRoutes = () => {
   const { activeRouteList } = useSelector((state) => state.photoSlice);
   const { mapGeo, listRouteAllTA } = useSelector((state) => state.mapSlice);
 
-  // console.log(dataSave, "dataSave");
-
   return (
     <Routes>
       {!!!dataSave?.guid ? (
@@ -53,6 +51,7 @@ const MainRoutes = () => {
             <Route path="/" element={<AllCategPage />} />
             <Route path="/main" element={<MainPage />} />
             <Route path="/invoice/*" element={<InvoicesPages />} />
+
             <Route path="/leftovers" element={<LeftoversPage />} />
             <Route path="/camera" element={<CameraPage />} />
             <Route path="/maps" element={<MapsPage />} />

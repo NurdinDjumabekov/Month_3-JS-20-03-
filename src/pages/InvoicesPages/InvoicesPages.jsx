@@ -24,9 +24,10 @@ const InvoicesPages = () => {
       <Routes>
         <Route path="/" element={<InvoicesPages />} />
         <Route path="main" element={<MyInvoicePage />} />
-        <Route path="accept_invoice" element={<AcceptInvoicePage />} />
-        <Route path="send_invoice" element={<SenderInvoicePage />} />
         <Route path="view" element={<ViewProdsPage />} />
+
+        {/* <Route path="accept_invoice" element={<AcceptInvoicePage />} />
+        <Route path="send_invoice" element={<SenderInvoicePage />} /> */}
       </Routes>
     </>
   );

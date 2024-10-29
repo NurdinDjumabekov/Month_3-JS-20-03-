@@ -61,10 +61,13 @@ const LeftoversPage = () => {
   }, []);
 
   const keys = {
-    key1: "product_name",
-    key2: "amount_kg",
-    key3: "amount",
-    key4: "price",
+    name: "product_name",
+    count_kg: "amount_kg",
+    count: "amount",
+    price: "price",
+    total_count_kg: "total_count_kg",
+    total_count: "total_count",
+    total_price: "total_price",
   };
 
   console.log(listProdsSI, "listProdsSI");

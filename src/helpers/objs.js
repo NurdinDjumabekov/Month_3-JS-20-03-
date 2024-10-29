@@ -297,7 +297,7 @@ export const listActionsMap = [
 ];
 
 export const objTypeInvoice = {
-  0: { text: "На складе", color: "red" },
-  1: { text: "Отгружено", color: "red" },
+  0: { text: "Отгружено", color: "red" },
+  1: { text: "На складе", color: "red" },
   2: { text: "Принято", color: "green" },
 };

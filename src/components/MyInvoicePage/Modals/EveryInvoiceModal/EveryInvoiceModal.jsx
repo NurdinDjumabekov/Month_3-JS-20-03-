@@ -1,6 +1,6 @@
 ////// hooks
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 ////// components
@@ -66,12 +66,10 @@ const EveryInvoiceModal = () => {
     // return () => handleClose();
   }, [invoiceInfo?.action]);
 
-  console.log(invoiceInfo?.sender_type, "invoiceInfo");
-
   return (
     <Dialog
       fullScreen
-      open={invoiceInfo?.action == 8}
+      open={true}
       onClose={handleClose}
       TransitionComponent={Transition}
     >
@@ -145,7 +143,7 @@ const EveryInvoiceModal = () => {
               </TableBody>
             </Table>
           </TableContainer>
-          {invoiceInfo?.sender_type == 1 && (
+          {invoiceInfo?.sender_type == 2 && (
             <button className="saveAction" onClick={acceptFN}>
               <LibraryAddIcon sx={{ width: 16, height: 16 }} />
               <p>Принять накладную</p>

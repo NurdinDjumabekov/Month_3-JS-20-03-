@@ -6,7 +6,8 @@ const { REACT_APP_API_URL } = process.env;
 
 const initialState = {
   stateLoad: true, /// всегда меняю его с true на false и наоборот (нужен для перезагрузки карт)
-  listExpense: [],
+  listExpense: [], // список типов трат
+  listExpenseTA: [], /// список трат ТА
 };
 
 ////// TestTest - get список цехов
@@ -49,9 +50,27 @@ export const getListExpense = createAsyncThunk(
 export const getListExpenseTA = createAsyncThunk(
   "getListExpenseTA",
   async function (guid, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/get_expenses?user_guid=${guid}&date_to=2024-10-23&date_from=2024-10-23`;
+    const url = `${REACT_APP_API_URL}/ta/get_expenses?user_guid=${guid}&date_to=2024-10-29&date_from=2024-10-23`;
     try {
       const response = await axiosInstance(url);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+////// createExpenseTA - create тратy
+export const createExpenseTA = createAsyncThunk(
+  "createExpenseTA",
+  async function (data, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/add_expense`;
+    try {
+      const response = await axiosInstance.post(url, data);
       if (response.status >= 200 && response.status < 300) {
         return response?.data;
       } else {
@@ -82,6 +101,19 @@ const stateSlice = createSlice({
       state.preloader = false;
     });
     builder.addCase(getListExpense.pending, (state, action) => {
+      state.preloader = true;
+    });
+
+    ////////////// getListExpenseTA
+    builder.addCase(getListExpenseTA.fulfilled, (state, action) => {
+      state.preloader = false;
+      state.listExpenseTA = action.payload;
+    });
+    builder.addCase(getListExpenseTA.rejected, (state, action) => {
+      state.error = action.payload;
+      state.preloader = false;
+    });
+    builder.addCase(getListExpenseTA.pending, (state, action) => {
       state.preloader = true;
     });
   },

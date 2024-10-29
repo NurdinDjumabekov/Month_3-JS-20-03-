@@ -15,11 +15,13 @@ import "./style.scss";
 
 //// icons
 import SummarizeIcon from "@mui/icons-material/Summarize";
+import AcceptInvvoiceWorkShop from "../../../components/InvoicesPages/AcceptInvvoiceWorkShop/AcceptInvvoiceWorkShop";
 
 const ViewProdsPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { guid, codeid, file, total_price, invoice_guid } = location.state; //// хранятся данные накладной
+  const { guid, codeid, file, invoice_guid, action } = location.state;
+  //// хранятся данные накладной
 
   const { listProdEveryInvoice } = useSelector((state) => state.invoiceSlice);
 
@@ -32,28 +34,34 @@ const ViewProdsPage = () => {
   }, [guid]);
 
   const keys = {
-    key1: "product_name",
-    key2: "count_kg",
-    key3: "count",
-    key4: "price",
+    name: "product_name",
+    count_kg: "count_kg",
+    count: "count",
+    price: "price",
+    total_count_kg: "total_count_kg",
+    total_count: "total_count",
+    total_price: "total_price",
   };
 
-  console.log(listProdEveryInvoice);
+  const obj = {
+    1: <AcceptInvvoiceWorkShop invoice_guid={invoice_guid} />, /// принятие накладйно от цеха
+  };
+
+  const check = action == 0;
 
   return (
-    <div className="viewProdsPage">
-      <NavMenu navText={`Накладная №${codeid}`} />
-      <div className="viewProdsPage__inner">
-        <ViewProds
-          list={listProdEveryInvoice}
-          keys={keys}
-          total_price={total_price}
-        />
-        <a className="lookPdf" href={file}>
-          <SummarizeIcon />
-        </a>
+    <>
+      <div className={`viewProdsPage ${check ? "" : "allViewAction"}`}>
+        <NavMenu navText={`Накладная №${codeid}`} />
+        <div className="viewProdsPage__inner">
+          <ViewProds list={listProdEveryInvoice} keys={keys} />
+          <a className="lookPdf" href={file}>
+            <SummarizeIcon />
+          </a>
+        </div>
       </div>
-    </div>
+      {obj?.[action]}
+    </>
   );
 };
 

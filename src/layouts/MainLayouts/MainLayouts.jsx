@@ -34,11 +34,9 @@ const MainLayouts = () => {
   const objMenu = { 1: <MenuAgents /> };
   /// user_type - 1 agent 2 admin
 
-  const noPadding = user_type == 2 || pathname === "/maps";
-
   return (
     <div className="layouts">
-      <div className={`pages ${noPadding ? "adminInfo" : ""}`}>
+      <div className={`pages`}>
         <Outlet />
       </div>
       {/* {objMenu?.[user_type]} */}

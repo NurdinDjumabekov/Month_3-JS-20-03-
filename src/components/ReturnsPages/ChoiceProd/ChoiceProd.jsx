@@ -102,7 +102,7 @@ const ChoiceProd = ({ invoiceGuid }) => {
               </TableCell>
               <TableCell style={{ width: "50%" }}>Продукт</TableCell>
               <TableCell align="left" style={{ width: "10%" }}>
-                Кг
+                Кол-во
               </TableCell>
               <TableCell align="left" style={{ width: "22%" }}>
                 Цена

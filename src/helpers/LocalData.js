@@ -371,13 +371,6 @@ export const listStatus = [
 export const styleTooltip = { width: 140, height: 140, borderRadius: "50%" };
 
 export const dataCategory = [
-  // {
-  //   codeid: 1,
-  //   name: "Мои заявки",
-  //   link: "main_invoice/accept_prod",
-  //   img: "https://img.freepik.com/free-vector/posts-concept-illustration_114360-112.jpg?w=740&t=st=1710925459~exp=1710926059~hmac=1fceb9efe8e3f24d7d4bcee953232bf181a89b4fc703a7086866134fe73cd5d7",
-  //   pathApi: "main_invoice/accept_prod",
-  // },
   {
     codeid: 1,
     name: "Мои заявки",
@@ -415,17 +408,24 @@ export const dataCategory = [
   },
   {
     codeid: 6,
-    name: "Оплата",
+    name: "Оплата и долги",
     link: "/pay",
     img: "https://img.freepik.com/free-vector/euro-coins-concept-illustration_114360-15485.jpg?t=st=1710925698~exp=1710929298~hmac=4fb3746133437b6b0ca94daa3d06c8c634817a0562bb3e4ac1df5e613f3512bd&w=740",
     pathApi: "/pay",
   },
+  {
+    codeid: 7,
+    name: "Траты",
+    link: "expense",
+    img: "https://img.freepik.com/free-vector/finance-department-employees-are-calculating-expenses-company-s-business_1150-41782.jpg?t=st=1711965120~exp=1711968720~hmac=96a672de3602a7397d6e0b7452abfa17eaa700d42fd08a2a3e244eb154b7bd30&w=1380",
+    pathApi: "expense",
+  },
   // {
-  //   codeid: 3,
-  //   name: "Траты",
-  //   link: "expense",
-  //   img: "https://img.freepik.com/free-vector/finance-department-employees-are-calculating-expenses-company-s-business_1150-41782.jpg?t=st=1711965120~exp=1711968720~hmac=96a672de3602a7397d6e0b7452abfa17eaa700d42fd08a2a3e244eb154b7bd30&w=1380",
-  //   pathApi: "expense",
+  //   codeid: 1,
+  //   name: "Мои заявки",
+  //   link: "main_invoice/accept_prod",
+  //   img: "https://img.freepik.com/free-vector/posts-concept-illustration_114360-112.jpg?w=740&t=st=1710925459~exp=1710926059~hmac=1fceb9efe8e3f24d7d4bcee953232bf181a89b4fc703a7086866134fe73cd5d7",
+  //   pathApi: "main_invoice/accept_prod",
   // },
 ];
 

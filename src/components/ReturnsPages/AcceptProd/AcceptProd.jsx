@@ -153,7 +153,7 @@ const AcceptProd = ({ invoiceGuid }) => {
                 </TableCell>
                 <TableCell style={{ width: "58%" }}>Продукт</TableCell>
                 <TableCell align="left" style={{ width: "14%" }}>
-                  Возврат в кг
+                  Возврат в шт
                 </TableCell>
                 <TableCell align="left" style={{ width: "20%" }}>
                   Цена

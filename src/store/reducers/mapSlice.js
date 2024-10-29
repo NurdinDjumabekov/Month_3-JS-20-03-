@@ -346,13 +346,11 @@ export const getEveryRoutes_TA = createAsyncThunk(
 export const sendCommentInRoute = createAsyncThunk(
   "sendCommentInRoute",
   async function (data, { dispatch, rejectWithValue }) {
-    const { prevNav } = data;
     const url = `${REACT_APP_API_URL}/ta/set_route`;
     try {
       const response = await axiosInstance.put(url, data);
       if (response.status >= 200 && response.status < 300) {
         myAlert("Комментарий успешно отправлен");
-        prevNav();
         return response.data;
       } else {
         throw Error(`Error: ${response.status}`);

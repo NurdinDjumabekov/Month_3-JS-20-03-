@@ -59,21 +59,24 @@ const CameraPage = () => {
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
+
   const handleFileChange = (e) => {
     const files = e?.target?.files;
 
-    console.log(files, e);
+    if (files && files.length > 0) {
+      const formData = new FormData();
+      formData.append("agent_guid", dataSave?.guid);
+      formData.append("point_guid", guid_point);
+      formData.append("route_guid", route_guid);
 
-    const formData = new FormData();
-    formData.append("agent_guid", dataSave?.guid);
-    formData.append("point_guid", guid_point);
-    formData.append("route_guid", route_guid);
+      // Перебор файлов и добавление каждого файла в formData
+      Array.from(files).forEach((file) => {
+        formData.append(`files`, file); // добавляем каждый файл с ключом "files[]"
+      });
 
-    formData.append("files", files);
-    // if (files && files.length > 0) {
-    //   files?.forEach((file) => {});
-    // }
-    dispatch(sendPhotos({ data: formData })).unwrap();
+      // Отправляем данные через dispatch
+      dispatch(sendPhotos({ data: formData }));
+    }
   };
 
   const viewAllPhotos = () => {
@@ -84,7 +87,12 @@ const CameraPage = () => {
     dispatch(getListPhotos(obj));
   };
 
-  const prevNav = () => navigate(-1);
+  const prevNav = () => {
+    navigate("/");
+    setTimeout(() => {
+      navigate("/maps");
+    }, 100);
+  };
 
   return (
     <div className="cameraPage">

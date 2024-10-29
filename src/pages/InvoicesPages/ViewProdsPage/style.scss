@@ -2,9 +2,8 @@
   height: 100%;
 
   &__inner {
-    height: calc(100% - 40px);
-    margin: 60px 0 0 0;
     padding: 0px 0px 15px;
+    height: 100%;
 
     .lookPdf {
       position: fixed;
@@ -25,5 +24,11 @@
         color: grey;
       }
     }
+  }
+}
+
+.allViewAction {
+  .viewProdsPage__inner {
+    padding: 0px 0px 75px;
   }
 }

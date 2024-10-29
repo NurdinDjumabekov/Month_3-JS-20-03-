@@ -27,7 +27,7 @@ const ListAcceptInvoiceSI = ({ route_guid, guid_point }) => {
   );
   const { listSendOrdersSI } = useSelector((state) => state.invoiceSlice);
 
-  const editProdInInvoice = () => {
+  const editProdInInvoice = async () => {
     const forCreate = { listProdsSI: listSendOrdersSI, comment: "" };
     const forSendTT = {
       invoice_guid,
@@ -41,8 +41,17 @@ const ListAcceptInvoiceSI = ({ route_guid, guid_point }) => {
       navigate,
     };
     const invoiceInfo = { invoice_guid, action: 2, route_guid }; //// редактирование товара (action: 2)
-    dispatch(createEditProdInInvoiceSI({ forCreate, invoiceInfo, forSendTT }));
+
+    const send = { forCreate, invoiceInfo, forSendTT };
+    const res = await dispatch(createEditProdInInvoiceSI(send)).unwrap();
     ///// добавление и редактирование товаров в заявке
+
+    if (res?.result == 1) {
+      navigate("/");
+      setTimeout(() => {
+        navigate("/maps");
+      }, 100);
+    }
   };
 
   return (

@@ -44,8 +44,9 @@ const ListInvoiceAcceptReturn = ({ invoice_guid }) => {
     const data = { invoice_guid, status: -1 };
     // по умолчанию 0, если удаление -1, 1 - потвержден ТА, 2 подтвержден Админом
     dispatch(changeStatusInvoiceReturn(data));
-    navigate(-1);
     myAlert("Успешно");
+    navigate("/");
+    navigate("/maps");
   };
 
   const check = checkEditInputs(listSendOrders); /// если уже были изменения то возвращaть true

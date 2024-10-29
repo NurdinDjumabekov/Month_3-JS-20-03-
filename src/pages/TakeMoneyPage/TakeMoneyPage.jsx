@@ -38,12 +38,14 @@ const TakeMoneyPage = () => {
   ///// type - 4 для отправки комментарий
 
   const { dataPay } = useSelector((state) => state.paySlice);
-  const { dataSave } = useSelector((state) => state.saveDataSlice);
   const { activeActions_TA } = useSelector((state) => state.mapSlice);
 
   const [comment, setComment] = useState("");
 
-  const prevNav = () => navigate(-1);
+  const prevNav = () => {
+    navigate("/");
+    navigate("/maps");
+  };
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -101,12 +103,15 @@ const TakeMoneyPage = () => {
     );
   }
 
-  const sendComment = () => {
-    getMyGeo().then(({ lat, lon }) => {
-      // dispatch(sendCommentInRoute({ comment, lat, lon, route_guid, prevNav }));
-      dispatch(sendCommentInRoute({ comment, route_guid, prevNav })); /// добавляю коммент в маршрут
+  const sendComment = async () => {
+    const send = { comment, route_guid, prevNav };
+    const res = await dispatch(sendCommentInRoute(send)).unwrap(); /// добавляю коммент в маршрут
+
+    if (res?.result == 1) {
       dispatch(setActiveActions_TA({ ...activeActions_TA, comment })); /// подсталвяю добавленный коммент в активный маршрут
-    });
+      prevNav();
+    }
+    // getMyGeo().then(({ lat, lon }) => {});
   };
 
   // 4 для отправки комментарий

@@ -8,6 +8,7 @@ const { REACT_APP_API_URL } = process.env;
 const initialState = {
   debtEveryTA: { vozvrat: [], dolg: [] }, /// долг каждого агента
   dataPay: { comment: "", amount: "", user_guid_to: "", user_type_to: "" },
+  listPaysTA: [], /// список оплат ТА
 };
 
 ////// getEveryDebt - get список долгов каждого ТА
@@ -51,6 +52,23 @@ export const sendPayFN = createAsyncThunk(
   }
 );
 
+////// getListPayTA - get список оплат ТА
+export const getListPayTA = createAsyncThunk(
+  "getListPayTA",
+  async function ({ agent_guid }, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/ta_transaction?agent_guid=${agent_guid}`;
+    try {
+      const response = await axiosInstance(url);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 const paySlice = createSlice({
   name: "paySlice",
   initialState,
@@ -83,6 +101,19 @@ const paySlice = createSlice({
       state.preloader = false;
     });
     builder.addCase(getEveryDebt.pending, (state, action) => {
+      state.preloader = true;
+    });
+
+    //////////////// getListPayTA
+    builder.addCase(getListPayTA.fulfilled, (state, action) => {
+      state.preloader = false;
+      state.listPaysTA = action.payload;
+    });
+    builder.addCase(getListPayTA.rejected, (state, action) => {
+      state.error = action.payload;
+      state.preloader = false;
+    });
+    builder.addCase(getListPayTA.pending, (state, action) => {
       state.preloader = true;
     });
   },

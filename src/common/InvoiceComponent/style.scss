@@ -1,45 +1,29 @@
-.acceptInvoicePage {
-  height: calc(100% - 55px);
+.invoiceParent {
+  background-color: rgba(162, 178, 238, 0.102);
+  min-width: 100%;
+  padding: 10px 20px;
+  border-bottom: 1px solid rgba(47, 71, 190, 0.287);
   display: flex;
-  flex-direction: column;
-  padding: 5px 0 0 0;
-  position: relative;
-  margin: 55px 0 0 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 
-  .indexNums {
-    font-size: 18px;
-    font-weight: 600;
-    color: rgba(47, 71, 190, 0.672);
-    border: 1px solid rgba(47, 71, 190, 0.672);
-    background-color: #d4dfee;
-    padding: 3px;
-    padding-left: 8px;
-    padding-right: 8px;
-    line-height: 25px;
-    border-radius: 5px;
-  }
-
-  > button:first-child {
-    border-top: 1px solid rgba(47, 71, 190, 0.287);
-  }
-
-  .invoiceParent {
-    background-color: rgba(162, 178, 238, 0.102);
-    min-width: 100%;
-    padding: 10px 12px;
-    border-bottom: 1px solid rgba(47, 71, 190, 0.287);
+  &__inner {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 58%;
+    gap: 5px;
 
-    &__inner {
+    .mainData {
       display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      width: 58%;
-      gap: 5px;
+      flex-direction: row;
+      gap: 10px;
     }
+  }
+
+  &:first-child {
+    border-top: 1px solid rgba(47, 71, 190, 0.287);
   }
 
   .titleDate {
@@ -64,14 +48,7 @@
     text-overflow: ellipsis;
   }
 
-  .totalPrice {
-    font-size: 16px;
-    font-weight: 400;
-    color: #222;
-  }
-
   .comments {
-    // max-width: 230px;
     display: -webkit-box; /* Для поддержки старых версий Safari */
     -webkit-box-orient: vertical; /* Определяет направление текста */
     -webkit-line-clamp: 4; /* Максимум 4 строки */
@@ -84,10 +61,10 @@
     padding: 0 0 0 5px;
   }
 
-  .mainData {
+  .statusSum {
     display: flex;
-    flex-direction: row;
-    gap: 10px;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .mainDataArrow {
@@ -121,5 +98,10 @@
       }
     }
   }
-}
 
+  .totalPrice {
+    font-size: 16px;
+    font-weight: 400;
+    color: #222;
+  }
+}

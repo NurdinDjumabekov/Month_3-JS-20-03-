@@ -1,17 +1,32 @@
-import React, { useEffect } from "react";
-import NavMenu from "../../common/NavMenu/NavMenu";
-import { getTasks } from "../../store/reducers/pointsSlice";
+/////// hooks
+import { useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import ArrowNav from "@mui/icons-material/ArrowForwardIosSharp";
+
+///// fns
+import {
+  addFileInTasks,
+  getTasks,
+  updateTasks,
+} from "../../store/reducers/pointsSlice";
 
 ////// style
 import "./style.scss";
-import { useState } from "react";
 
-import { BottomSheet } from "react-spring-bottom-sheet";
+////// components
+import { useDropzone } from "react-dropzone";
+import NavMenu from "../../common/NavMenu/NavMenu";
 import SendInput from "../../common/SendInput/SendInput";
 import Modals from "../../components/Modals/Modals";
+
+////// icons
+import ArrowNav from "@mui/icons-material/ArrowForwardIosSharp";
+import AddIcon from "../../assets/MyIcons/AddIcon";
+import DeleteIcon from "../../assets/MyIcons/DeleteIcon";
+
+/////// helpers
+import { myAlert } from "../../helpers/MyAlert";
 
 const TasksPage = () => {
   const dispatch = useDispatch();
@@ -21,21 +36,85 @@ const TasksPage = () => {
 
   const { route_guid, guid_point } = useParams();
 
-  const [active, setActive] = useState({});
-  const [comm, setComm] = useState("");
+  const [data, setData] = useState({});
+  const [active, setActive] = useState({ comm: "", filesAgent: [] });
 
   useEffect(() => {
     dispatch(getTasks({ agent_guid: dataSave?.guid, point_guid: guid_point }));
   }, []);
 
+  const moreInfo = (item) => {
+    if (item?.status !== 2) {
+      setData(item);
+    } else {
+      myAlert("Задание уже выполнено");
+    }
+  };
+
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      setActive({
+        ...active,
+        filesAgent: [...active.filesAgent, ...acceptedFiles],
+      });
+    },
+    [active, setActive]
+  );
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    multiple: true,
+  });
+
+  const delFileLocal = (fileToRemove) => {
+    const filesAgent = active?.filesAgent?.filter(
+      (file) => file !== fileToRemove
+    );
+    setActive({ ...active, filesAgent });
+  };
+
+  const saveDataTasks = () => {
+    if (!!!active.comm) return myAlert("Введите текст", "error");
+
+    const send = { task_guid: data?.guid, comment: active?.comm };
+
+    dispatch(updateTasks({ ...send, status: 1 }));
+
+    setTimeout(async () => {
+      const res = await dispatch(updateTasks({ ...send, status: 2 })).unwrap();
+      if (!!res?.result) {
+        setData({});
+        setActive({ comm: "", filesAgent: [] });
+
+        const formData = new FormData();
+        formData.append("user_guid", dataSave?.guid);
+        formData.append("agent_guid", dataSave?.guid);
+        formData.append("task_guid", data?.guid);
+        formData.append("user_type", dataSave?.user_type);
+        active?.filesAgent?.forEach((file) => {
+          formData.append(`files`, file);
+        });
+
+        const resFile = await dispatch(
+          addFileInTasks({ data: formData })
+        ).unwrap();
+
+        if (!!resFile?.result) {
+          dispatch(
+            getTasks({ agent_guid: dataSave?.guid, point_guid: guid_point })
+          );
+        }
+      }
+    }, 2000);
+  };
+
   return (
     <>
       <NavMenu navText={"Задания от руководителя"} />
-
       <div className="tasksPage">
         <div className="tasksPage__lists">
           {listsTasks?.map((item, index) => (
-            <button className="invoiceParent" onClick={() => setActive(item)}>
+            <button className="invoiceParent" onClick={() => moreInfo(item)}>
               <div className="invoiceParent__inner">
                 <div className="mainData">
                   <p className="indexNums">{index + 1}</p>
@@ -53,9 +132,7 @@ const TasksPage = () => {
               <div className="mainDataArrow">
                 <div>
                   <p>{item?.status_name}</p>
-                  <span className="totalPrice">
-                    {/* {roundingNum(item?.total_price, 2)} сом */}
-                  </span>
+                  <span className="totalPrice"> ...</span>
                 </div>
                 <div className="arrows">
                   <ArrowNav sx={{ color: "rgba(162, 178, 238, 0.839)" }} />
@@ -67,71 +144,63 @@ const TasksPage = () => {
       </div>
 
       <Modals
+        openModal={!!data?.codeid}
+        closeModal={() => setData({})}
+        title={"Информация"}
+      >
+        <div className="listProdCRUD_SI tasksActions">
+          <p>{data?.comment}</p>
+          {data?.filesUser?.map((i, index) => (
+            <div className="files">
+              <a href={i?.file_path} target="_blank">
+                Файл {index + 1}
+              </a>
+            </div>
+          ))}
+          <button className="send" onClick={() => setActive(data)}>
+            <AddIcon width={16} height={16} color={"#fff"} />
+            <p>Выполнить задание</p>
+          </button>
+        </div>
+      </Modals>
+
+      <Modals
         openModal={!!active?.codeid}
         closeModal={() => setActive({})}
-        title={"Оплата"}
+        title={"Выполнить задания от руководителя"}
       >
-        <div className="listProdCRUD_SI ">
+        <div className="listProdCRUD_SI tasksActions">
           <SendInput
-            value={comm}
-            onChange={(e) => setComm(e.target.value)}
+            value={active?.comm}
+            onChange={(e) => setActive({ ...active, comm: e.target.value })}
             title={"Ваш комментарий"}
             name={"comment"}
             type="text"
             typeInput="textarea"
           />
-          {/* <TableContainer
-            component={Paper}
-            sx={{ maxHeight: "100%" }}
-            className="scroll_table standartTable"
-          >
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  <TableCell style={{ width: "46%" }}>Продукт</TableCell>
-                  <TableCell align="left" style={{ width: "18%" }}>
-                    Кг
-                  </TableCell>
-                  <TableCell align="left" style={{ width: "18%" }}>
-                    Шт
-                  </TableCell>
-                  <TableCell align="left" style={{ width: "18%" }}>
-                    Цена
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {listProdsReturn?.map((row) => (
-                  <TableRow key={row?.product_guid}>
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      style={{ width: "46%" }}
-                    >
-                      {row?.product_name}
-                    </TableCell>
-                    <TableCell align="left" style={{ width: "18%" }}>
-                      {row?.amount}
-                    </TableCell>
-                    <TableCell align="left" style={{ width: "18%" }}>
-                      {row?.amount_per}
-                    </TableCell>
-                    <TableCell align="left" style={{ width: "18%" }}>
-                      {row?.price}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer> */}
 
-          <SendInput
-            value={comm}
-            onChange={(e) => setComm(e.target.value)}
-            // title={"Ваш комментарий"}
-            name={"comment"}
-            type="file"
-          />
+          <div className="inputSend">
+            <div {...getRootProps()} className="dropzone">
+              <input {...getInputProps()} />
+              <p>Перетащите сюда файлы или кликните для выбора</p>
+            </div>
+            <ul>
+              {active?.filesAgent?.map((file, index) => (
+                <li key={index}>
+                  <p>{file?.name}</p>
+                  <button onClick={() => delFileLocal(file)}>
+                    {/* удаление файла локально */}
+                    <DeleteIcon width={19} height={19} color={"red"} />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <button className="send" onClick={saveDataTasks}>
+            <AddIcon width={16} height={16} color={"#fff"} />
+            <p>Cохранить</p>
+          </button>
         </div>
       </Modals>
     </>
@@ -139,3 +208,4 @@ const TasksPage = () => {
 };
 
 export default TasksPage;
+//

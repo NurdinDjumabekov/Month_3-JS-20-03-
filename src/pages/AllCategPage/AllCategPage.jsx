@@ -48,17 +48,6 @@ const AllCategPage = () => {
       <NavMenu>
         <UserInfo /> <LogOut />
       </NavMenu>
-      <div className="parentBlock">
-        <div className="balance" onClick={goPage}>
-          <div>
-            <div className="balance__inner">
-              <p>Баланс</p>
-              <div></div>
-            </div>
-          </div>
-          <p className="balance__history">История</p>
-        </div>
-      </div>
 
       <div className="allCateg">
         {dataCategory?.map((item, index) => (

@@ -7,9 +7,9 @@ import { useNavigate } from "react-router-dom";
 import NavMenu from "../../../common/NavMenu/NavMenu";
 
 /////// fns
+import { getInvoiceReturn } from "../../../store/reducers/invoiceSlice";
 
 ////// helpers
-import { listInvReturn } from "../../../helpers/LocalData";
 import { roundingNum } from "../../../helpers/totals";
 
 ////// style
@@ -17,7 +17,8 @@ import "./style.scss";
 
 ////// icons
 import AddIcon from "../../../assets/MyIcons/AddIcon";
-import { getInvoiceReturn } from "../../../store/reducers/invoiceSlice";
+import ChecklistRtlIcon from "@mui/icons-material/ChecklistRtl";
+import SummarizeIcon from "@mui/icons-material/Summarize";
 
 const ReturnHistoryPage = () => {
   const dispatch = useDispatch();
@@ -44,7 +45,7 @@ const ReturnHistoryPage = () => {
   };
 
   const clickInvoice = (item) => {
-    navigate(`/return/prods`, { state: item });
+    navigate(`/invoice/view`, { state: item });
   };
 
   const createReturnForAdmin = () => {
@@ -52,10 +53,36 @@ const ReturnHistoryPage = () => {
     navigate(`/return/create`, { state: obj });
   };
 
+  const listNav = [
+    {
+      text: "Возврат в цех",
+      icon: <SummarizeIcon sx={{ width: 20, height: 20 }} />,
+      color: "#805dca",
+      url: "/return/send_invoice",
+    },
+    {
+      text: "Принятые",
+      icon: <ChecklistRtlIcon sx={{ width: 20, height: 20 }} />,
+      color: "#4361ee",
+      url: "/return/accept_invoice",
+    },
+  ];
+
   return (
     <>
       <NavMenu navText={"История возврата"} />
       <div className="returnHistoryPage">
+        <div className="navAction invoices invoicesReturn">
+          {listNav?.map((item) => (
+            <button
+              style={{ background: item?.color }}
+              onClick={() => navigate(item?.url)}
+            >
+              {item?.icon}
+              <p>{item?.text}</p>
+            </button>
+          ))}
+        </div>
         <div className="listBlock">
           {listInvoiceReturn?.map((item, index) => (
             <button

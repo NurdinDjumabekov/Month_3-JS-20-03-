@@ -8,7 +8,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: calc(100% - 60px) !important;
+    height: calc(100% - 110px) !important;
     overflow-y: scroll;
     padding: 0 0 20px 0;
 
@@ -143,4 +143,8 @@
       font-size: 16px;
     }
   }
+}
+
+.invoicesReturn {
+  margin: 5px 0 !important;
 }

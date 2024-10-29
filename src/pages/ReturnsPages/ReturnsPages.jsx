@@ -13,6 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import ReturnHistoryPage from "./ReturnHistoryPage/ReturnHistoryPage";
 import ReturnProdsPage from "./ReturnProdsPage/ReturnProdsPage";
 import ReturnCreatePage from "./ReturnCreatePage/ReturnCreatePage";
+import AcceptInvoiceReturnPage from "./AcceptInvoiceReturnPage/AcceptInvoicePage";
+import SenderInvoiceReturnPage from "./SenderInvoiceReturnPage/SenderInvoiceReturnPage";
 
 const ReturnsPages = () => {
   const dispatch = useDispatch();
@@ -23,8 +25,10 @@ const ReturnsPages = () => {
       <Routes>
         <Route path="/" element={<ReturnsPages />} />
         <Route path="history" element={<ReturnHistoryPage />} />
-        <Route path="prods" element={<ReturnProdsPage />} />
         <Route path="create" element={<ReturnCreatePage />} />
+        <Route path="send_invoice" element={<SenderInvoiceReturnPage />} />
+        <Route path="accept_invoice" element={<AcceptInvoiceReturnPage />} />
+        {/* <Route path="prods" element={<ReturnProdsPage />} /> delete */}
       </Routes>
     </>
   );

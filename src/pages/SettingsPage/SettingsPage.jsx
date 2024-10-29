@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   clearDataPay,
   getEveryDebt,
+  getListPayTA,
   sendPayFN,
   setDataPay,
 } from "../../store/reducers/paySlice";
@@ -38,10 +39,11 @@ const SettingsPage = () => {
 
   const { guid } = useSelector((state) => state.saveDataSlice?.dataSave);
   const { debtEveryTA, dataPay } = useSelector((state) => state.paySlice);
+  const { listPaysTA } = useSelector((state) => state.paySlice);
 
   useEffect(() => {
     dispatch(getWorkPlanEveryTA({ guid }));
-    dispatch(getEveryDebt({ agent_guid: guid }));
+    dispatch(getListPayTA({ agent_guid: guid }));
     // dispatch(
     //   setListWorkPlan([
     //     { name: "Осталось выполнить", value: 95 },
@@ -51,8 +53,6 @@ const SettingsPage = () => {
     dispatch(clearDataPay()); /// clear поля ввода данных для оплаты
     dispatch(getPointsRouteAgent({ guid, first: false }));
   }, []);
-
-  const length = debtEveryTA?.vozvrat?.length == 0;
 
   const listNav = [
     {
@@ -79,7 +79,7 @@ const SettingsPage = () => {
     }
   };
 
-  console.log(debtEveryTA, "debtEveryTA");
+  const length = listPaysTA?.length == 0;
 
   return (
     <>
@@ -104,11 +104,11 @@ const SettingsPage = () => {
             </div>
           ) : (
             <div className="payCredit__list">
-              {debtEveryTA?.vozvrat?.map((item) => (
+              {listPaysTA?.map((item) => (
                 <div>
                   <div className="mainData">
                     <p>{item?.date}</p>
-                    <span>{item?.comment || "..."}</span>
+                    <span>{item?.user_to || "..."}</span>
                   </div>
                   <div className="status">
                     <p>Успешно</p>

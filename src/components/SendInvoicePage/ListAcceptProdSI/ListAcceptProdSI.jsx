@@ -48,6 +48,8 @@ const ListAcceptProdSI = ({ editProdInInvoice }) => {
     ///// удаление твоара с накладной через запрос
   };
 
+  console.log(listSendOrdersSI);
+
   return (
     <div className="listProdCRUD_SI acceptSI">
       <TableContainer
@@ -118,24 +120,21 @@ const ListAcceptProdSI = ({ editProdInInvoice }) => {
                 Итого
               </TableCell>
               <TableCell align="left" className="footerTable">
-                {totalSum(listSendOrdersSI, "count", "price")} сом
+                {listSendOrdersSI?.[0]?.total_price} сом
               </TableCell>
               <TableCell
                 colSpan={2}
                 align="left"
                 style={{ fontWeight: "bold" }}
               >
-                {sumCountsFN(listSendOrdersSI, "count")} шт
+                {listSendOrdersSI?.[0]?.total_count} шт
               </TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
 
-      <button
-        className="saveAction mobileBtn"
-        onClick={() => editProdInInvoice()}
-      >
+      <button className="saveAction mobileBtn" onClick={editProdInInvoice}>
         <LibraryAddIcon sx={{ color: "#fff" }} />
         <p>Отпустить накладную</p>
       </button>

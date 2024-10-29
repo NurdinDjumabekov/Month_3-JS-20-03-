@@ -1,7 +1,12 @@
 .expensePage {
   padding: 50px 0 0 0;
+  height: 100%;
 
   &__inner {
+    height: calc(100% - 20px);
+    overflow-y: scroll;
+    margin: 5px 0 0 0;
+
     .list {
       padding: 0px 8px;
 
@@ -43,6 +48,38 @@
           }
         }
       }
+    }
+  }
+
+  .createExpense {
+    position: fixed;
+    left: 50%;
+    bottom: 15px;
+    transform: translateX(-50%);
+    width: 95%;
+    height: 45px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #4361ee;
+
+    p {
+      color: #fff;
+      font-size: 16px;
+    }
+  }
+}
+.createExpense {
+  .sendData {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    p {
+      font-size: 16px;
     }
   }
 }

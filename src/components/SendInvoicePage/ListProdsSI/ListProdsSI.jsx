@@ -99,13 +99,13 @@ const ListProdsSI = () => {
                   style={{ width: "15%" }}
                   onClick={() => decreaseCount(row)}
                 >
-                  {row?.amount} кг
+                  {row?.amount} шт
                 </TableCell>
                 <TableCell align="left" style={{ width: "10%" }}>
                   <input
                     type="text"
                     onChange={(e) => onChangeCount(e.target.value, row)}
-                    name="counts" 
+                    name="counts"
                     value={row?.count}
                     maxLength={10}
                     className="counts"

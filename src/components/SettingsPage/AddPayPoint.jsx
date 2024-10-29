@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 ////// fns
 import {
   clearDataPay,
+  getListPayTA,
   sendPayFN,
   setDataPay,
 } from "../../store/reducers/paySlice";
@@ -28,8 +29,9 @@ const AddPayPoint = ({ viewApp, setViewApp }) => {
 
   const { dataPay } = useSelector((state) => state.paySlice);
   const { listPointsEveryTA } = useSelector((state) => state.mapSlice);
+  const { guid } = useSelector((state) => state.saveDataSlice?.dataSave);
 
-  const sendPayForAdmin = () => {
+  const sendPayForAdmin = async () => {
     if (!!!dataPay?.amount) {
       return myAlert("Введите сумму", "error");
     }
@@ -42,10 +44,14 @@ const AddPayPoint = ({ viewApp, setViewApp }) => {
       user_guid_to: "B85094A9-D70A-46AB-A724-5F3D7A506B37",
       user_type_to: "2", /// данные админа
     };
-    dispatch(sendPayFN(data));
+    const result = await dispatch(sendPayFN(data)).unwrap();
+    if (!!result) {
+      dispatch(getListPayTA({ agent_guid: guid }));
+      dispatch(clearDataPay());
+    }
   };
 
-  const sendPayForTT = () => {
+  const sendPayForTT = async () => {
     if (!!!dataPay?.amount) {
       return myAlert("Введите сумму", "error");
     }
@@ -60,8 +66,11 @@ const AddPayPoint = ({ viewApp, setViewApp }) => {
       user_guid_to: dataPay?.point?.value,
       user_type_to: "4", /// данные ТТ
     };
-    dispatch(sendPayFN(data));
-    setViewApp(false);
+    const result = await dispatch(sendPayFN(data)).unwrap();
+    if (!!result) {
+      dispatch(getListPayTA({ agent_guid: guid }));
+      setViewApp(false);
+    }
   };
 
   const onChange = (e) => {
@@ -148,7 +157,7 @@ const AddPayPoint = ({ viewApp, setViewApp }) => {
             />
 
             <button className="sendData" onClick={sendPayForTT}>
-              Произвести оплату
+              Принять оплату
             </button>
           </div>
         </Modals>

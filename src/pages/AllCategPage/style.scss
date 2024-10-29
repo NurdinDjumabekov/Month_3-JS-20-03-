@@ -5,63 +5,6 @@
   justify-content: space-between;
 }
 
-.parentBlock {
-  min-width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 15px 10px;
-
-  .balance {
-    width: 100%;
-    margin: 0 auto 10px auto;
-    padding: 10px 15px;
-    background-color: rgba(47, 71, 190, 0.591);
-    border-radius: 8px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-
-    &__inner {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 5px;
-
-      > div {
-        border-top: 3px solid #fff;
-        border-right: 3px solid #fff;
-        height: 10px;
-        width: 10px;
-        border-radius: 3px;
-        transform: rotate(45deg);
-        margin-right: 20px;
-      }
-
-      p {
-        line-height: 18px;
-        font-weight: 500;
-        color: #fff;
-        font-size: 17px;
-      }
-    }
-
-    &__num {
-      font-weight: 500;
-      color: #fff;
-      font-size: 16px;
-      margin-top: 8px;
-    }
-
-    &__history {
-      color: #fff;
-      font-size: 16px;
-      line-height: 20px;
-    }
-  }
-}
-
 .allCateg {
   min-width: 100%;
   display: flex;
@@ -69,7 +12,11 @@
   justify-content: center;
   align-items: center;
   gap: 8px 8px;
-  padding: 0 0 30px 0;
+  // background: red;
+  height: 100%;
+  overflow-y: scroll;
+  // margin: 55px 0 0 0;
+  padding: 10px 3px;
 
   .parentCateg {
     width: 45%;
@@ -108,7 +55,7 @@
   .textTitle {
     margin: 0;
     padding: 0;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 600;
     padding: 5px 10px;
     background-color: rgba(199, 210, 254, 0.25);
