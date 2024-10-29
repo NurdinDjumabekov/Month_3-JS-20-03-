@@ -28,6 +28,7 @@ import TasksPage from "../pages/TasksPage/TasksPage";
 import InvoicesPages from "../pages/InvoicesPages/InvoicesPages";
 import ReturnsPages from "../pages/ReturnsPages/ReturnsPages";
 import ExpensePage from "../pages/ExpensePage/ExpensePage";
+import ApplicationsPages from "../pages/ApplicationsPages/ApplicationsPages";
 
 const MainRoutes = () => {
   const dispatch = useDispatch();
@@ -49,15 +50,15 @@ const MainRoutes = () => {
         <>
           <Route element={<MainLayouts />}>
             <Route path="/" element={<AllCategPage />} />
-            <Route path="/main" element={<MainPage />} />
+            <Route path="/app/*" element={<ApplicationsPages />} />
             <Route path="/invoice/*" element={<InvoicesPages />} />
+            <Route path="/return/*" element={<ReturnsPages />} />
 
             <Route path="/leftovers" element={<LeftoversPage />} />
             <Route path="/camera" element={<CameraPage />} />
             <Route path="/maps" element={<MapsPage />} />
             <Route path="/create_points" element={<AddPointsPage />} />
             <Route path="/add_points_route" element={<AddPointInRoutePage />} />
-            <Route path="/return/*" element={<ReturnsPages />} />
             <Route path="/pay" element={<SettingsPage />} />
             <Route path="/expense" element={<ExpensePage />} />
           </Route>

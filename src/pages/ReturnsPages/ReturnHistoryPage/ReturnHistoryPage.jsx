@@ -53,36 +53,10 @@ const ReturnHistoryPage = () => {
     navigate(`/return/create`, { state: obj });
   };
 
-  const listNav = [
-    {
-      text: "Возврат в цех",
-      icon: <SummarizeIcon sx={{ width: 20, height: 20 }} />,
-      color: "#805dca",
-      url: "/return/send_invoice",
-    },
-    {
-      text: "Принятые",
-      icon: <ChecklistRtlIcon sx={{ width: 20, height: 20 }} />,
-      color: "#4361ee",
-      url: "/return/accept_invoice",
-    },
-  ];
-
   return (
     <>
       <NavMenu navText={"История возврата"} />
       <div className="returnHistoryPage">
-        <div className="navAction invoices invoicesReturn">
-          {listNav?.map((item) => (
-            <button
-              style={{ background: item?.color }}
-              onClick={() => navigate(item?.url)}
-            >
-              {item?.icon}
-              <p>{item?.text}</p>
-            </button>
-          ))}
-        </div>
         <div className="listBlock">
           {listInvoiceReturn?.map((item, index) => (
             <button

@@ -9,15 +9,14 @@ import { styled } from "@mui/styles";
 /////// img
 
 ////// components
-import { Tooltip, tooltipClasses } from "@mui/material";
+import { Tooltip } from "@mui/material";
 
 ////// helpers
 import { objStatusOrders } from "../../../helpers/objs";
-import { texts } from "../../../helpers/LocalData";
 
 /////// fns
 import { setInvoiceInfo } from "../../../store/reducers/mainSlice";
-import { setCheckInvoice } from "../../../store/reducers/mainSlice";
+import {} from "../../../store/reducers/mainSlice";
 import { getListProdsInInvoice } from "../../../store/reducers/mainSlice";
 
 ////// icons

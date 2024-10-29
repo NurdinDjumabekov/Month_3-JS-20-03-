@@ -132,6 +132,7 @@ const ListInvoice = () => {
                 value={activeCategs}
               />
             </div>
+
             <div className="myInputs">
               <h6>Поиск товаров </h6>
               <input

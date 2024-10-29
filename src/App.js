@@ -1,5 +1,7 @@
 import MainRoutes from "./routers/MainRoutes";
 import "react-toastify/dist/ReactToastify.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 /////// hooks
 import React, { useEffect } from "react";

@@ -11,8 +11,6 @@ import interactionPlugin from "@fullcalendar/interaction";
 import ruLocale from "@fullcalendar/core/locales/ru";
 import ModalOrderCRUD from "../../components/MainPage/Modals/ModalOrderCRUD/ModalOrderCRUD";
 import EveryDateInfo from "../../components/MainPage/EveryDateInfo/EveryDateInfo";
-import ViewRouter from "../../Modals/ViewRouter/ViewRouter";
-import ModalPayTA from "../../Modals/MainPage/ModalPayTA/ModalPayTA";
 import NavMenu from "../../common/NavMenu/NavMenu";
 
 ////// helpers
@@ -25,7 +23,7 @@ import { listStatusOrders } from "../../helpers/objs";
 import { checkDates } from "../../helpers/validations";
 
 ////// fns
-import { editInvoice, setInvoiceInfo } from "../../store/reducers/mainSlice";
+import { editInvoice } from "../../store/reducers/mainSlice";
 import { setActiveDate } from "../../store/reducers/mainSlice";
 import { getListOrders } from "../../store/reducers/mainSlice";
 import { createInvoice } from "../../store/reducers/mainSlice";
@@ -41,14 +39,12 @@ const MainPage = () => {
 
   const calendarRef = useRef(null);
 
-  const { user_type, fio } = useSelector(
-    (state) => state.saveDataSlice?.dataSave
-  );
+  const { user_type } = useSelector((state) => state.saveDataSlice?.dataSave);
   const { listOrders, activeDate } = useSelector((state) => state.mainSlice);
   const { listTitleOrders } = useSelector((state) => state.mainSlice);
   const { listTA } = useSelector((state) => state.mainSlice);
 
-  const addTodo = (selectInfo) => {
+  const addTodo = async (selectInfo) => {
     ////// from date
     const date_from_mob = transformDateTime(selectInfo?.date);
     const date_from_desc = transformDateTime(selectInfo?.start);
@@ -78,14 +74,17 @@ const MainPage = () => {
       }
 
       /// создаю заявку для цеха от имени ТА
-      dispatch(createInvoice({ date_from, date_to }));
-    }
-    if (user_type == 2) {
-      /// создаю заявку для цеха от имени ТА выбрав через админку
-      /// временно создам для открытия модалки
-      const obj = { date_from, date_to, guid: "временно создан", action: 1 };
-      dispatch(setInvoiceInfo(obj)); //// 1 - создание
-      //// guidShadow - только для админа
+      const res = await dispatch(
+        createInvoice({ date_from, date_to })
+      ).unwrap();
+
+      if (!!res?.result) {
+        const invoice_guid = res?.invoice_guid;
+
+        const obj = { action: 1, date_from, date_to, invoice_guid };
+        navigate("/app/crud_invoice", { state: obj });
+        // 1 - создание
+      }
     }
   };
 
@@ -161,8 +160,6 @@ const MainPage = () => {
     dispatch(editInvoice({ data, agents_guid, activeDate })); // Редактирование заявок
   };
 
-  // const objType = { 2: <MenuLeft /> }; //// только для админа
-
   return (
     <>
       <NavMenu navText={"Список заявок"} />
@@ -216,9 +213,7 @@ const MainPage = () => {
             </div>
           </div>
         </div>
-        {/* <ModalOrderCRUD /> */}
-        <ModalPayTA />
-        <ViewRouter />
+        <ModalOrderCRUD />
       </div>
     </>
   );

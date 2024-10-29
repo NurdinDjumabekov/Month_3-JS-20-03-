@@ -109,14 +109,6 @@ const ModalOrderCRUD = () => {
             </Toolbar>
           </AppBar>
         </div>
-        {/* ///// для desktopa */}
-        <div
-          className={`listsCRUD ${lengthList ? "viewFirstList" : ""} desctop`}
-        >
-          <ListInvoice />
-          <ListAcceptInvoice />
-        </div>
-
         {/* ///// для mobile */}
         <div
           className={`listsCRUD ${lengthList ? "viewFirstList" : ""} mobile`}

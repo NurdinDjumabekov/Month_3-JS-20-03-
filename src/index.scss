@@ -1,3 +1,5 @@
+
+
 * {
   margin: 0;
   padding: 0;
@@ -129,7 +131,7 @@ button {
     thead {
       tr {
         th:first-child {
-          padding: 12px 0 12px 0px !important;
+          padding: 12px 0 12px 3px !important;
         }
         th {
           padding: 8px 8px 5px !important;
@@ -149,7 +151,7 @@ button {
     tbody {
       tr {
         th:first-child {
-          padding: 5px 0 5px 0px !important;
+          padding: 5px 0 5px 3px !important;
         }
 
         td,

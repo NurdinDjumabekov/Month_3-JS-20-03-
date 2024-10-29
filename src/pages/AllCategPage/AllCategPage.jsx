@@ -33,8 +33,6 @@ const AllCategPage = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  const goPage = () => navigate("/pay/history");
-
   const clickCateg = (obj) => {
     navigate(`${obj?.link}`, {
       id: obj?.codeid,

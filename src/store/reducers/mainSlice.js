@@ -279,9 +279,7 @@ export const createInvoice = createAsyncThunk(
     try {
       const response = await axiosInstance.post(url, data);
       if (response.status >= 200 && response.status < 300) {
-        const guid = response?.data?.invoice_guid;
-        const obj = { ...data, guid, action: 1 };
-        dispatch(setInvoiceInfo(obj)); // 1 - создание
+        return response?.data;
       } else {
         throw Error(`Error: ${response.status}`);
       }

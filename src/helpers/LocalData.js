@@ -374,9 +374,9 @@ export const dataCategory = [
   {
     codeid: 1,
     name: "Мои заявки",
-    link: "/main",
+    link: "/app/main",
     img: "https://img.freepik.com/premium-vector/budget-planning-flat-illustration-is-scalable-and-easy-to-use_203633-7957.jpg?w=900",
-    pathApi: "/main",
+    pathApi: "/app/main",
   },
   {
     codeid: 2,
@@ -394,16 +394,16 @@ export const dataCategory = [
   },
   {
     codeid: 4,
-    name: "Маршруты",
+    name: "Торговые точки",
     link: "/maps",
-    img: "https://img.freepik.com/free-vector/balance-sheet-cartoon-web-icon-accounting-process-finance-analyst-calculating-tools-financial-consulting-idea-bookkeeping-service_335657-2313.jpg?t=st=1711965019~exp=1711968619~hmac=635d5b94c27cf917e8532dfd722c44aba43db051d262065031cdac53408da1ab&w=900",
+    img: "https://img.freepik.com/premium-vector/teamwork-web-concept-with-character-scene-man-woman-work-together-construct-cubes-developing-project-people-situation-flat-design-vector-illustration-social-media-marketing-material_9209-12505.jpg?w=1380",
     pathApi: "/maps",
   },
   {
     codeid: 5,
     name: "Возврат",
     link: "/return/history",
-    img: "https://img.freepik.com/premium-vector/teamwork-web-concept-with-character-scene-man-woman-work-together-construct-cubes-developing-project-people-situation-flat-design-vector-illustration-social-media-marketing-material_9209-12505.jpg?w=1380",
+    img: "https://img.freepik.com/free-vector/balance-sheet-cartoon-web-icon-accounting-process-finance-analyst-calculating-tools-financial-consulting-idea-bookkeeping-service_335657-2313.jpg?t=st=1711965019~exp=1711968619~hmac=635d5b94c27cf917e8532dfd722c44aba43db051d262065031cdac53408da1ab&w=900",
     pathApi: "/return/history",
   },
   {

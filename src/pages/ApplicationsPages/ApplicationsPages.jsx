@@ -10,22 +10,22 @@ import { useDispatch, useSelector } from "react-redux";
 ////// helpers
 
 /////// components
-import MyInvoicePage from "./MyInvoicePage/MyInvoicePage";
-import ViewProdsPage from "./ViewProdsPage/ViewProdsPage";
+import MainPage from "../MainPage/MainPage";
+import CreateInvoicePage from "../CreateInvoicePage/CreateInvoicePage";
 
-const InvoicesPages = () => {
+const ApplicationsPages = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return (
     <>
       <Routes>
-        <Route path="/" element={<InvoicesPages />} />
-        <Route path="main" element={<MyInvoicePage />} />
-        <Route path="view" element={<ViewProdsPage />} />
+        <Route path="/" element={<ApplicationsPages />} />
+        <Route path="main" element={<MainPage />} />
+        <Route path="/crud_invoice" element={<CreateInvoicePage />} />
       </Routes>
     </>
   );
 };
 
-export default InvoicesPages;
+export default ApplicationsPages;
