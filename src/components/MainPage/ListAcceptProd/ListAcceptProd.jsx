@@ -1,5 +1,6 @@
 ////// hooks
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 ////// components
@@ -8,42 +9,61 @@ import { TableContainer, TableHead } from "@mui/material";
 import { TableRow, Paper } from "@mui/material";
 
 /////// fns
-import { delProdInInvoice } from "../../../store/reducers/mainSlice"; /// delete
+import { getListProdsInInvoiceNur } from "../../../store/reducers/standartSlice";
+import { delProdsInInvoiceNur } from "../../../store/reducers/standartSlice";
 
 ////// style
 import "./style.scss";
 
 ////// helpers
+import { roundingNum } from "../../../helpers/totals";
+import { myAlert } from "../../../helpers/MyAlert";
 
 ////// icons
 import DeleteIcon from "@mui/icons-material/Delete";
-import { getListProdsInInvoiceNur } from "../../../store/reducers/standartSlice";
 
 const ListAcceptProd = ({ invoice_guid }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { listOrdersNur } = useSelector((state) => state.standartSlice);
-  const { guid } = useSelector((state) => state.mainSlice?.invoiceInfo);
-  const { activeDate } = useSelector((state) => state.mainSlice);
-  const { listTA } = useSelector((state) => state.mainSlice);
 
-  const delProd = ({ product_guid, invoice_guid, price, count }) => {
-    const products = [{ product_guid, count, workshop_price: price }];
+  const delProd = async (props) => {
+    const { product_guid, invoice_guid, price, count_kg } = props;
+
+    const products = [{ product_guid, count: count_kg, workshop_price: price }];
     const data = { invoice_guid, comment: "", status: -1, products };
-    const obj = { listTA, activeDate, action: 3 };
-    dispatch(delProdInInvoice({ data, ...obj, guid }));
+    const res = await dispatch(delProdsInInvoiceNur({ data })).unwrap();
+
+    if (res?.[0]?.result == 1) {
+      myAlert("Удалено");
+    } else {
+      myAlert(res?.[0]?.msg, "error");
+    }
   };
 
-  const getData = () => {
-    /// список товаров определённого заказа
-    dispatch(getListProdsInInvoiceNur(invoice_guid));
+  const editProd = (obj) => {
+    const send = { invoice_guid, action: 2, workshop_price: obj?.price };
+    navigate("/app/input_prods", { state: { ...send, ...obj } });
+    ///// редактирование кол-ва товара
   };
+
+  const getData = () => dispatch(getListProdsInInvoiceNur(invoice_guid));
+  /// список товаров определённого заказа
 
   useEffect(() => {
     getData();
   }, [invoice_guid]);
 
-  console.log(listOrdersNur, "listOrdersNur");
+  if (listOrdersNur?.length == 0) {
+    return (
+      <div className="emptyData">
+        <p>Список пустой</p>
+      </div>
+    );
+  }
+
+  const delStyle = { color: "rgba(213, 42, 42, 0.848)", width: 20, height: 20 };
 
   return (
     <div className="listAcceptProd">
@@ -55,18 +75,18 @@ const ListAcceptProd = ({ invoice_guid }) => {
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              <TableCell style={{ width: "8%" }} align="center">
+              <TableCell style={{ width: "10%" }} align="center">
                 №
               </TableCell>
-              <TableCell style={{ width: "50%" }}>Продукт</TableCell>
-              <TableCell align="left" style={{ width: "10%" }}>
+              <TableCell style={{ width: "40%" }}>Продукт</TableCell>
+              <TableCell align="left" style={{ width: "20%" }}>
                 Вес
               </TableCell>
-              <TableCell align="left" style={{ width: "22%" }}>
+              <TableCell align="left" style={{ width: "20%" }}>
                 Цена
               </TableCell>
               <TableCell
-                align="left"
+                align="center"
                 style={{ width: "10%" }}
                 className="titleCheckbox"
               >
@@ -81,29 +101,37 @@ const ListAcceptProd = ({ invoice_guid }) => {
                   component="th"
                   scope="row"
                   align="center"
-                  style={{ width: "8%" }}
+                  style={{ width: "10%" }}
+                  onClick={() => editProd(row)}
                 >
                   {index + 1}
                 </TableCell>
-                <TableCell component="th" scope="row" style={{ width: "50%" }}>
+                <TableCell
+                  component="th"
+                  scope="row"
+                  style={{ width: "40%" }}
+                  onClick={() => editProd(row)}
+                >
                   {row?.product_name}
                 </TableCell>
-                <TableCell align="left" style={{ width: "10%" }}>
-                  {row?.count}
+                <TableCell
+                  align="left"
+                  style={{ width: "20%" }}
+                  onClick={() => editProd(row)}
+                >
+                  {roundingNum(row?.count_kg)} кг
                 </TableCell>
-                <TableCell align="left" style={{ width: "20%" }}>
-                  {row?.price} сом
+                <TableCell
+                  align="left"
+                  style={{ width: "20%" }}
+                  onClick={() => editProd(row)}
+                >
+                  {roundingNum(row?.price)} сом
                 </TableCell>
                 <TableCell align="center" style={{ width: "10%" }}>
                   <Tooltip title={"Удалить"} placement="top" disableInteractive>
                     <button className="actionsDel" onClick={() => delProd(row)}>
-                      <DeleteIcon
-                        sx={{
-                          color: "rgba(213, 42, 42, 0.848)",
-                          width: 20,
-                          height: 20,
-                        }}
-                      />
+                      <DeleteIcon sx={delStyle} />
                     </button>
                   </Tooltip>
                 </TableCell>
@@ -114,10 +142,10 @@ const ListAcceptProd = ({ invoice_guid }) => {
                 Итого
               </TableCell>
               <TableCell align="left" style={{ fontWeight: "bold" }}>
-                {listOrdersNur?.[0]?.total_count} кг
+                {roundingNum(listOrdersNur?.[0]?.total_count_kg)} кг
               </TableCell>
               <TableCell colSpan={2} align="left" className="footerTable">
-                {listOrdersNur?.[0]?.total_price} сом
+                {roundingNum(listOrdersNur?.[0]?.total_price)} сом
               </TableCell>
             </TableRow>
           </TableBody>

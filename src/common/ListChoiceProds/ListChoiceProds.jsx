@@ -1,5 +1,5 @@
 ////// hooks
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 ////// style
@@ -15,10 +15,10 @@ import { TableRow, Paper } from "@mui/material";
 
 ////// fns
 import { setActiveWorkShop } from "../../store/reducers/selectsSlice";
+import { getListProdsNur } from "../../store/reducers/standartSlice";
 
 ////// helpers
 import { transformLists } from "../../helpers/transformLists";
-import { getListProdsNur } from "../../store/reducers/standartSlice";
 
 const ListChoiceProds = ({ setSearch, search, invoice_guid, action }) => {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const ListChoiceProds = ({ setSearch, search, invoice_guid, action }) => {
 
   const onChangeWS = (item) => {
     dispatch(setActiveWorkShop(item)); ///// выбор селекта цехов
-    const links = `get_workshop`;
+    const links = `get_product?workshop_guid=${item?.value}&type=agent`;
     dispatch(getListProdsNur({ links, guid: item?.value }));
     // get список товаров с категориями
     setSearch("");
@@ -40,7 +40,7 @@ const ListChoiceProds = ({ setSearch, search, invoice_guid, action }) => {
   const workShop = transformLists(listWorkShopsNur, "guid", "name");
 
   const clickProd = (obj) => {
-    const send = { ...obj, invoice_guid, action };
+    const send = { ...obj, invoice_guid, action, count_kg: "" };
     navigate("/app/input_prods", { state: send });
   };
 
@@ -58,7 +58,7 @@ const ListChoiceProds = ({ setSearch, search, invoice_guid, action }) => {
         </div>
       </div>
       <div className="listProdCRUD">
-        <div className="helpers">
+        {/* <div className="helpers">
           <div>
             <span className="vakuum"></span>
             <p>Вакуум</p>
@@ -66,7 +66,7 @@ const ListChoiceProds = ({ setSearch, search, invoice_guid, action }) => {
           <div>
             <span></span> <p>Без вакуум</p>
           </div>
-        </div>
+        </div> */}
         <div className="listProdCRUD__inner">
           {listProdsNur?.map((item) => (
             <TableContainer
@@ -103,9 +103,8 @@ const ListChoiceProds = ({ setSearch, search, invoice_guid, action }) => {
                         }`}
                       ></div> */}
                       </TableCell>
-
                       <TableCell align="left" style={{ width: "20%" }}>
-                        {row?.price} сом
+                        {row?.workshop_price} сом
                       </TableCell>
                     </TableRow>
                   ))}

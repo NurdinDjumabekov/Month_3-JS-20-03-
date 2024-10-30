@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 /////// components
 import ReturnHistoryPage from "./ReturnHistoryPage/ReturnHistoryPage";
-import ReturnCreatePage from "./ReturnCreatePage/ReturnCreatePage";
 
 const ReturnsPages = () => {
   const dispatch = useDispatch();
@@ -22,7 +21,6 @@ const ReturnsPages = () => {
       <Routes>
         <Route path="/" element={<ReturnsPages />} />
         <Route path="history" element={<ReturnHistoryPage />} />
-        <Route path="create" element={<ReturnCreatePage />} />
       </Routes>
     </>
   );

@@ -54,10 +54,8 @@ const LeftoversPage = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(getListWorkShop({ listInner: true, agent_guid: guid }));
-      ////  get список цехов (остатки ТА)
-    }, 500);
+    dispatch(getListWorkShop({ listInner: true, agent_guid: guid }));
+    ////  get список цехов (остатки ТА)
   }, []);
 
   const keys = {
@@ -69,8 +67,6 @@ const LeftoversPage = () => {
     total_count: "total_count",
     total_price: "total_price",
   };
-
-  console.log(listProdsSI, "listProdsSI");
 
   return (
     <>
@@ -84,6 +80,7 @@ const LeftoversPage = () => {
               className="select"
               onChange={onChangeWS}
               value={activeWorkShop}
+              isSearchable={false}
             />
           </div>
           <div className="myInputs">
@@ -93,6 +90,7 @@ const LeftoversPage = () => {
               className="select"
               onChange={onChangeCateg}
               value={activeCategs}
+              isSearchable={false}
             />
           </div>
         </div>

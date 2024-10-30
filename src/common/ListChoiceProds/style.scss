@@ -48,8 +48,9 @@
     }
 
     > div:nth-child(2) {
-      // max-height: 100%;
-      border-top: 1px solid #22222218;
+      > div {
+        border-top: 1px solid #2222222e;
+      }
     }
 
     &__inner {
@@ -57,7 +58,7 @@
       // height: calc(100% - 405px);
       height: 100%;
       margin: 3px 0 0 0;
-      height: calc(100vh - 150px);
+      height: calc(100vh - 120px);
 
       .standartTable table tbody tr td .counts {
         height: 24px;
@@ -66,11 +67,12 @@
 
       .standartTable {
         table {
+          border-top: 1px solid #2222222c !important;
           thead {
             padding: 3px 0 0 0;
             tr {
               th:last-child {
-                padding: 10px 20px !important;
+                padding: 15px 20px !important;
                 font-weight: 500;
                 font-size: 18px;
               }
@@ -97,6 +99,7 @@
                 font-weight: 500;
                 padding-top: 10px !important;
                 padding-bottom: 10px !important;
+                font-size: 14px !important;
 
                 .lineVaakum {
                   width: 10px;

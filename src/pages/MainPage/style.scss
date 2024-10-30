@@ -1,11 +1,7 @@
 .mainCalendare {
-  padding: 10px 0px 10px 10px;
   height: 100vh;
   background: #fafafa;
-
-  @media (max-width: 1025px) {
-    padding: 3px;
-  }
+  padding: 3px;
 
   .mainPage {
     width: 100%;
@@ -20,18 +16,11 @@
       margin: 0 auto;
       height: 100%;
       background: #fff;
-      padding: 10px;
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       position: relative;
 
-      @media (max-width: 1025px) {
-        padding: 125px 0 75px 0;
-
-        @media (max-width: 580px) {
-          padding: 135px 0 75px 0;
-        }
-      }
+      padding: 95px 0 75px 0;
 
       .custom-calendar {
         height: 100vh;
@@ -117,21 +106,10 @@
       .listInfo {
         display: flex;
         align-items: center;
-        gap: 35px;
+        gap: 5px;
         position: absolute;
-        left: 10px;
-        top: 65px;
-
-        @media (max-width: 1025px) {
-          top: 100px;
-          @media (max-width: 700px) {
-            gap: 10px;
-            @media (max-width: 580px) {
-              top: 102px;
-              left: 5px;
-            }
-          }
-        }
+        top: 58px;
+        left: 5px;
 
         &__every {
           display: flex;

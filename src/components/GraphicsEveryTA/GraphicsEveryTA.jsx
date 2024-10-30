@@ -10,7 +10,7 @@ import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import "./style.scss";
 
 ////// fns
-import { setListWorkPlan } from "../../../../store/reducers/mainSlice";
+import { setListWorkPlan } from "../../store/reducers/mainSlice";
 
 ////// icons
 

@@ -9,7 +9,6 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import ruLocale from "@fullcalendar/core/locales/ru";
-import ModalOrderCRUD from "../../components/MainPage/Modals/ModalOrderCRUD/ModalOrderCRUD";
 import EveryDateInfo from "../../components/MainPage/EveryDateInfo/EveryDateInfo";
 import NavMenu from "../../common/NavMenu/NavMenu";
 
@@ -32,7 +31,6 @@ import { createInvoice } from "../../store/reducers/mainSlice";
 
 /////// style
 import "./style.scss";
-import { getListWorkShopsNur } from "../../store/reducers/standartSlice";
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -214,7 +212,6 @@ const MainPage = () => {
             </div>
           </div>
         </div>
-        <ModalOrderCRUD />
       </div>
     </>
   );

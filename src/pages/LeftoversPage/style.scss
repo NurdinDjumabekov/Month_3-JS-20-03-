@@ -1,12 +1,12 @@
 .leftoversPage {
-  height: 100vh;
+  height: calc(100vh - 60px);
 
   &__header {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
     gap: 10px;
-    padding: 5px;
+    padding: 5px 15px;
     position: relative;
     z-index: 20;
 

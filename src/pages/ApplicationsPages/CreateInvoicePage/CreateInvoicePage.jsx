@@ -21,9 +21,10 @@ import colorArrowBtn from "../../../assets/icons/colorArrowBtn.svg";
 
 ///// fns
 import { setActiveWorkShop } from "../../../store/reducers/selectsSlice";
-import { searchListProds } from "../../../store/reducers/mainSlice";
-import { getListWorkShop } from "../../../store/reducers/mainSlice";
-import { getListWorkShopsNur } from "../../../store/reducers/standartSlice";
+import {
+  getListWorkShopsNur,
+  searchListProdsNur,
+} from "../../../store/reducers/standartSlice";
 import { getListProdsNur } from "../../../store/reducers/standartSlice";
 
 const CreateInvoicePage = () => {
@@ -55,7 +56,7 @@ const CreateInvoicePage = () => {
     const name = res?.[0]?.name;
     dispatch(setActiveWorkShop({ label: name, value: guid }));
     ///// выбор селекта цехов
-    const links = `get_workshop`;
+    const links = `get_product?workshop_guid=${guid}&type=agent`;
     dispatch(getListProdsNur({ links, guid }));
     // get список товаров с категориями
   };
@@ -69,7 +70,8 @@ const CreateInvoicePage = () => {
   const handleSearch = useCallback(
     //// поиск товара через запрос
     debounce((value) => {
-      dispatch(searchListProds(value));
+      const link = `get_product?search=${value}&type=agent`;
+      dispatch(searchListProdsNur({ link }));
     }, 500),
     []
   );
@@ -87,7 +89,7 @@ const CreateInvoicePage = () => {
     setSearch(value);
 
     if (value?.length === 0) {
-      dispatch(getListWorkShop());
+      getData();
     } else {
       handleSearch(value);
     }
@@ -98,7 +100,7 @@ const CreateInvoicePage = () => {
     if (inputRef.current) {
       inputRef.current.blur();
     }
-    dispatch(searchListProds(search));
+    dispatch(searchListProdsNur(search));
   };
 
   const checkLength = search?.length === 0;

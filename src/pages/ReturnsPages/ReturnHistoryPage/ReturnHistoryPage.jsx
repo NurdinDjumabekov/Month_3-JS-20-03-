@@ -8,6 +8,7 @@ import NavMenu from "../../../common/NavMenu/NavMenu";
 
 /////// fns
 import { getInvoiceReturn } from "../../../store/reducers/invoiceSlice";
+import { createInvoice } from "../../../store/reducers/standartSlice";
 
 ////// helpers
 import { roundingNum } from "../../../helpers/totals";
@@ -17,8 +18,6 @@ import "./style.scss";
 
 ////// icons
 import AddIcon from "../../../assets/MyIcons/AddIcon";
-import ChecklistRtlIcon from "@mui/icons-material/ChecklistRtl";
-import SummarizeIcon from "@mui/icons-material/Summarize";
 
 const ReturnHistoryPage = () => {
   const dispatch = useDispatch();
@@ -45,12 +44,44 @@ const ReturnHistoryPage = () => {
   };
 
   const clickInvoice = (item) => {
-    navigate(`/invoice/view`, { state: item });
+    if (item?.status == 0) {
+      const obj = {
+        action: 1,
+        date_from: "",
+        date_to: "",
+        invoice_guid: item?.invoice_guid,
+      };
+      // 1 - создание и редактирование
+      navigate("/app/crud_invoice", { state: obj });
+    } else {
+      navigate(`/invoice/view`, { state: item });
+    }
   };
 
-  const createReturnForAdmin = () => {
-    const obj = {};
-    navigate(`/return/create`, { state: obj });
+  const createReturnForAdmin = async () => {
+    //// создание накладной возврата для цеха
+    const send = {
+      sender_guid: dataSave?.guid, // guid отпровителя
+      sender_type: 1,
+      reciever_guid: "b85094a9-d70a-46ab-a724-5f3d7a506b37", // guid получателя
+      reciever_type: 3, // на склад
+      user_guid: dataSave?.guid, // guid человека кто создает
+      user_type: 1,
+      comment: "Возврат накладной",
+      invoice_type: 4, // всегда 4!
+    };
+
+    const res = await dispatch(createInvoice(send)).unwrap();
+    if (!!res?.result) {
+      const obj = {
+        action: 1,
+        date_from: "",
+        date_to: "",
+        invoice_guid: res?.invoice_guid,
+      };
+      // 1 - создание и редактирование
+      navigate("/app/crud_invoice", { state: obj });
+    }
   };
 
   return (

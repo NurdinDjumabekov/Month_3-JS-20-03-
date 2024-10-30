@@ -52,6 +52,7 @@ const MainRoutes = () => {
             <Route path="/" element={<AllCategPage />} />
             <Route path="/app/*" element={<ApplicationsPages />} />
             <Route path="/invoice/*" element={<InvoicesPages />} />
+
             <Route path="/return/*" element={<ReturnsPages />} />
 
             <Route path="/leftovers" element={<LeftoversPage />} />

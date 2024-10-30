@@ -9,12 +9,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 /////// fns
 import { sendGeoUser, setMapGeo } from "./store/reducers/mapSlice";
+import Preloader from "./common/Preloader/Preloader";
 
 const App = () => {
   const dispatch = useDispatch();
 
   const { guid } = useSelector((state) => state.saveDataSlice?.dataSave);
   const { user_type } = useSelector((state) => state.saveDataSlice?.dataSave);
+  const { preloader } = useSelector((state) => state.standartSlice);
 
   const isWithinAllowedTime = () => {
     const now = new Date();
@@ -54,7 +56,12 @@ const App = () => {
     }
   }, []);
 
-  return <MainRoutes />;
+  return (
+    <>
+      <MainRoutes />
+      {preloader && <Preloader />}
+    </>
+  );
 };
 
 export default App;

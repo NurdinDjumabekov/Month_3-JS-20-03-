@@ -41,7 +41,7 @@ const AcceptInvvoiceWorkShop = ({ invoice_guid }) => {
     const res = await dispatch(acceptInvoice({ data, navigate })).unwrap();
     if (!!res?.result) {
       dispatch(getMyInvoice(data?.user_guid));
-      navigate("/invoice/main");
+      navigate(-1);
       myAlert("Накладная принята");
     }
   };

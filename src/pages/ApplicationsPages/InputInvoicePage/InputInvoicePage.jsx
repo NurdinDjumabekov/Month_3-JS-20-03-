@@ -11,13 +11,14 @@ import NavMenu from "../../../common/NavMenu/NavMenu";
 
 ///// icons
 import krest from "../../../assets/icons/krest.svg";
+
+///// helpers
 import { myAlert } from "../../../helpers/MyAlert";
 
 ///// fns
-import {
-  addProdsInInvoiceNur,
-  getListProdsInInvoiceNur,
-} from "../../../store/reducers/standartSlice";
+import { getListProdsInInvoiceNur } from "../../../store/reducers/standartSlice";
+import { editProdsInInvoiceNur } from "../../../store/reducers/standartSlice";
+import { addProdsInInvoiceNur } from "../../../store/reducers/standartSlice";
 
 const InputInvoicePage = () => {
   const dispatch = useDispatch();
@@ -25,66 +26,96 @@ const InputInvoicePage = () => {
   const location = useLocation();
   const inputRef = useRef(null);
 
-  const { product_name, invoice_guid, product_price } = location?.state;
-  const { category_name, product_guid } = location?.state;
+  /// action - 1 - создание заявки
+  /// action - 2 - редактирвоание заявки
 
-  const [inputProd, setInputProd] = useState("");
+  const { product_name, invoice_guid, workshop_price } = location?.state;
+  const { category_name, product_guid, action } = location?.state;
+  const { count_kg } = location?.state;
 
-  const { dataSave } = useSelector((state) => state.saveDataSlice);
+  const [count, setCount] = useState("");
 
   const onChange = (e) => {
     const value = e.target.value;
 
     // Проверка: цифры и до 3 цифр после точки
     if (/^\d*\.?\d{0,3}$/.test(value)) {
-      setInputProd(value);
+      setCount(value);
     }
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      inputRef?.current.focus();
-    }, 500);
-  }, []);
+    inputRef?.current.focus();
 
-  const sendProds = async (e) => {
+    switch (action) {
+      case 1:
+        setCount(count_kg);
+        break;
+      case 2:
+        setCount(count_kg);
+        break;
+
+      default:
+        break;
+    }
+  }, [action]);
+
+  const addProds = async (e) => {
     e.preventDefault();
 
-    if (!!!inputProd) {
+    if (!!!count) {
       myAlert("Поля не должны быть пустыми или равны 0", "error");
       return;
     }
 
-    const data = {
-      invoice_guid,
-      comment: "...",
-      // products: [
-      //   { product_guid, count: inputProd, workshop_price: product_price },
-      // ],
-      products: [
-        {
-          count: "12",
-          product_guid: "8ED65AD8-4977-11E6-8293-000C29BE2924",
-          workshop_price: 370,
-        },
-      ],
-      user_guid: dataSave?.guid,
-      user_type: 1,
-    };
-
+    const products = [{ product_guid, count, workshop_price }];
+    const data = { invoice_guid, comment: "...", products };
     const res = await dispatch(addProdsInInvoiceNur({ data })).unwrap();
 
     if (!!res?.results?.[0]) {
-      navigate(-1);
       /// список товаров определённого заказа
       dispatch(getListProdsInInvoiceNur(invoice_guid));
+      navigate(-1);
+    }
+  };
+
+  const editProds = async (e) => {
+    e.preventDefault();
+    if (!!!count) {
+      myAlert("Поля не должны быть пустыми или равны 0", "error");
+      return;
+    }
+    const products = [{ product_guid, count, workshop_price }];
+    const data = { invoice_guid, comment: "...", products, status: 2 };
+    const res = await dispatch(editProdsInInvoiceNur({ data })).unwrap();
+
+    if (res?.[0]?.result == 1) {
+      myAlert("Отредактировано успешно");
+      /// список товаров определённого заказа
+      dispatch(getListProdsInInvoiceNur(invoice_guid));
+      navigate(-1);
+    } else {
+      myAlert(res?.[0]?.msg, "error");
+    }
+  };
+
+  const crateaction = (e) => {
+    switch (action) {
+      case 1:
+        addProds(e);
+        break;
+      case 2:
+        editProds(e);
+        break;
+
+      default:
+        break;
     }
   };
 
   return (
     <>
       <NavMenu navText={"Назад"} />
-
       <div className="inputInvoice">
         <div className="titles">
           <h3>Категория товара: {category_name}</h3>
@@ -100,15 +131,15 @@ const InputInvoicePage = () => {
         <div className="price">
           <div className="inputSend">
             <p>Цена товара</p>
-            <input value={`${product_price} сом`} readOnly />
+            <input value={`${workshop_price} сом`} readOnly />
           </div>
         </div>
 
-        <form className="count" onSubmit={sendProds}>
+        <form className="count" onSubmit={crateaction}>
           <div className="inputSend">
             <p>Введите итоговый вес товара</p>
             <input
-              value={inputProd}
+              value={count}
               onChange={onChange}
               ref={inputRef}
               type="tel"

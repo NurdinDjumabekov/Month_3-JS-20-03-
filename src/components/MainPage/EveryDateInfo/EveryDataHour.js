@@ -1,12 +1,10 @@
 /////// hooks
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 /////// style
 import "./style.scss";
-import { styled } from "@mui/styles";
-
-/////// img
 
 ////// components
 import { Tooltip } from "@mui/material";
@@ -15,9 +13,6 @@ import { Tooltip } from "@mui/material";
 import { objStatusOrders } from "../../../helpers/objs";
 
 /////// fns
-import { setInvoiceInfo } from "../../../store/reducers/mainSlice";
-import {} from "../../../store/reducers/mainSlice";
-import { getListProdsInInvoice } from "../../../store/reducers/mainSlice";
 
 ////// icons
 import UserIcon from "@mui/icons-material/AccountCircle";
@@ -25,22 +20,16 @@ import PaidIcon from "@mui/icons-material/PaymentsOutlined";
 
 const EveryDataHour = ({ content }) => {
   const { status, agent, invoice_guid } = content?.event?._def?.extendedProps;
-  const { total_price, codeid } = content?.event?._def?.extendedProps;
+  const { total_price, date_from } = content?.event?._def?.extendedProps;
+  const { date_to } = content?.event?._def?.extendedProps;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const editEveryInvoice = () => {
-    ///// редактирвоание заявки ( action: 2)
-    dispatch(setInvoiceInfo({ guid: invoice_guid, action: 2 }));
-    dispatch(getListProdsInInvoice(invoice_guid));
-
-    ///// можно ли редактировать данные
-
-    // if (status == 0) {
-    //   dispatch(setCheckInvoice(true));
-    // } else {
-    //   dispatch(setCheckInvoice(false));
-    // }
+    const obj = { action: 1, date_from, date_to, invoice_guid };
+    // редактирвоание заявки
+    navigate("/app/crud_invoice", { state: obj });
   };
 
   return (

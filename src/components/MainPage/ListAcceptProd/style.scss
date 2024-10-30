@@ -1,6 +1,10 @@
 .listAcceptProd {
   height: 100%;
 
+  > div {
+    height: 100%;
+  }
+
   .actionsDel {
     display: flex;
     align-items: center;
@@ -20,6 +24,54 @@
   .standartTable table tbody tr td .counts {
     height: 24px;
     font-weight: 500;
+  }
+
+  .standartTable {
+    table {
+      thead {
+        tr {
+          th:last-child {
+            padding: 0px 10px 0 0 !important;
+          }
+
+          th:first-child {
+            padding-left: 15px !important;
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          td:last-child {
+            padding-right: 20px !important;
+          }
+
+          th:first-child {
+            padding-left: 15px !important;
+            font-weight: 600 !important;
+          }
+
+          td:first-child {
+            padding-left: 20px !important;
+          }
+        }
+        tr {
+          td,
+          th {
+            font-weight: 500 !important;
+            font-size: 12px !important;
+          }
+        }
+
+        tr:last-child {
+          td {
+            padding-top: 10px !important;
+            padding-bottom: 10px !important;
+            font-size: 14px !important;
+          }
+        }
+      }
+    }
   }
 
   .counterRow {

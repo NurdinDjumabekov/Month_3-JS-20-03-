@@ -29,8 +29,8 @@ root.render(
       <PersistGate loading={null} persistor={persistor}>
         <ToastContainer
           oastContainer
-          autoClose={5000}
-          limit={3}
+          autoClose={2000}
+          limit={1}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick
