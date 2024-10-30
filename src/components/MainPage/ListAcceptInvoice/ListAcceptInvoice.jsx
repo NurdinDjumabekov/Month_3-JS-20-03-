@@ -15,14 +15,12 @@ import { editInvoice } from "../../../store/reducers/mainSlice";
 import { createEditProdInInvoice } from "../../../store/reducers/mainSlice";
 
 ////// icons
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import ConfirmModal from "../../../common/ConfirmModal/ConfirmModal";
-import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 
 ////// style
 import "./style.scss";
 
-const ListAcceptInvoice = () => {
+const ListAcceptInvoice = ({ invoice_guid }) => {
   const dispatch = useDispatch();
 
   const [delInvoice, setDelInvoice] = useState(false);
@@ -34,7 +32,7 @@ const ListAcceptInvoice = () => {
 
   const delIInvoice = () => {
     const agents_guid = searchActiveOrdersTA(listTA);
-    const data = { invoice_guid: guid, status: -1 }; /// удаление -1 заявки
+    const data = { invoice_guid, status: -1 }; /// удаление -1 заявки
     const time = { date_from: "2024-09-09 18:00", date_to: "2024-09-09 21:30" };
     const send = { data: { ...data, ...time }, activeDate, agents_guid };
     dispatch(editInvoice(send));
@@ -62,24 +60,18 @@ const ListAcceptInvoice = () => {
             noFN={() => setDelInvoice(false)}
             title={"Удалить заявку ?"}
           />
-          {check && (
-            <button className="saveAction" onClick={editProdInInvoice}>
-              <LibraryAddIcon sx={{ width: 16, height: 16 }} />
-              <p>Сохранить</p>
-            </button>
-          )}
 
-          <button
+          {/* <button
             className="saveAction del"
             onClick={() => setDelInvoice(true)}
             disabled={!checkInvoice}
           >
             <DeleteOutlineIcon sx={{ width: 18, height: 18 }} />
             <p>Удалить заявку</p>
-          </button>
+          </button> */}
         </div>
       </div>
-      <ListAcceptProd />
+      <ListAcceptProd invoice_guid={invoice_guid} />
     </div>
   );
 };

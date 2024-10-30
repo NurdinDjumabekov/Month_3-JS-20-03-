@@ -57,8 +57,6 @@ const ModalOrderCRUD = () => {
     }
   }, [invoiceInfo?.guid]);
 
-  console.log(invoiceInfo, "invoiceInfo");
-
   const { guid, action } = invoiceInfo;
 
   const check = !!guid && (action == 1 || action == 2);

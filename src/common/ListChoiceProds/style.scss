@@ -14,4 +14,134 @@
       width: 100%;
     }
   }
+
+  .listProdCRUD {
+    height: 100%;
+
+    .helpers {
+      display: flex;
+      // justify-content: space-between;
+      align-items: center;
+      padding: 0 18px 10px;
+      width: 100%;
+      gap: 15px;
+
+      > div {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        span {
+          width: 8px;
+          height: 8px;
+          background: red;
+        }
+
+        p {
+          font-size: 14px;
+        }
+
+        .vakuum {
+          background: green;
+        }
+      }
+    }
+
+    > div:nth-child(2) {
+      // max-height: 100%;
+      border-top: 1px solid #22222218;
+    }
+
+    &__inner {
+      overflow-y: scroll;
+      // height: calc(100% - 405px);
+      height: 100%;
+      margin: 3px 0 0 0;
+      height: calc(100vh - 150px);
+
+      .standartTable table tbody tr td .counts {
+        height: 24px;
+        font-weight: 500;
+      }
+
+      .standartTable {
+        table {
+          thead {
+            padding: 3px 0 0 0;
+            tr {
+              th:last-child {
+                padding: 10px 20px !important;
+                font-weight: 500;
+                font-size: 18px;
+              }
+            }
+          }
+
+          tbody {
+            tr {
+              td:last-child {
+                padding-right: 15px !important;
+                // color: green;
+                font-weight: 500;
+              }
+              th:first-child {
+                padding-left: 20px !important;
+                // color: green;
+                font-weight: 500;
+              }
+            }
+            tr {
+              td,
+              th {
+                position: relative !important;
+                font-weight: 500;
+                padding-top: 10px !important;
+                padding-bottom: 10px !important;
+
+                .lineVaakum {
+                  width: 10px;
+                  // background: red;
+                  height: 100%;
+                  position: absolute;
+                  right: 0px;
+                  bottom: 4px;
+                  // transform: translateX(-50%);
+                  border-right: 2px solid red;
+                  // border-bottom: 2px solid red;
+                }
+
+                .is_vakuum {
+                  // background: green;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .checkboxTh {
+        align-items: center;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .checkbox {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      .checkboxTable {
+        input {
+          width: 22px;
+          height: 22px;
+        }
+      }
+
+      .counterRow {
+        padding: 4px !important;
+      }
+    }
+  }
 }

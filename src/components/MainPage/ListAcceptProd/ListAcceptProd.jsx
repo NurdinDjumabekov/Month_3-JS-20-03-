@@ -1,5 +1,5 @@
 ////// hooks
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 ////// components
@@ -9,44 +9,23 @@ import { TableRow, Paper } from "@mui/material";
 
 /////// fns
 import { delProdInInvoice } from "../../../store/reducers/mainSlice"; /// delete
-import { changeCountOrders } from "../../../store/reducers/mainSlice";
 
 ////// style
 import "./style.scss";
 
 ////// helpers
-import { validNums } from "../../../helpers/validations";
 
 ////// icons
 import DeleteIcon from "@mui/icons-material/Delete";
+import { getListProdsInInvoiceNur } from "../../../store/reducers/standartSlice";
 
-const ListAcceptProd = () => {
+const ListAcceptProd = ({ invoice_guid }) => {
   const dispatch = useDispatch();
 
-  const { listSendOrders } = useSelector((state) => state.mainSlice);
+  const { listOrdersNur } = useSelector((state) => state.standartSlice);
   const { guid } = useSelector((state) => state.mainSlice?.invoiceInfo);
   const { activeDate } = useSelector((state) => state.mainSlice);
-  const { listTA, checkInvoice } = useSelector((state) => state.mainSlice);
-
-  const onChangeCount = (e, item) => {
-    const count = e?.target?.value?.replace(",", ".");
-
-    if (validNums(count)) {
-      //// валидация на числа
-      return;
-    }
-    dispatch(changeCountOrders({ ...item, count }));
-  };
-
-  const incrementCount = (item) => {
-    const newCount = (parseFloat(item?.count) || 0) + 1;
-    dispatch(changeCountOrders({ ...item, count: newCount.toString() }));
-  };
-
-  const decrementCount = (item) => {
-    const newCount = Math.max((parseFloat(item?.count) || 0) - 1, 0); // Минимальное значение - 0
-    dispatch(changeCountOrders({ ...item, count: newCount.toString() }));
-  };
+  const { listTA } = useSelector((state) => state.mainSlice);
 
   const delProd = ({ product_guid, invoice_guid, price, count }) => {
     const products = [{ product_guid, count, workshop_price: price }];
@@ -55,7 +34,16 @@ const ListAcceptProd = () => {
     dispatch(delProdInInvoice({ data, ...obj, guid }));
   };
 
-  console.log(listSendOrders, "listSendOrders");
+  const getData = () => {
+    /// список товаров определённого заказа
+    dispatch(getListProdsInInvoiceNur(invoice_guid));
+  };
+
+  useEffect(() => {
+    getData();
+  }, [invoice_guid]);
+
+  console.log(listOrdersNur, "listOrdersNur");
 
   return (
     <div className="listAcceptProd">
@@ -72,7 +60,7 @@ const ListAcceptProd = () => {
               </TableCell>
               <TableCell style={{ width: "50%" }}>Продукт</TableCell>
               <TableCell align="left" style={{ width: "10%" }}>
-                Кол-во
+                Вес
               </TableCell>
               <TableCell align="left" style={{ width: "22%" }}>
                 Цена
@@ -87,56 +75,28 @@ const ListAcceptProd = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {listSendOrders?.map((row, index) => (
+            {listOrdersNur?.map((row, index) => (
               <TableRow key={row?.product_guid}>
                 <TableCell
                   component="th"
                   scope="row"
                   align="center"
                   style={{ width: "8%" }}
-                  onClick={() => decrementCount(row)}
                 >
                   {index + 1}
                 </TableCell>
-                <TableCell
-                  component="th"
-                  scope="row"
-                  style={{ width: "50%" }}
-                  onClick={() => decrementCount(row)}
-                >
+                <TableCell component="th" scope="row" style={{ width: "50%" }}>
                   {row?.product_name}
                 </TableCell>
-                <TableCell
-                  align="left"
-                  style={{ width: "10%" }}
-                  className="counterRow"
-                >
-                  <div className="countInputContainer">
-                    <input
-                      type="text"
-                      onChange={(e) => onChangeCount(e, row)}
-                      name="counts"
-                      value={row?.count}
-                      maxLength={10}
-                      className="counts"
-                      readOnly={!checkInvoice}
-                    />
-                  </div>
+                <TableCell align="left" style={{ width: "10%" }}>
+                  {row?.count}
                 </TableCell>
-                <TableCell
-                  align="left"
-                  style={{ width: "20%" }}
-                  onClick={() => incrementCount(row)}
-                >
+                <TableCell align="left" style={{ width: "20%" }}>
                   {row?.price} сом
                 </TableCell>
                 <TableCell align="center" style={{ width: "10%" }}>
                   <Tooltip title={"Удалить"} placement="top" disableInteractive>
-                    <button
-                      className="actionsDel"
-                      disabled={!checkInvoice}
-                      onClick={() => delProd(row)}
-                    >
+                    <button className="actionsDel" onClick={() => delProd(row)}>
                       <DeleteIcon
                         sx={{
                           color: "rgba(213, 42, 42, 0.848)",
@@ -153,12 +113,11 @@ const ListAcceptProd = () => {
               <TableCell colSpan={2} align="left" className="footerTable">
                 Итого
               </TableCell>
-
               <TableCell align="left" style={{ fontWeight: "bold" }}>
-                {listSendOrders?.[0]?.total_count} шт
+                {listOrdersNur?.[0]?.total_count} кг
               </TableCell>
               <TableCell colSpan={2} align="left" className="footerTable">
-                {listSendOrders?.[0]?.total_price} сом
+                {listOrdersNur?.[0]?.total_price} сом
               </TableCell>
             </TableRow>
           </TableBody>

@@ -16,9 +16,10 @@ import { validNums } from "../../../helpers/validations";
 import "./style.scss";
 
 const ListProds = () => {
+  //// delete
   const dispatch = useDispatch();
 
-  const { listProds } = useSelector((state) => state.mainSlice);
+  const { listProdsNur } = useSelector((state) => state.standartSlice);
 
   const onChangeCount = (e, item) => {
     const count = e?.target?.value?.replace(",", ".");
@@ -37,81 +38,52 @@ const ListProds = () => {
       <div className="helpers">
         <div>
           <span className="vakuum"></span>
-          <p>Ваакум</p>
+          <p>Вакуум</p>
         </div>
         <div>
           <span></span>
-          <p>Без ваакум</p>
+          <p>Без вакуум</p>
         </div>
       </div>
       <div className="listProdCRUD__inner">
-        <TableContainer
-          component={Paper}
-          className="scroll_table standartTable"
-        >
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                <TableCell colSpan={3} align="left" style={{ width: "12%" }}>
-                  Сосиски замороженые (20)
-                </TableCell>
-                {/* <TableCell style={{ width: "68%" }}>Продукт</TableCell> */}
-                {/* <TableCell align="left" style={{ width: "16%" }}>
-                  Вес
-                </TableCell> */}
-                {/* <TableCell align="left" style={{ width: "20%" }}>
-                  Цена
-                </TableCell> */}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {listProds?.map((row, index) => (
-                <TableRow key={row?.product_guid}>
-                  {/* <TableCell
-                    align="center"
-                    component="th"
-                    scope="row"
-                    style={{ width: "12%" }}
-                  >
-                    {index + 1}
-                  </TableCell> */}
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    style={{ width: "68%" }}
-                  >
-                    {row?.product_name}
-                    {/* <div
-                      className={`lineVaakum ${
-                        !!row?.is_vakuum ? "is_vakuum" : ""
-                      }`}
-                    ></div> */}
-                  </TableCell>
-                  {/* <TableCell
-                    align="left"
-                    style={{ width: "16%", padding: 0 }}
-                    className="counterRow"
-                  >
-                    <div className="counterContainer">
-                      <input
-                        type="number"
-                        onChange={(e) => onChangeCount(e, row)}
-                        name="counts"
-                        value={row?.count}
-                        maxLength={10}
-                        className="counts"
-                        readOnly={!checkInvoice}
-                      />
-                    </div>
-                  </TableCell> */}
-                  <TableCell align="left" style={{ width: "20%" }}>
-                    {row?.workshop_price} сом
+        {listProdsNur?.map((item) => (
+          <TableContainer
+            component={Paper}
+            className="scroll_table standartTable"
+          >
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  <TableCell colSpan={3} align="left" style={{ width: "12%" }}>
+                    {item?.name}
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {item?.prods?.map((row) => (
+                  <TableRow key={row?.product_guid}>
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      style={{ width: "68%" }}
+                    >
+                      {row?.product_name}
+                      {/* <div
+                        className={`lineVaakum ${
+                          !!row?.is_vakuum ? "is_vakuum" : ""
+                        }`}
+                      ></div> */}
+                    </TableCell>
+
+                    <TableCell align="left" style={{ width: "20%" }}>
+                      {row?.price} сом
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        ))}
       </div>
     </div>
   );

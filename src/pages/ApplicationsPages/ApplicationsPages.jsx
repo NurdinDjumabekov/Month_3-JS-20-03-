@@ -11,7 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 /////// components
 import MainPage from "../MainPage/MainPage";
-import CreateInvoicePage from "../CreateInvoicePage/CreateInvoicePage";
+import CreateInvoicePage from "./CreateInvoicePage/CreateInvoicePage";
+import InputInvoicePage from "./InputInvoicePage/InputInvoicePage";
 
 const ApplicationsPages = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const ApplicationsPages = () => {
         <Route path="/" element={<ApplicationsPages />} />
         <Route path="main" element={<MainPage />} />
         <Route path="/crud_invoice" element={<CreateInvoicePage />} />
+        <Route path="/input_prods" element={<InputInvoicePage />} />
       </Routes>
     </>
   );

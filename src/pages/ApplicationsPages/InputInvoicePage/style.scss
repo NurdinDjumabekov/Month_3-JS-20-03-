@@ -1,0 +1,99 @@
+.inputInvoice {
+  // background: red;
+  height: 100%;
+  padding: 20px 15px;
+
+  .titles {
+    padding: 0 40px 0 0;
+    position: relative;
+
+    h3 {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin: 10px 0 0 0;
+      width: 80%;
+      color: #2f47be97;
+    }
+
+    button {
+      position: absolute;
+      right: 5px;
+      top: -3px;
+      background: transparent;
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  .lefttovers {
+    margin: 10px 0 0 0;
+    p {
+      font-size: 14px;
+      margin-top: 5px;
+    }
+  }
+
+  .price {
+    .inputSend {
+      margin: 10px 0 0 0;
+
+      p {
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      input {
+        height: 40px;
+        border: 1px solid #8c8c8c4a;
+
+        &:focus {
+          border: 1px solid #8c8c8c4a;
+        }
+      }
+    }
+  }
+
+  .count {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 10px;
+
+    .inputSend {
+      margin: 10px 0 0 0;
+      width: 65%;
+      p {
+        font-size: 13px;
+        font-weight: 500;
+      }
+      input {
+        height: 40px;
+      }
+    }
+
+    button {
+      background: #2f47be97;
+      width: 110px;
+      max-width: 110px;
+      min-width: 110px;
+      margin: 7px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      height: 40px;
+      border-radius: 8px;
+
+      p {
+        color: #fff;
+        font-weight: 600;
+        font-size: 15px;
+      }
+    }
+  }
+}

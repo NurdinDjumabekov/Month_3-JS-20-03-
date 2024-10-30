@@ -1,41 +1,30 @@
 ////// hooks
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback } from "react";
 
 ////// style
 import "./style.scss";
 
 ////// components
-import NavMenu from "../../common/NavMenu/NavMenu";
+import NavMenu from "../../../common/NavMenu/NavMenu";
 import debounce from "debounce";
-import Select from "react-select";
-import ListProds from "../../components/MainPage/ListProds/ListProds";
-
-///// icons
-import arrow from "../../assets/icons/arrowNav.svg";
-import searchIcon from "../../assets/icons/searchIcon.png";
-import krest from "../../assets/icons/krestBlack.svg";
-import { useState } from "react";
-import {
-  setActiveCategs,
-  setActiveWorkShop,
-} from "../../store/reducers/selectsSlice";
-import {
-  getListCategs,
-  getListProds,
-  getListWorkShop,
-  searchListProds,
-} from "../../store/reducers/mainSlice";
-
-///// components
-import ListChoiceProds from "../../common/ListChoiceProds/ListChoiceProds";
+import ListChoiceProds from "../../../common/ListChoiceProds/ListChoiceProds";
 import Slider from "react-slick";
-import ListAcceptInvoice from "../../components/MainPage/ListAcceptInvoice/ListAcceptInvoice";
+import ListAcceptInvoice from "../../../components/MainPage/ListAcceptInvoice/ListAcceptInvoice";
 
 ///// icons
-import colorArrowBtn from "../../assets/icons/colorArrowBtn.svg";
+import arrow from "../../../assets/icons/arrowNav.svg";
+import searchIcon from "../../../assets/icons/searchIcon.png";
+import krest from "../../../assets/icons/krestBlack.svg";
+import colorArrowBtn from "../../../assets/icons/colorArrowBtn.svg";
+
+///// fns
+import { setActiveWorkShop } from "../../../store/reducers/selectsSlice";
+import { searchListProds } from "../../../store/reducers/mainSlice";
+import { getListWorkShop } from "../../../store/reducers/mainSlice";
+import { getListWorkShopsNur } from "../../../store/reducers/standartSlice";
+import { getListProdsNur } from "../../../store/reducers/standartSlice";
 
 const CreateInvoicePage = () => {
   const dispatch = useDispatch();
@@ -47,18 +36,33 @@ const CreateInvoicePage = () => {
 
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  console.log(currentSlide, "currentSlide");
-
   const settings = {
     dots: false,
     infinite: false,
-    speed: 500,
+    speed: 100,
     slidesToShow: 1,
     slidesToScroll: 1,
     nextArrow: currentSlide == 0 ? <RightBtn /> : <NoneBtn />,
     prevArrow: currentSlide == 1 ? <LeftBtn /> : <NoneBtn />,
     afterChange: (current) => setCurrentSlide(current),
   };
+
+  const getData = async () => {
+    const link = ``;
+    const res = await dispatch(getListWorkShopsNur({ link })).unwrap();
+    // get список цехов
+    const guid = res?.[0]?.guid;
+    const name = res?.[0]?.name;
+    dispatch(setActiveWorkShop({ label: name, value: guid }));
+    ///// выбор селекта цехов
+    const links = `get_workshop`;
+    dispatch(getListProdsNur({ links, guid }));
+    // get список товаров с категориями
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const [search, setSearch] = useState("");
 
@@ -70,17 +74,13 @@ const CreateInvoicePage = () => {
     []
   );
 
-  const prev = () => navigate(-1);
-
   const clear = () => {
     setSearch("");
-    dispatch(getListWorkShop());
+    getData();
     if (inputRef.current) {
       inputRef.current.focus();
     }
   };
-
-  const checkLength = search?.length === 0;
 
   const onChangeSearch = (e) => {
     const value = e?.target?.value;
@@ -101,11 +101,13 @@ const CreateInvoicePage = () => {
     dispatch(searchListProds(search));
   };
 
+  const checkLength = search?.length === 0;
+
   return (
-    <>
+    <div className="createInvoiceParent">
       <NavMenu>
         <div className="sarchBlock">
-          <button className="arrow" onClick={prev}>
+          <button className="arrow" onClick={() => navigate(-1)}>
             <img src={arrow} alt="<" />
           </button>
           <form className="search" onSubmit={searchData}>
@@ -132,11 +134,16 @@ const CreateInvoicePage = () => {
       </NavMenu>
       <div className="createInvoicePage">
         <Slider {...settings}>
-          <ListChoiceProds setSearch={setSearch} search={search} />
-          <ListAcceptInvoice />
+          <ListChoiceProds
+            setSearch={setSearch}
+            search={search}
+            invoice_guid={invoice_guid}
+            action={action}
+          />
+          <ListAcceptInvoice invoice_guid={invoice_guid} action={action} />
         </Slider>
       </div>
-    </>
+    </div>
   );
 };
 

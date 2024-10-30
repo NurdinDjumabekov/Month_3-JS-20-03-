@@ -32,6 +32,7 @@ import { createInvoice } from "../../store/reducers/mainSlice";
 
 /////// style
 import "./style.scss";
+import { getListWorkShopsNur } from "../../store/reducers/standartSlice";
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -82,8 +83,8 @@ const MainPage = () => {
         const invoice_guid = res?.invoice_guid;
 
         const obj = { action: 1, date_from, date_to, invoice_guid };
-        navigate("/app/crud_invoice", { state: obj });
         // 1 - создание
+        navigate("/app/crud_invoice", { state: obj });
       }
     }
   };
