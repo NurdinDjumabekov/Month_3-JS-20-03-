@@ -1,9 +1,8 @@
 .expensePage {
-  padding: 50px 0 0 0;
   height: 100%;
 
   &__inner {
-    height: calc(100% - 20px);
+    height: calc(100% - 80px);
     overflow-y: scroll;
     margin: 5px 0 0 0;
 
@@ -20,10 +19,12 @@
         border-radius: 5px;
         margin: 8px auto;
         padding: 10px;
+        padding-right: 35px;
         width: 100%;
+        position: relative;
 
         .mainData {
-          width: 70%;
+          width: 65%;
 
           p {
             color: rgba(47, 71, 190, 0.687);
@@ -31,6 +32,7 @@
             font-weight: 600;
             line-height: 17px;
           }
+
           span {
             display: block;
             font-size: 13px;
@@ -40,12 +42,19 @@
         }
 
         .status {
-          width: 30%;
+          width: 35%;
           p {
             color: #0ca946e6;
             font-size: 13px;
             font-weight: 500;
           }
+        }
+
+        .del {
+          position: absolute;
+          right: 7px;
+          top: 10px;
+          background: transparent;
         }
       }
     }
@@ -64,10 +73,12 @@
     justify-content: center;
     gap: 10px;
     background: #4361ee;
+    z-index: 10;
 
     p {
       color: #fff;
       font-size: 16px;
+      font-weight: 500;
     }
   }
 }

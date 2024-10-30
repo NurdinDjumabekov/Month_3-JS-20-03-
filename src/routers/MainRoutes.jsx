@@ -14,7 +14,6 @@ import MainLayouts from "../layouts/MainLayouts/MainLayouts";
 /////// pages
 import MainPage from "../pages/MainPage/MainPage";
 import LoginPage from "../pages/LoginPage/LoginPage";
-import SettingsPage from "../pages/SettingsPage/SettingsPage";
 import MapsPage from "../pages/MapsPage/MapsPage";
 import CameraPage from "../pages/CameraPage/CameraPage";
 import SendInvoicePage from "../pages/SendInvoicePage/SendInvoicePage";
@@ -29,6 +28,7 @@ import InvoicesPages from "../pages/InvoicesPages/InvoicesPages";
 import ReturnsPages from "../pages/ReturnsPages/ReturnsPages";
 import ExpensePage from "../pages/ExpensePage/ExpensePage";
 import ApplicationsPages from "../pages/ApplicationsPages/ApplicationsPages";
+import PayPage from "../pages/PayPage/PayPage";
 
 const MainRoutes = () => {
   const dispatch = useDispatch();
@@ -52,16 +52,16 @@ const MainRoutes = () => {
             <Route path="/" element={<AllCategPage />} />
             <Route path="/app/*" element={<ApplicationsPages />} />
             <Route path="/invoice/*" element={<InvoicesPages />} />
-
-            <Route path="/return/*" element={<ReturnsPages />} />
-
             <Route path="/leftovers" element={<LeftoversPage />} />
+            <Route path="/return/*" element={<ReturnsPages />} />
+            <Route path="/expense" element={<ExpensePage />} />
+
+            <Route path="/pay" element={<PayPage />} />
+
             <Route path="/camera" element={<CameraPage />} />
             <Route path="/maps" element={<MapsPage />} />
             <Route path="/create_points" element={<AddPointsPage />} />
             <Route path="/add_points_route" element={<AddPointInRoutePage />} />
-            <Route path="/pay" element={<SettingsPage />} />
-            <Route path="/expense" element={<ExpensePage />} />
           </Route>
           <Route
             path="/send_app/:route_guid/:guid_point/:type"

@@ -7,6 +7,7 @@ import { useEffect } from "react";
 /////// fns
 import {
   createExpenseTA,
+  delExpenseTA,
   getListExpense,
   getListExpenseTA,
 } from "../../store/reducers/stateSlice";
@@ -24,6 +25,7 @@ import AddIcon from "../../assets/MyIcons/AddIcon";
 
 ////// helpers
 import { myAlert } from "../../helpers/MyAlert";
+import DeleteIcon from "../../assets/MyIcons/DeleteIcon";
 
 const ExpensePage = () => {
   const dispatch = useDispatch();
@@ -63,6 +65,14 @@ const ExpensePage = () => {
     setData({ user_guid: dataSave?.guid, user_type: 1 });
   };
 
+  const delExpense = async ({ guid }) => {
+    const send = { expense_guid: guid };
+    const res = await dispatch(delExpenseTA(send))?.unwrap();
+    if (!!res?.result) {
+      dispatch(getListExpenseTA(dataSave?.guid));
+    }
+  };
+
   return (
     <>
       <NavMenu navText={"Траты"} />
@@ -85,9 +95,14 @@ const ExpensePage = () => {
                     <span>{item?.comment || "..."}</span>
                   </div>
                   <div className="status">
-                    <p>{item?.status_name}</p>
+                    <p>{item?.status_name} asda asd asd asdasd</p>
                     <p>{item?.amount} сом</p>
                   </div>
+                  {item?.status == 0 && (
+                    <button className="del" onClick={() => delExpense(item)}>
+                      <DeleteIcon width={22} height={22} color={"red"} />
+                    </button>
+                  )}
                 </div>
               ))}
             </div>

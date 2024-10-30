@@ -31,25 +31,20 @@ import NavMenu from "../../common/NavMenu/NavMenu";
 import AddPayPoint from "../../components/SettingsPage/AddPayPoint";
 import { getPointsRouteAgent } from "../../store/reducers/mapSlice";
 
-const SettingsPage = () => {
+const PayPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [viewApp, setViewApp] = useState(false);
 
   const { guid } = useSelector((state) => state.saveDataSlice?.dataSave);
-  const { debtEveryTA, dataPay } = useSelector((state) => state.paySlice);
+  const { dataPay } = useSelector((state) => state.paySlice);
   const { listPaysTA } = useSelector((state) => state.paySlice);
 
   useEffect(() => {
     dispatch(getWorkPlanEveryTA({ guid }));
     dispatch(getListPayTA({ agent_guid: guid }));
-    // dispatch(
-    //   setListWorkPlan([
-    //     { name: "Осталось выполнить", value: 95 },
-    //     { name: "Выполнено", value: 5 },
-    //   ])
-    // ); //// check
+
     dispatch(clearDataPay()); /// clear поля ввода данных для оплаты
     dispatch(getPointsRouteAgent({ guid, first: false }));
   }, []);
@@ -126,4 +121,4 @@ const SettingsPage = () => {
   );
 };
 
-export default SettingsPage;
+export default PayPage;

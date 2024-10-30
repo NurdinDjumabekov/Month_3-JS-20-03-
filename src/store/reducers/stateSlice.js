@@ -82,6 +82,24 @@ export const createExpenseTA = createAsyncThunk(
   }
 );
 
+////// delExpenseTA - create тратy
+export const delExpenseTA = createAsyncThunk(
+  "delExpenseTA",
+  async function (data, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/del_expense`;
+    try {
+      const response = await axiosInstance.post(url, data);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const stateSlice = createSlice({
   name: "stateSlice",
   initialState,
