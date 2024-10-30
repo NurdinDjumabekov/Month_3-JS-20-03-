@@ -395,9 +395,9 @@ export const dataCategory = [
   {
     codeid: 4,
     name: "Торговые точки",
-    link: "/maps",
+    link: "/points/main",
     img: "https://img.freepik.com/premium-vector/teamwork-web-concept-with-character-scene-man-woman-work-together-construct-cubes-developing-project-people-situation-flat-design-vector-illustration-social-media-marketing-material_9209-12505.jpg?w=1380",
-    pathApi: "/maps",
+    pathApi: "/points/main",
   },
   {
     codeid: 5,

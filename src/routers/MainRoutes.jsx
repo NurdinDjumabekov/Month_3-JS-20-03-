@@ -12,7 +12,6 @@ import MainLayouts from "../layouts/MainLayouts/MainLayouts";
 ////fns
 
 /////// pages
-import MainPage from "../pages/MainPage/MainPage";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import MapsPage from "../pages/MapsPage/MapsPage";
 import CameraPage from "../pages/CameraPage/CameraPage";
@@ -29,6 +28,7 @@ import ReturnsPages from "../pages/ReturnsPages/ReturnsPages";
 import ExpensePage from "../pages/ExpensePage/ExpensePage";
 import ApplicationsPages from "../pages/ApplicationsPages/ApplicationsPages";
 import PayPage from "../pages/PayPage/PayPage";
+import ActionsInPointsPage from "../pages/ActionsInPointsPage/ActionsInPointsPage";
 
 const MainRoutes = () => {
   const dispatch = useDispatch();
@@ -52,11 +52,14 @@ const MainRoutes = () => {
             <Route path="/" element={<AllCategPage />} />
             <Route path="/app/*" element={<ApplicationsPages />} />
             <Route path="/invoice/*" element={<InvoicesPages />} />
-            <Route path="/leftovers" element={<LeftoversPage />} />
             <Route path="/return/*" element={<ReturnsPages />} />
+            <Route path="/leftovers" element={<LeftoversPage />} />
             <Route path="/expense" element={<ExpensePage />} />
 
             <Route path="/pay" element={<PayPage />} />
+            {/* /// доделать */}
+
+            <Route path="/points*" element={<ActionsInPointsPage />} />
 
             <Route path="/camera" element={<CameraPage />} />
             <Route path="/maps" element={<MapsPage />} />

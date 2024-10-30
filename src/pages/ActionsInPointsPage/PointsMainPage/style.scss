@@ -1,0 +1,112 @@
+.pointsMain {
+  padding: 5px 15px 30px;
+  height: 100%;
+  position: relative;
+  overflow-y: scroll;
+
+  &__inner {
+    position: relative;
+    z-index: 99;
+    .every {
+      width: 100%;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin: 15px 0 0 0;
+      padding: 15px 25px 15px 15px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+
+      .texts {
+        .title {
+          display: flex;
+          align-items: center;
+
+          p {
+            font-size: 15px;
+            font-weight: 500;
+          }
+
+          b {
+            font-size: 15px;
+            font-weight: 500;
+            display: block;
+            margin: 0 0 0 5px;
+          }
+        }
+
+        span {
+          font-size: 15px;
+          font-weight: 700;
+        }
+      }
+
+      .icons {
+        width: 45px;
+        height: 45px;
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  .line1 {
+    position: fixed;
+    left: -219px;
+    top: 214px;
+    height: 20px;
+    width: 200%;
+    background: #406bfc;
+    transform: rotate(45deg);
+    z-index: 1;
+  }
+
+  .line2 {
+    position: fixed;
+    right: -219px;
+    bottom: 214px;
+    height: 20px;
+    width: 200%;
+    background: #406bfc;
+    transform: rotate(145deg);
+    z-index: 1;
+  }
+
+  .line3 {
+    position: fixed;
+    right: -340px;
+    top: 222px;
+    height: 20px;
+    width: 200%;
+    background: #406bfc;
+    transform: rotate(235deg);
+    z-index: 1;
+  }
+
+  .graphics {
+    margin: 15px 0 0 0 !important;
+    position: relative;
+
+    h5 {
+      font-size: 16px;
+      font-weight: 500;
+      position: absolute;
+      left: 15px;
+      top: 10px;
+    }
+
+    background: #fff;
+    height: 350px;
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 10px 0 0 0;
+    border-radius: 5px;
+    z-index: 99;
+    position: relative;
+  }
+}

@@ -95,7 +95,7 @@ const ExpensePage = () => {
                     <span>{item?.comment || "..."}</span>
                   </div>
                   <div className="status">
-                    <p>{item?.status_name} asda asd asd asdasd</p>
+                    <p>{item?.status_name}</p>
                     <p>{item?.amount} сом</p>
                   </div>
                   {item?.status == 0 && (
