@@ -27,7 +27,7 @@ const EveryDataHour = ({ content }) => {
   const navigate = useNavigate();
 
   const editEveryInvoice = () => {
-    const obj = { action: 1, date_from, date_to, invoice_guid };
+    const obj = { action: 1, date_from, date_to, invoice_guid, type_unit: 1 };
     // редактирвоание заявки
     navigate("/app/crud_invoice", { state: obj });
   };

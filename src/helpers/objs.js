@@ -301,3 +301,9 @@ export const objTypeInvoice = {
   1: { text: "На складе", color: "red" },
   2: { text: "Принято", color: "green" },
 };
+
+export const statusExpense = {
+  0: { text: "Ожидание", color: "red" },
+  1: { text: "Принят", color: "green" },
+  2: { text: "Отклонён", color: "red" },
+};

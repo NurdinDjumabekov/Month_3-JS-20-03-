@@ -6,6 +6,8 @@ import { useJsApiLoader } from "@react-google-maps/api";
 
 ////// styles
 import "./style.scss";
+
+////// components
 import Preloader from "../../../common/Preloader/Preloader";
 import Autocomplete from "../../../components/ActionsInPointsPage/RenderGoogleMaps/Autocomplete/Autocomplete";
 import GoogleMapsRoute from "../../../components/ActionsInPointsPage/RenderGoogleMaps/GoogleMapsRoute/GoogleMapsRoute";

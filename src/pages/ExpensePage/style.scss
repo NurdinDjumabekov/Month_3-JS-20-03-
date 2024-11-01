@@ -43,8 +43,8 @@
 
         .status {
           width: 35%;
+
           p {
-            color: #0ca946e6;
             font-size: 13px;
             font-weight: 500;
           }
@@ -82,6 +82,7 @@
     }
   }
 }
+
 .createExpense {
   .sendData {
     display: flex;

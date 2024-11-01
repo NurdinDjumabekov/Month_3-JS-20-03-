@@ -1,8 +1,7 @@
 /////// hooks
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
 ////// components
 import Slider from "react-slick";
@@ -21,8 +20,8 @@ import {
   activeSlideFN,
   getDataInvoiceReturn,
   getDataInvoiceSend,
+  getReportEveryTT,
 } from "../../../store/reducers/standartSlice";
-import { useEffect } from "react";
 
 const ActionForPointsPage = () => {
   const dispatch = useDispatch();
@@ -33,13 +32,14 @@ const ActionForPointsPage = () => {
 
   const { guid, point, balance, seller_fio } = location.state;
   const { route_sheet_guid, seller_guid, seller_number } = location.state;
-  const { start_time, end_time } = location.state;
+  const { start_time, end_time, point_guid } = location.state;
 
   const return_guid = location?.state?.return_guid;
   const send_guid = location?.state?.send_guid;
 
   const { listMenu, activeSlide } = useSelector((state) => state.standartSlice);
   const { inviceData } = useSelector((state) => state.standartSlice);
+  const { reportEveryTT } = useSelector((state) => state.standartSlice);
 
   const settings = {
     dots: false,
@@ -65,15 +65,22 @@ const ActionForPointsPage = () => {
     },
   };
 
+  console.log(reportEveryTT, "reportEveryTT");
+
   const handleMenuClick = (codeid) => {
     dispatch(activeSlideFN(codeid));
-    sliderRef.current.slickGoTo(codeid);
+    sliderRef.current?.slickGoTo(codeid);
   };
 
   useEffect(() => {
     dispatch(getDataInvoiceReturn(return_guid));
     dispatch(getDataInvoiceSend(send_guid));
   }, [activeSlide]);
+
+  useEffect(() => {
+    /// для получения данных осчетов ТА
+    dispatch(getReportEveryTT(point_guid));
+  }, []);
 
   return (
     <>
@@ -94,7 +101,7 @@ const ActionForPointsPage = () => {
         <div className="actionForPoints__content">
           <Slider ref={sliderRef} {...settings}>
             <div className="everySlide">
-              <MainInfo />
+              <MainInfo reportEveryTT={reportEveryTT} />
             </div>
             <div className="everySlide">
               <RerurnProd return_guid={return_guid} />

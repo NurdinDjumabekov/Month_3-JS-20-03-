@@ -82,7 +82,7 @@ const MainPage = () => {
 
         const obj = { action: 1, date_from, date_to, invoice_guid };
         // 1 - создание
-        navigate("/app/crud_invoice", { state: obj });
+        navigate("/app/crud_invoice", { state: { ...obj, type_unit: 1 } });
       }
     }
   };

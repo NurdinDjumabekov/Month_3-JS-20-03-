@@ -30,7 +30,7 @@ const MyInvoicePage = () => {
   const objRole = { 1: "reciever", 2: "sender" };
 
   const clickInvoice = (item) => {
-    navigate(`/invoice/view`, { state: { ...item, action: 1 } });
+    navigate(`/invoice/view`, { state: { ...item, action: item?.status } });
   };
 
   return (
@@ -50,6 +50,7 @@ const MyInvoicePage = () => {
               clickInvoice={clickInvoice}
               objStatus={objTypeInvoice}
               title={"sender_type"}
+              key={index}
             />
           ))}
         </div>

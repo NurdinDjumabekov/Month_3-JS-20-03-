@@ -59,7 +59,7 @@ const MainRoutes = () => {
             <Route path="/pay" element={<PayPage />} />
             {/* /// доделать */}
 
-            <Route path="/points*" element={<ActionsInPointsPage />} />
+            <Route path="/points/*" element={<ActionsInPointsPage />} />
 
             <Route path="/camera" element={<CameraPage />} />
             <Route path="/maps" element={<MapsPage />} />

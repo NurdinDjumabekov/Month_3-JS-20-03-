@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 ////// style
 import "./style.scss";
 
-const MainInfo = () => {
+const MainInfo = ({ reportEveryTT }) => {
   return (
     <div className="mainInfo">
       <div className="mainInfo__inner">
@@ -20,47 +20,47 @@ const MainInfo = () => {
         </div>
         <div className="info">
           <p>Долг точки: </p>
-          <span>01.11.2024</span>
+          <span>{reportEveryTT?.tt_oplata}</span>
         </div>
 
         <div className="info">
           <p>Сумма реализации: </p>
-          <span>5000 сом</span>
+          <span>{reportEveryTT?.tt_prinat_price} сом</span>
         </div>
 
         <div className="info">
           <p>Сумма возврата: </p>
-          <span>2342 сом</span>
+          <span>{reportEveryTT?.tt_vozvrat_price} сом</span>
         </div>
 
         <div className="info">
           <p>Сумма оплаты: </p>
-          <span>2000 сом</span>
+          <span>{reportEveryTT?.tt_oplata} сом</span>
         </div>
 
         <div className="info">
           <p>Вес возврата: </p>
-          <span>10 кг</span>
+          <span>{reportEveryTT?.tt_vozvrat_price} кг</span>
         </div>
 
         <div className="info">
           <p>Вес реализации: </p>
-          <span>200 кг</span>
+          <span>{reportEveryTT?.tt_prinat_count_kg} кг</span>
         </div>
 
         <div className="info">
           <p>Результат посещения: </p>
-          <span>Успешный</span>
+          <span>{reportEveryTT?.result || "Не посетил точку"}</span>
         </div>
 
         <div className="info">
           <p>Время посещения: </p>
-          <span>19:00</span>
+          <span>{reportEveryTT?.start_time || "..."}</span>
         </div>
 
         <div className="info">
           <p>Завершение сеанса: </p>
-          <span>20:00</span>
+          <span>{reportEveryTT?.end_time || "..."}</span>
         </div>
       </div>
 

@@ -20,7 +20,9 @@ import { getListProdsNur } from "../../store/reducers/standartSlice";
 ////// helpers
 import { transformLists } from "../../helpers/transformLists";
 
-const ListChoiceProds = ({ setSearch, search, invoice_guid, action }) => {
+const ListChoiceProds = (props) => {
+  const { setSearch, search, invoice_guid, action, type_unit } = props;
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -40,7 +42,7 @@ const ListChoiceProds = ({ setSearch, search, invoice_guid, action }) => {
   const workShop = transformLists(listWorkShopsNur, "guid", "name");
 
   const clickProd = (obj) => {
-    const send = { ...obj, invoice_guid, action, count_kg: "" };
+    const send = { ...obj, invoice_guid, action, count_kg: "", type_unit };
     navigate("/app/input_prods", { state: send });
   };
 

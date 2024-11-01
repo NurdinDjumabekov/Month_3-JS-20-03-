@@ -31,7 +31,7 @@ const InputInvoicePage = () => {
 
   const { product_name, invoice_guid, workshop_price } = location?.state;
   const { category_name, product_guid, action } = location?.state;
-  const { count_kg } = location?.state;
+  const { count_kg, type_unit } = location?.state;
 
   const [count, setCount] = useState("");
 
@@ -85,7 +85,7 @@ const InputInvoicePage = () => {
       myAlert("Поля не должны быть пустыми или равны 0", "error");
       return;
     }
-    
+
     const products = [{ product_guid, count, workshop_price }];
     const data = { invoice_guid, comment: "...", products, status: 2 };
     const res = await dispatch(editProdsInInvoiceNur({ data })).unwrap();
@@ -114,6 +114,11 @@ const InputInvoicePage = () => {
     }
   };
 
+  const objUnit = {
+    1: "Введите итоговое кол-во товара",
+    2: "Введите итоговый вес товара",
+  };
+
   return (
     <>
       <NavMenu navText={"Назад"} />
@@ -138,7 +143,7 @@ const InputInvoicePage = () => {
 
         <form className="count" onSubmit={crateaction}>
           <div className="inputSend">
-            <p>Введите итоговый вес товара</p>
+            <p>{objUnit?.[type_unit]}</p>
             <input
               value={count}
               onChange={onChange}

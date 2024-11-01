@@ -17,25 +17,39 @@ import mapIcon from "../../../../assets/images/free-icon-map-854878.png";
 import mapIcon2 from "../../../../assets/images/map_11515753.png";
 import mapIcon3 from "../../../../assets/images/distance_11515677.png";
 
+////// fns
+import { getCountsPoint } from "../../../../store/reducers/standartSlice";
+
 const PointsMainPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { dataSave } = useSelector((state) => state.saveDataSlice);
+  const { countsPoints } = useSelector((state) => state.standartSlice);
+
   const list = [
-    { codeid: 1, name: "Список всех торговых точек", img: mapIcon, nav: "/" },
+    {
+      codeid: 1,
+      name: "Список всех торговых точек",
+      img: mapIcon,
+      nav: "/sadasd",
+      count: countsPoints?.total_tt,
+    },
     {
       codeid: 2,
       name: "Торговые точки на сегодня",
       more: "карта",
       img: mapIcon2,
       nav: "/maps",
+      count: countsPoints?.today_tt,
     },
     {
       codeid: 3,
       name: "Торговые точки на сегодня",
       more: "список",
       img: mapIcon3,
-      nav: "/",
+      nav: "/list_day",
+      count: countsPoints?.today_tt,
     },
   ];
 
@@ -55,6 +69,10 @@ const PointsMainPage = () => {
 
   const clickTypePoint = ({ nav }) => navigate(`/points${nav}`);
 
+  useEffect(() => {
+    dispatch(getCountsPoint(dataSave?.guid));
+  }, []);
+
   return (
     <>
       <NavMenu navText={"Список торговых точек"} />
@@ -64,14 +82,18 @@ const PointsMainPage = () => {
         <div className="line3"></div>
         <div className="pointsMain__inner">
           {list?.map((i) => (
-            <div className="every" onClick={() => clickTypePoint(i)}>
+            <div
+              className="every"
+              onClick={() => clickTypePoint(i)}
+              key={i?.codeid}
+            >
               <div className="texts">
                 <div className="title">
                   <p>
                     {i?.name} {!!i?.more && <>({i?.more})</>}
                   </p>
                 </div>
-                <span>10+</span>
+                <span>{+i?.count}+</span>
               </div>
               <div className="icons">
                 <img src={i?.img} alt="" />

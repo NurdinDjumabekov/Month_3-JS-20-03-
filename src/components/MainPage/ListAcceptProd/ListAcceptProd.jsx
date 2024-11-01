@@ -37,6 +37,7 @@ const ListAcceptProd = ({ invoice_guid }) => {
 
     if (res?.[0]?.result == 1) {
       myAlert("Удалено");
+      getData();
     } else {
       myAlert(res?.[0]?.msg, "error");
     }

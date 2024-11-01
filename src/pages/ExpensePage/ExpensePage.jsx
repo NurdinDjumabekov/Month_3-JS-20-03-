@@ -26,10 +26,10 @@ import AddIcon from "../../assets/MyIcons/AddIcon";
 ////// helpers
 import { myAlert } from "../../helpers/MyAlert";
 import DeleteIcon from "../../assets/MyIcons/DeleteIcon";
+import { statusExpense } from "../../helpers/objs";
 
 const ExpensePage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [data, setData] = useState({ amount: "", comment: "" });
 
@@ -95,7 +95,9 @@ const ExpensePage = () => {
                     <span>{item?.comment || "..."}</span>
                   </div>
                   <div className="status">
-                    <p>{item?.status_name}</p>
+                    <p style={{ color: statusExpense?.[item?.status]?.color }}>
+                      {statusExpense?.[item?.status]?.text}
+                    </p>
                     <p>{item?.amount} сом</p>
                   </div>
                   {item?.status == 0 && (

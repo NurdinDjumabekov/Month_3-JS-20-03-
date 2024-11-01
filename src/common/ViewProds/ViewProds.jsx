@@ -69,13 +69,13 @@ const ViewProds = (props) => {
               Итого
             </TableCell>
             <TableCell align="left">
-              {roundingNum(+list?.[0]?.[total_count_kg])}
+              {roundingNum(+list?.[0]?.[total_count_kg]) || 0}
             </TableCell>
             <TableCell align="left">
-              {roundingNum(+list?.[0]?.[total_count])}
+              {roundingNum(+list?.[0]?.[total_count]) || 0}
             </TableCell>
             <TableCell align="left">
-              {roundingNum(+list?.[0]?.[total_price])}
+              {roundingNum(+list?.[0]?.[total_price]) || 0}
             </TableCell>
           </TableRow>
         </Table>

@@ -13,6 +13,8 @@ const initialState = {
   listMenu: [...listMenuLocal],
   activeSlide: 0,
   inviceData: { return: {}, send: {} }, // возврат,  // приход
+  countsPoints: { today_tt: 0, total_tt: 0 },
+  reportEveryTT: {}, /// отчет каждой точки
 };
 
 ////// getListWorkShopsNur - get список цехов
@@ -195,6 +197,42 @@ export const getDataInvoiceSend = createAsyncThunk(
   }
 );
 
+////// getCountsPoint - get кол-ва точек у агента(на сегодня и в общем)
+export const getCountsPoint = createAsyncThunk(
+  "getCountsPoint",
+  async function (agent_guid, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/get_point_count?agent_guid=${agent_guid}`;
+    try {
+      const response = await axiosInstance(url);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+////// getReportEveryTT - get данные отчеты каждогой ТТ
+export const getReportEveryTT = createAsyncThunk(
+  "getReportEveryTT",
+  async function (point_guid, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/get_point_report?point_guid=${point_guid}&date`;
+    try {
+      const response = await axiosInstance(url);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const standartSlice = createSlice({
   name: "standartSlice",
   initialState,
@@ -295,6 +333,32 @@ const standartSlice = createSlice({
     });
     builder.addCase(getDataInvoiceSend.pending, (state, action) => {
       // state.preloader = true;
+    });
+
+    ///////////////// getCountsPoint
+    builder.addCase(getCountsPoint.fulfilled, (state, action) => {
+      state.preloader = false;
+      state.countsPoints = action.payload;
+    });
+    builder.addCase(getCountsPoint.rejected, (state, action) => {
+      state.error = action.payload;
+      state.preloader = false;
+    });
+    builder.addCase(getCountsPoint.pending, (state, action) => {
+      state.preloader = true;
+    });
+
+    ///////////////// getReportEveryTT
+    builder.addCase(getReportEveryTT.fulfilled, (state, action) => {
+      state.preloader = false;
+      state.reportEveryTT = action.payload;
+    });
+    builder.addCase(getReportEveryTT.rejected, (state, action) => {
+      state.error = action.payload;
+      state.preloader = false;
+    });
+    builder.addCase(getReportEveryTT.pending, (state, action) => {
+      state.preloader = true;
     });
   },
 });

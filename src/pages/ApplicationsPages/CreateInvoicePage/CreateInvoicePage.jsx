@@ -32,6 +32,8 @@ const CreateInvoicePage = () => {
   const inputRef = useRef(null);
 
   const { action, invoice_guid } = location?.state;
+  const type_unit = location?.state?.type_unit || 2;
+  /// 1 - шт, 2 кг
 
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -139,6 +141,7 @@ const CreateInvoicePage = () => {
             search={search}
             invoice_guid={invoice_guid}
             action={action}
+            type_unit={type_unit}
           />
           <ListAcceptInvoice invoice_guid={invoice_guid} action={action} />
         </Slider>

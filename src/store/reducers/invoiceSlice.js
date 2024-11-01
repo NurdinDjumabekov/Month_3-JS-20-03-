@@ -256,7 +256,7 @@ export const sendInvoiceForTT = createAsyncThunk(
 export const getMyInvoice = createAsyncThunk(
   "getMyInvoice",
   async function (guid, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/get_invoices?date=0&reciever_guid=${guid}&page=main`;
+    const url = `${REACT_APP_API_URL}/ta/get_invoices?date=0&reciever_guid=${guid}&page=all_workshop`;
     try {
       const response = await axiosInstance(url);
       if (response.status >= 200 && response.status < 300) {
