@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import axiosInstance from "../../axiosInstance";
+import { listMenuLocal } from "../../helpers/LocalData";
 
 const { REACT_APP_API_URL } = process.env;
 
@@ -9,6 +10,9 @@ const initialState = {
   listWorkShopsNur: [], // список цехов
   listProdsNur: [], // список цехов
   listOrdersNur: [],
+  listMenu: [...listMenuLocal],
+  activeSlide: 0,
+  inviceData: { return: {}, send: {} }, // возврат,  // приход
 };
 
 ////// getListWorkShopsNur - get список цехов
@@ -155,12 +159,54 @@ export const createInvoice = createAsyncThunk(
   }
 );
 
+////// getDataInvoiceReturn - get данные накладных возврата
+export const getDataInvoiceReturn = createAsyncThunk(
+  "getDataInvoiceReturn",
+  async function (invoice_guid, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/get_application?invoice_guid=${invoice_guid}`;
+    try {
+      const response = await axiosInstance(url);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data?.[0] || {};
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+////// getDataInvoiceSend - get данные накладных отпуска
+export const getDataInvoiceSend = createAsyncThunk(
+  "getDataInvoiceSend",
+  async function (invoice_guid, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/get_application?invoice_guid=${invoice_guid}`;
+    try {
+      const response = await axiosInstance(url);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data?.[0] || {};
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const standartSlice = createSlice({
   name: "standartSlice",
   initialState,
   reducers: {
-    asdas: (state, action) => {
-      state.stateLoad = action?.payload;
+    listMenuFN: (state, action) => {
+      state.listMenu = action?.payload;
+    },
+    activeSlideFN: (state, action) => {
+      state.activeSlide = action?.payload;
+    },
+    clearListOrdersNurFN: (state, action) => {
+      state.listOrdersNur = [];
     },
   },
   extraReducers: (builder) => {
@@ -216,9 +262,44 @@ const standartSlice = createSlice({
     builder.addCase(getListProdsInInvoiceNur.pending, (state, action) => {
       state.preloader = true;
     });
+
+    ///////////////// getDataInvoiceReturn
+    builder.addCase(getDataInvoiceReturn.fulfilled, (state, action) => {
+      // state.preloader = false;
+      state.inviceData = {
+        ...state.inviceData,
+        return: action.payload,
+      };
+    });
+    builder.addCase(getDataInvoiceReturn.rejected, (state, action) => {
+      state.error = action.payload;
+      // state.preloader = false;
+      state.listSendOrders = [];
+    });
+    builder.addCase(getDataInvoiceReturn.pending, (state, action) => {
+      // state.preloader = true;
+    });
+
+    ///////////////// getDataInvoiceSend
+    builder.addCase(getDataInvoiceSend.fulfilled, (state, action) => {
+      // state.preloader = false;
+      state.inviceData = {
+        ...state.inviceData,
+        send: action.payload,
+      };
+    });
+    builder.addCase(getDataInvoiceSend.rejected, (state, action) => {
+      state.error = action.payload;
+      // state.preloader = false;
+      state.listSendOrders = [];
+    });
+    builder.addCase(getDataInvoiceSend.pending, (state, action) => {
+      // state.preloader = true;
+    });
   },
 });
 
-export const { asdas } = standartSlice.actions;
+export const { listMenuFN, activeSlideFN, clearListOrdersNurFN } =
+  standartSlice.actions;
 
 export default standartSlice.reducer;

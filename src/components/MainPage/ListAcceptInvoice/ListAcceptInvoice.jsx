@@ -25,8 +25,6 @@ const ListAcceptInvoice = ({ invoice_guid }) => {
   const [delInvoice, setDelInvoice] = useState(false);
 
   const { listTA } = useSelector((state) => state.mainSlice);
-  const { guid } = useSelector((state) => state.mainSlice?.invoiceInfo);
-  const { listSendOrders } = useSelector((state) => state.mainSlice);
   const { activeDate } = useSelector((state) => state.mainSlice);
 
   const delIInvoice = () => {

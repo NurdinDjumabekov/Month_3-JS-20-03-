@@ -9,7 +9,7 @@ import InsertCommentIcon from "@mui/icons-material/InsertComment";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import TaskIcon from "@mui/icons-material/Task";
 
-let eventGuid = 0;
+let eventGuid = 1;
 let todayStr = new Date().toISOString().replace(/T.*$/, ""); // YYYY-MM-DD of today
 
 export const INITIAL_EVENTS = [
@@ -57,30 +57,6 @@ export const pointsTT = [
   {
     coordinates: [74.5573735, 42.8298586],
     text: "Marker 5",
-  },
-];
-
-const segments = [
-  {
-    color: "#43e843",
-    label: "A",
-    coords: [
-      [74.5907, 42.8765], // Пункт А (начало маршрута)
-      [74.5922, 42.8751], // Дорога 1
-      [74.5944, 42.874], // Дорога 2
-    ],
-  },
-
-  {
-    color: "#43e843",
-    label: "B",
-    coords: [
-      [74.5944, 42.874], // Переход на другой сегмент
-      [74.5966, 42.8725], // Дорога 3
-      [74.5988, 42.871], // Дорога 4
-      [74.5988, 42.871], // Пункт B (конец маршрута)
-      [74.6009, 42.8695], // Дорога 5
-    ],
   },
 ];
 
@@ -231,26 +207,6 @@ export const listActions_TA = [
     link: "/return",
   },
 ];
-
-const asda = {
-  comment: "",
-  end_time: "12:10",
-  guid: "8B2FA324-1A9D-4E17-BC28-961E29C6B7B5",
-  lat: "42.892466738541785",
-  lon: "74.53660586276366",
-  ordering: 2,
-  point: "к. Восток-5 (базар) ",
-  guid_point: "0F981F22-1C3C-11E7-82A3-000C2986F897",
-  route_sheet_guid: "F384863D-F97E-46EE-8437-BD1395713306",
-  seller_fio: "Сухорукова Светлана Ивановна",
-  seller_number: "755369169",
-  seller_photo:
-    "https://st2.depositphotos.com/1003098/5850/i/450/depositphotos_58506567-stock-photo-salespeople-standing-in-hardware-store.jpg",
-  set_end_time: null,
-  set_start_time: null,
-  start_time: "11:50",
-  status: 1,
-};
 
 export const logoSeller =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsBoEakbCXS0yKg6yRKEsmsMyf9qbMLhwBEyokbVraQoK0ZarRTmE4GjmOI5tjkpCWaLY&usqp=CAU";
@@ -934,4 +890,13 @@ export const listProdsCateg = [
       },
     ],
   },
+];
+
+export const listMenuLocal = [
+  { name: "Информация", codeid: 0 },
+  { name: "Возврат", codeid: 1 },
+  { name: "Реализация", codeid: 2 },
+  { name: "Оплата", codeid: 3 },
+  { name: "Фото отчет", codeid: 4 },
+  { name: "Задания от руководителя", codeid: 5 },
 ];

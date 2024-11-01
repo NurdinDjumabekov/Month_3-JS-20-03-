@@ -47,13 +47,11 @@ const App = () => {
 
     getLocationAndSend();
 
-    if (user_type == 1) {
-      //// только для ТА
-      const intervalId = setInterval(getLocationAndSend, 10000);
+    //// только для ТА
+    const intervalId = setInterval(getLocationAndSend, 10000);
 
-      // Очищаем таймер при размонтировании компонента
-      return () => clearInterval(intervalId);
-    }
+    // Очищаем таймер при размонтировании компонента
+    return () => clearInterval(intervalId);
   }, []);
 
   return (

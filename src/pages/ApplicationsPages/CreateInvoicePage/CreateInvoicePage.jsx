@@ -21,10 +21,8 @@ import colorArrowBtn from "../../../assets/icons/colorArrowBtn.svg";
 
 ///// fns
 import { setActiveWorkShop } from "../../../store/reducers/selectsSlice";
-import {
-  getListWorkShopsNur,
-  searchListProdsNur,
-} from "../../../store/reducers/standartSlice";
+import { searchListProdsNur } from "../../../store/reducers/standartSlice";
+import { getListWorkShopsNur } from "../../../store/reducers/standartSlice";
 import { getListProdsNur } from "../../../store/reducers/standartSlice";
 
 const CreateInvoicePage = () => {
@@ -151,25 +149,25 @@ const CreateInvoicePage = () => {
 
 export default CreateInvoicePage;
 
-function LeftBtn(props) {
+export const LeftBtn = (props) => {
   const { className, style, onClick } = props;
   return (
     <div className={`${className} leftBtnPage`} onClick={onClick}>
       <img src={colorArrowBtn} alt=">" />
     </div>
   );
-}
+};
 
-function RightBtn(props) {
+export const RightBtn = (props) => {
   const { className, style, onClick } = props;
   return (
     <div className={`${className} rightBtnPage`} onClick={onClick}>
       <img src={colorArrowBtn} alt=">" />
     </div>
   );
-}
+};
 
-function NoneBtn(props) {
+export const NoneBtn = (props) => {
   const { className, style, onClick } = props;
   return (
     <div
@@ -178,4 +176,4 @@ function NoneBtn(props) {
       onClick={onClick}
     />
   );
-}
+};

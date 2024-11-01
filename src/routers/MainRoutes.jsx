@@ -95,14 +95,3 @@ const MainRoutes = () => {
 
 export default MainRoutes;
 /// user_type 2 - админ, 1 - агент
-
-// useEffect(() => {
-//   (async () => {
-//     try {
-//       const data = await dispatch(TestTest()).unwrap();
-//       console.log(data, "data");
-//     } catch (error) {
-//       // обработка ошибки
-//     }
-//   })();
-// }, []);

@@ -34,9 +34,11 @@ const MainLayouts = () => {
   const objMenu = { 1: <MenuAgents /> };
   /// user_type - 1 agent 2 admin
 
+  const checkMap = "/points/maps" == pathname;
+
   return (
     <div className="layouts">
-      <div className={`pages`}>
+      <div className={`pages ${checkMap ? "mapsStyle" : ""}`}>
         <Outlet />
       </div>
       {/* {objMenu?.[user_type]} */}

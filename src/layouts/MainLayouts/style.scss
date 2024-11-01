@@ -15,22 +15,9 @@ $widthAllContent: 100%;
     margin: 50px 0 0 0;
   }
 
-  //// только для админа
-  .adminInfo {
-    padding: 0 !important;
-
-    .plan {
-      display: none;
-    }
-
-    .mainPage {
-      height: 98vh;
-
-      .menuLeft {
-        &__inner {
-          padding: 12px 10px;
-        }
-      }
-    }
+  .mapsStyle {
+    height: 100% !important;
+    min-height: 100% !important;
+    margin: 0 !important;
   }
 }

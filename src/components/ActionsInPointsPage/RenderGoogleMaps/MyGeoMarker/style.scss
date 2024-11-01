@@ -1,0 +1,49 @@
+.myGeoIcon {
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #aed3ec;
+  border-radius: 50%;
+  width: 37px;
+  height: 37px;
+  animation: pulse 1s infinite;
+  z-index: 10;
+
+  &::before {
+    content: "";
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    background: #fff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+
+  &::after {
+    content: "";
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #2599fc;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+}
+
+// Анимация пульсации
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}

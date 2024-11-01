@@ -1,16 +1,21 @@
 //////// hooks
 import React, { useState, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 
 /////// components
-import PointsMainPage from "./PointsMainPage/PointsMainPage";
+import PointsMainPage from "../../components/ActionsInPointsPage/RenderGoogleMaps/PointsMainPage/PointsMainPage";
+import RenderGoogleMaps from "./RenderGoogleMaps/RenderGoogleMaps";
+import ActionForPointsPage from "./ActionForPointsPage/ActionForPointsPage";
+import PayActionPage from "./PayActionPage/PayActionPage";
 
 const ActionsInPointsPage = () => {
   return (
     <Routes>
       <Route path="/" element={<ActionsInPointsPage />} />
       <Route path="/main" element={<PointsMainPage />} />
+      <Route path="/maps" element={<RenderGoogleMaps />} />
+      <Route path="/actions" element={<ActionForPointsPage />} />
+      <Route path="/pay" element={<PayActionPage />} />
     </Routes>
   );
 };

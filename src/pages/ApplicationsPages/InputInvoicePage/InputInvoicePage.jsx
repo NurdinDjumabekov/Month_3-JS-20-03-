@@ -85,6 +85,7 @@ const InputInvoicePage = () => {
       myAlert("Поля не должны быть пустыми или равны 0", "error");
       return;
     }
+    
     const products = [{ product_guid, count, workshop_price }];
     const data = { invoice_guid, comment: "...", products, status: 2 };
     const res = await dispatch(editProdsInInvoiceNur({ data })).unwrap();

@@ -68,7 +68,7 @@ const ReturnHistoryPage = () => {
       user_guid: dataSave?.guid, // guid человека кто создает
       user_type: 1,
       comment: "Возврат накладной",
-      invoice_type: 4, // всегда 4!
+      invoice_type: 4, // для накладной возврата
     };
 
     const res = await dispatch(createInvoice(send)).unwrap();

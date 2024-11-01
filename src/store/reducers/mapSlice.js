@@ -117,44 +117,6 @@ export const getPointsRouteAgent = createAsyncThunk(
   }
 );
 
-////// getDateRouteAgent - get данных координат каждого ТА
-export const getDateRouteAgent = createAsyncThunk(
-  "getDateRouteAgent",
-  async function ({ guid, date }, { dispatch, rejectWithValue }) {
-    const dateNew = transformActionDate(date);
-    const url = `${REACT_APP_API_URL}/ta/get_all_gps?agent_guid=${guid}&date_from=${dateNew}&date_to=${dateNew}`;
-    try {
-      const response = await axiosInstance(url);
-      if (response.status >= 200 && response.status < 300) {
-        return response.data;
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-////// getAllRouteAgent - get данных координат всех ТА
-export const getAllRouteAgent = createAsyncThunk(
-  "getAllRouteAgent",
-  async function (props, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/get_current_gps?agent_guid=0`;
-    try {
-      const response = await axiosInstance(url);
-      if (response.status >= 200 && response.status < 300) {
-        console.log("start");
-        return response.data;
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
 ////// getListRoute - get данных координат для обьезда у каждого ТА
 export const getListRoute = createAsyncThunk(
   "getListRoute",
@@ -247,73 +209,15 @@ export const getListRoutesForMap = createAsyncThunk(
   }
 );
 
-////// everyRouteCRUD - create, edit, del списка координат обьезда у каждого дня
-export const everyRouteCRUD = createAsyncThunk(
-  "ListRouteCRUD",
-  async function (data, { dispatch, rejectWithValue }) {
-    const { route_sheet_guid, actionType, noneAlert } = data;
-    const objReq = { 1: "post", 2: "put", 3: "put" };
-    const objurl = { 1: "create_route", 2: "update_route", 3: "update_route" };
-
-    const url = `${REACT_APP_API_URL}/ta/${objurl?.[actionType]}`;
-
-    try {
-      const response = await axiosInstance[objReq?.[actionType]](url, data);
-      if (response.status >= 200 && response.status < 300) {
-        if (response.data?.result == 1) {
-          if (!noneAlert) {
-            //// разрешаю выводить alert только в edit
-            myAlert(response.data?.msg);
-          }
-          dispatch(clearEveryListRouteCRUD()); /// очищаю state для заркытия модалки
-          dispatch(getEveryRouteWithTT(route_sheet_guid)); /// обновляю список маршрутов для определенного дня
-        } else {
-          myAlert(response.data?.msg, "error");
-        }
-        return response.data;
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-////// editCoordsPoint - обновление координат точек
-export const editCoordsPoint = createAsyncThunk(
-  "editCoordsPoint",
-  async function (data, { dispatch, rejectWithValue }) {
-    const { agent_guid } = data;
-    const url = `${REACT_APP_API_URL}/ta/update_point`;
-    try {
-      const response = await axiosInstance.put(url, data);
-      if (response.status >= 200 && response.status < 300) {
-        dispatch(getListRoute({ agent_guid }));
-        dispatch(setActiveViewMap(clearActiveMap));
-        myAlert(`Координаты точки '${data?.point}' обновлены`);
-        return response.data;
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
 ////// getListRoutes_TA - get данных координат точек определенного агента
 export const getListRoutes_TA = createAsyncThunk(
   "getListRoutes_TA",
-  async function (props, { dispatch, rejectWithValue }) {
-    const { agent_guid, user_type, activeDate } = props;
-    const url = `${REACT_APP_API_URL}/ta/agent_route_sheet?agent_guid=${agent_guid}&date=${activeDate}`;
+  async function (agent_guid, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/agent_route_sheet?agent_guid=${agent_guid}`;
     try {
       const response = await axiosInstance(url);
       if (response.status >= 200 && response.status < 300) {
-        const obj = { route_sheet_guid: response.data?.[0]?.guid, user_type };
-        dispatch(getEveryRoutes_TA(obj));
-        return response.data?.[0]?.listRouteTA;
+        return response.data?.[0]?.guid;
       } else {
         throw Error(`Error: ${response.status}`);
       }
@@ -327,12 +231,12 @@ export const getListRoutes_TA = createAsyncThunk(
 export const getEveryRoutes_TA = createAsyncThunk(
   "getEveryRoutes_TA",
   async function (props, { dispatch, rejectWithValue }) {
-    const { route_sheet_guid, user_type } = props;
+    const { route_sheet_guid } = props;
     const url = `${REACT_APP_API_URL}/ta/agent_routes?route_sheet_guid=${route_sheet_guid}`;
     try {
       const response = await axiosInstance(url);
       if (response.status >= 200 && response.status < 300) {
-        return { list: response.data, user_type };
+        return { list: response.data };
       } else {
         throw Error(`Error: ${response.status}`);
       }
@@ -425,57 +329,6 @@ const mapSlice = createSlice({
       state.preloader = true;
     });
 
-    ////////////// getDateRouteAgent
-    builder.addCase(getDateRouteAgent.fulfilled, (state, action) => {
-      state.preloader = false;
-      const start =
-        action.payload?.length > 0 ? action.payload?.[0] : undefined;
-      const end =
-        action.payload?.length > 0
-          ? action.payload?.[action.payload.length - 1]
-          : undefined;
-
-      const listCords = action.payload?.map((i) => [i?.lon, i?.lat]);
-
-      state.listRouteEveryTA = [
-        {
-          color: "#43e843",
-          label: "A",
-          coords: [[start?.lon, start?.lat]], // Пункт А (начало маршрута)
-        },
-        {
-          color: "#43e843",
-          label: "",
-          coords: listCords,
-        },
-        {
-          color: "#43e843",
-          label: "B",
-          coords: [[end?.lon, end?.lat]], // Пункт А (начало маршрута)
-        },
-      ];
-    });
-    builder.addCase(getDateRouteAgent.rejected, (state, action) => {
-      state.error = action.payload;
-      state.preloader = false;
-    });
-    builder.addCase(getDateRouteAgent.pending, (state, action) => {
-      state.preloader = true;
-    });
-
-    ////////////// getAllRouteAgent
-    builder.addCase(getAllRouteAgent.fulfilled, (state, action) => {
-      state.preloader = false;
-      state.listRouteAllTA = action.payload;
-    });
-    builder.addCase(getAllRouteAgent.rejected, (state, action) => {
-      state.error = action.payload;
-      state.preloader = false;
-    });
-    builder.addCase(getAllRouteAgent.pending, (state, action) => {
-      state.preloader = true;
-    });
-
     /////////////// getListRoute
     builder.addCase(getListRoute.fulfilled, (state, action) => {
       state.preloader = false;
@@ -538,10 +391,9 @@ const mapSlice = createSlice({
 
     //////////////// getEveryRoutes_TA
     builder.addCase(getEveryRoutes_TA.fulfilled, (state, action) => {
-      const user_type = action.payload?.user_type; // 1 - Та, 2 - админ
-      const list = action.payload?.list; /// geo TA
+      const list = action.payload?.list;
       const lat = state.mapGeo?.latitude; /// geo TA
-      const lon = state.mapGeo?.longitude;
+      const lon = state.mapGeo?.longitude; /// geo TA
       const firstObj = action.payload?.list?.[0];
 
       const myData = { ...firstObj, lat, lon, ...pastGeoData };
@@ -551,9 +403,19 @@ const mapSlice = createSlice({
       /// если уже есть стартовая точка
 
       if (checkSides) {
-        state.everyRoutes_TA = list;
+        state.everyRoutes_TA = list?.map((i) => ({
+          ...i,
+          lng: +i?.lat,
+          lat: +i?.lon,
+        }));
       } else {
-        state.everyRoutes_TA = [myData, ...list];
+        // state.everyRoutes_TA = [...list]?.map((i) => ({
+        state.everyRoutes_TA = [myData, ...list]?.map((i) => ({
+          ...i,
+          lng: +i?.lon,
+          lat: +i?.lat,
+        }));
+        /// lat: 42.857, lng: 74.628
       }
       state.preloader = false;
     });
