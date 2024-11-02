@@ -37,6 +37,7 @@ const ListChoiceProds = (props) => {
     dispatch(getListProdsNur({ links, guid: item?.value }));
     // get список товаров с категориями
     setSearch("");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const workShop = transformLists(listWorkShopsNur, "guid", "name");

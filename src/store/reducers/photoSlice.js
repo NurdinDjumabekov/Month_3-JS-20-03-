@@ -12,7 +12,7 @@ const initialState = {
   activeRouteList: {}, /// активный маршрутный лист
 };
 
-////// sendPhotos - отправка фото торговой точки
+////// sendPhotos - отправка фото для всех данные (фото точки, фото задания для руководителя)
 export const sendPhotos = createAsyncThunk(
   "sendPhotos",
   async function ({ data }, { dispatch, rejectWithValue }) {
@@ -20,6 +20,25 @@ export const sendPhotos = createAsyncThunk(
     try {
       const response = await axios.post(url, data);
       if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+////// delPhotos - удалить фото торговой точки
+export const delPhotos = createAsyncThunk(
+  "delPhotos",
+  async function (data, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/del_file`;
+    try {
+      const response = await axiosInstance.post(url, data);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
       } else {
         throw Error(`Error: ${response.status}`);
       }
@@ -33,10 +52,10 @@ export const sendPhotos = createAsyncThunk(
 export const getListPhotos = createAsyncThunk(
   "getListPhotos",
   async function (props, { dispatch, rejectWithValue }) {
-    const { guid, guid_point, route_guid } = props;
+    const { agent_guid, point_guid, route_sheet_guid } = props;
 
     const date = transformActionDate(new Date());
-    const url = `${REACT_APP_API_URL}/ta/get_file?date=${date}&agent_guid=${guid}&point_guid=${guid_point}&route_guid=${route_guid}`;
+    const url = `${REACT_APP_API_URL}/ta/get_file?date=${date}&agent_guid=${agent_guid}&point_guid=${point_guid}&route_guid=${route_sheet_guid}`;
     try {
       const response = await axiosInstance(url);
       if (response.status >= 200 && response.status < 300) {

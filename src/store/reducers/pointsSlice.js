@@ -30,6 +30,7 @@ const initialState = {
   }, //// для добавление в маршрут новой точки от имени ТА
 
   listsTasks: [], /// список задач для ТА
+  everyTasks: {}, /// каждая задача
 };
 
 ////// getAddres - get наименование точки
@@ -91,14 +92,6 @@ export const addNewPontToday = createAsyncThunk(
     try {
       const response = await axiosInstance.post(url, data);
       if (response.status >= 200 && response.status < 300) {
-        if (response.data?.result == 1) {
-          myAlert("Новый маршрут был построен");
-          data?.navigate("/maps");
-          dispatch(setStateLoad()); // (нужен для перезагрузки карт)
-        }
-        if (response.data?.result == 0) {
-          myAlert("Маршрут с такой точкой уже построен!", "error");
-        }
         return response.data?.result;
       } else {
         throw Error(`Error: ${response.status}`);
@@ -109,13 +102,13 @@ export const addNewPontToday = createAsyncThunk(
   }
 );
 
-////// getTasks - get наименование точки
+////// getTasks - get сипсок тасков
 export const getTasks = createAsyncThunk(
   "getTasks",
   async function (props, { dispatch, rejectWithValue }) {
     const date = transformDate(new Date());
     const { agent_guid, point_guid } = props;
-    const url = `${REACT_APP_API_URL}/ta/get_tasks?agent_guid=${agent_guid}&date=${date}&point_guid=${point_guid}&is_admin`;
+    const url = `${REACT_APP_API_URL}/ta/get_tasks?agent_guid=${agent_guid}&point_guid=${point_guid}`;
     try {
       const response = await axiosInstance(url);
       if (response.status >= 200 && response.status < 300) {
@@ -129,13 +122,13 @@ export const getTasks = createAsyncThunk(
   }
 );
 
-////// updateTasks - обновление тасков
-export const updateTasks = createAsyncThunk(
-  "updateTasks",
-  async function (data, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/update_task_status`;
+////// getEveryTasks - get каждый таск
+export const getEveryTasks = createAsyncThunk(
+  "getEveryTasks",
+  async function (task_guid, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/get_tasks?task_guid=${task_guid}`;
     try {
-      const response = await axiosInstance.put(url, data);
+      const response = await axiosInstance(url);
       if (response.status >= 200 && response.status < 300) {
         return response.data;
       } else {
@@ -147,15 +140,16 @@ export const updateTasks = createAsyncThunk(
   }
 );
 
-////// addFileInTasks - добавление файлов в списки задач
-export const addFileInTasks = createAsyncThunk(
-  "addFileInTasks",
-  async function ({ data }, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/add_file`;
+////// updateTasksStatus - обновление таска
+export const updateTasksStatus = createAsyncThunk(
+  "updateTasksStatus",
+  async function (props, { dispatch, rejectWithValue }) {
+    const { data } = props;
+    const url = `${REACT_APP_API_URL}/ta/update_task_status`;
     try {
-      const response = await axios.post(url, data);
+      const response = await axiosInstance.put(url, data);
       if (response.status >= 200 && response.status < 300) {
-        return response?.data;
+        return response.data;
       } else {
         throw Error(`Error: ${response.status}`);
       }
@@ -213,6 +207,19 @@ const pointsSlice = createSlice({
       state.preloader = false;
     });
     builder.addCase(getTasks.pending, (state, action) => {
+      state.preloader = true;
+    });
+
+    /////////// getEveryTasks
+    builder.addCase(getEveryTasks.fulfilled, (state, action) => {
+      state.preloader = false;
+      state.everyTasks = action.payload;
+    });
+    builder.addCase(getEveryTasks.rejected, (state, action) => {
+      state.error = action.payload;
+      state.preloader = false;
+    });
+    builder.addCase(getEveryTasks.pending, (state, action) => {
       state.preloader = true;
     });
   },

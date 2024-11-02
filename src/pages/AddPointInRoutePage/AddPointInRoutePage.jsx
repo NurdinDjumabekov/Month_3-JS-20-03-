@@ -5,16 +5,15 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 ////// fns
-import {
-  addNewPontToday,
-  setInfoNextpoint,
-} from "../../store/reducers/pointsSlice";
+import { setInfoNextpoint } from "../../store/reducers/pointsSlice";
+import { addNewPontToday } from "../../store/reducers/pointsSlice";
 import { clearInfoNextpoint } from "../../store/reducers/pointsSlice";
 import { getPointsRouteAgent } from "../../store/reducers/mapSlice";
 import { getListRoutes_TA } from "../../store/reducers/mapSlice";
 
 ///// components
 import Select from "react-select";
+import NavMenu from "../../common/NavMenu/NavMenu";
 
 ////// icons
 import AddIcon from "../../assets/MyIcons/AddIcon";
@@ -62,16 +61,11 @@ const AddPointInRoutePage = () => {
     return () => dispatch(clearInfoNextpoint());
   }, []);
 
-  const addPointToday = () => {
+  const addPointToday = async () => {
     if (!!!infoNextpoint?.point?.value) {
       myAlert("Заполните 'Список ваших торговых точек'", "error");
       return;
     }
-
-    // if (!!!infoNextpoint?.position?.value) {
-    //   myAlert("Заполните 'Выберите очередь для новой точки'", "error");
-    //   return;
-    // }
 
     const data = {
       point_guid: infoNextpoint?.point?.value,
@@ -80,47 +74,56 @@ const AddPointInRoutePage = () => {
       route_sheet_guid: activeRouteList?.guid,
       navigate,
     };
-    dispatch(addNewPontToday(data));
+    const res = await dispatch(addNewPontToday(data)).unwrap();
     /// добавляю новую точку на сегодня от имени ТА
+    if (res == 1) {
+      myAlert("Новый маршрут был построен");
+      navigate(-1);
+    } else {
+      myAlert("Маршрут с такой точкой уже построен!", "error");
+    }
   };
 
   return (
-    <div className="addPointInRoutePage">
-      <div className="myInputs">
-        <h6>Список ваших торговых точек</h6>
-        <Select
-          options={listPoints}
-          className="select"
-          onChange={onChange}
-          value={infoNextpoint?.point}
-          name="point"
+    <>
+      <NavMenu navText={"Добавить точку в свой маршрут"} />
+      <div className="addPointInRoutePage">
+        <div className="myInputs">
+          <h6>Список ваших торговых точек</h6>
+          <Select
+            options={listPoints}
+            className="select"
+            onChange={onChange}
+            value={infoNextpoint?.point}
+            name="point"
+          />
+        </div>
+
+        <div className="myInputs">
+          <h6>Выберите очередь для новой точки</h6>
+          <Select
+            options={listRoute}
+            className="select"
+            onChange={onChange}
+            name="position"
+            value={infoNextpoint?.position}
+          />
+        </div>
+
+        <textarea
+          type="text"
+          onChange={onChangeCom}
+          value={infoNextpoint?.comment}
+          name="comment"
+          placeholder="Комментарий (Описание для админа)"
         />
+
+        <button className="sendData" onClick={addPointToday}>
+          <AddIcon width={16} height={16} color={"#fff"} />
+          <p>Добавить точку на сегодня</p>
+        </button>
       </div>
-
-      <div className="myInputs">
-        <h6>Выберите очередь для новой точки</h6>
-        <Select
-          options={listRoute}
-          className="select"
-          onChange={onChange}
-          name="position"
-          value={infoNextpoint?.position}
-        />
-      </div>
-
-      <textarea
-        type="text"
-        onChange={onChangeCom}
-        value={infoNextpoint?.comment}
-        name="comment"
-        placeholder="Комментарий (Описание для админа)"
-      />
-
-      <button className="sendData" onClick={addPointToday}>
-        <AddIcon width={16} height={16} color={"#fff"} />
-        <p>Добавить точку на сегодня</p>
-      </button>
-    </div>
+    </>
   );
 };
 

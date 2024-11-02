@@ -20,8 +20,12 @@ import {
   activeSlideFN,
   getDataInvoiceReturn,
   getDataInvoiceSend,
+  getListTypeVisit,
   getReportEveryTT,
+  getReportPayEveryTT,
 } from "../../../store/reducers/standartSlice";
+import PhotosInfo from "../../../components/ActionsInPointsPage/ActionForPointsPage/PhotosInfo/PhotosInfo";
+import TasksInfo from "../../../components/ActionsInPointsPage/ActionForPointsPage/TasksInfo/TasksInfo";
 
 const ActionForPointsPage = () => {
   const dispatch = useDispatch();
@@ -32,7 +36,7 @@ const ActionForPointsPage = () => {
 
   const { guid, point, balance, seller_fio } = location.state;
   const { route_sheet_guid, seller_guid, seller_number } = location.state;
-  const { start_time, end_time, point_guid } = location.state;
+  const { start_time, end_time, point_guid, date } = location.state;
 
   const return_guid = location?.state?.return_guid;
   const send_guid = location?.state?.send_guid;
@@ -65,8 +69,6 @@ const ActionForPointsPage = () => {
     },
   };
 
-  console.log(reportEveryTT, "reportEveryTT");
-
   const handleMenuClick = (codeid) => {
     dispatch(activeSlideFN(codeid));
     sliderRef.current?.slickGoTo(codeid);
@@ -77,10 +79,18 @@ const ActionForPointsPage = () => {
     dispatch(getDataInvoiceSend(send_guid));
   }, [activeSlide]);
 
-  useEffect(() => {
+  const getDataVisit = () => {
     /// для получения данных осчетов ТА
     dispatch(getReportEveryTT(point_guid));
-  }, []);
+    dispatch(getReportPayEveryTT({ date, point_guid }));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    getDataVisit();
+    dispatch(getListTypeVisit());
+    /// get список типов посещений точек (успешно, закрыто и т.д.)
+  }, [date]);
 
   return (
     <>
@@ -101,7 +111,12 @@ const ActionForPointsPage = () => {
         <div className="actionForPoints__content">
           <Slider ref={sliderRef} {...settings}>
             <div className="everySlide">
-              <MainInfo reportEveryTT={reportEveryTT} />
+              <MainInfo
+                reportEveryTT={reportEveryTT}
+                getDataVisit={getDataVisit}
+                guid={guid}
+                point={point}
+              />
             </div>
             <div className="everySlide">
               <RerurnProd return_guid={return_guid} />
@@ -110,7 +125,17 @@ const ActionForPointsPage = () => {
               <Realization send_guid={send_guid} />
             </div>
             <div className="everySlide">
-              <PayInfo props={location.state} inviceData={inviceData} />
+              <PayInfo
+                props={location.state}
+                inviceData={inviceData}
+                getDataVisit={getDataVisit}
+              />
+            </div>
+            <div className="everySlide">
+              <PhotosInfo props={location.state} />
+            </div>
+            <div className="everySlide">
+              <TasksInfo props={location.state} />
             </div>
           </Slider>
         </div>

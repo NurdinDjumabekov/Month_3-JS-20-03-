@@ -2,6 +2,8 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
+/////// components
 import { Marker } from "@react-google-maps/api";
 
 ////// icons
@@ -9,10 +11,10 @@ import iconMap from "../../../../assets/images/map.png";
 
 ///// style
 import "./style.scss";
-import {
-  activeSlideFN,
-  createInvoice,
-} from "../../../../store/reducers/standartSlice";
+
+///// fns
+import { createInvoice } from "../../../../store/reducers/standartSlice";
+import { activeSlideFN } from "../../../../store/reducers/standartSlice";
 
 const CustomMarker = ({ position, index, setCenter, setZoom }) => {
   const dispatch = useDispatch();
@@ -56,7 +58,7 @@ const CustomMarker = ({ position, index, setCenter, setZoom }) => {
           const return_guid = returns?.invoice_guid;
           const send_guid = res?.invoice_guid;
           const sendData = { ...position, return_guid, send_guid };
-          dispatch(activeSlideFN()); /// обнуляю слайдер, чтобы отображался самый первый
+          dispatch(activeSlideFN(0)); /// обнуляю слайдер, чтобы отображался самый первый
           navigate("/points/actions", { state: sendData });
         }
       }

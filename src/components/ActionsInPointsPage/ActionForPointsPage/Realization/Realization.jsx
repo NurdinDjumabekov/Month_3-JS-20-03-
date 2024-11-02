@@ -20,6 +20,7 @@ const Realization = ({ send_guid }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { reportEveryTT } = useSelector((state) => state.standartSlice);
   const { listOrdersNur, activeSlide } = useSelector(
     (state) => state.standartSlice
   );
@@ -55,6 +56,9 @@ const Realization = ({ send_guid }) => {
     navigate("/app/crud_invoice", { state: obj });
   };
 
+  const checkEdit = !!!reportEveryTT?.end_time && !!reportEveryTT?.start_time;
+  //// редактирование и добавление не возможно
+
   return (
     <div className="mainInfo rerurnProd">
       <div className="mainInfo__inner">
@@ -74,9 +78,11 @@ const Realization = ({ send_guid }) => {
           <p>Распечатать накладную отпуска</p>
         </button>
       </div>
-      <button className="startEndTA" onClick={createInvoice}>
-        <p>+ Оформить товар</p>
-      </button>
+      {checkEdit && (
+        <button className="startEndTA" onClick={createInvoice}>
+          <p>+ Оформить товар</p>
+        </button>
+      )}
     </div>
   );
 };

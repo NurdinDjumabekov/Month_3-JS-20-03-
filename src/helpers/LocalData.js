@@ -897,6 +897,6 @@ export const listMenuLocal = [
   { name: "Возврат", codeid: 1 },
   { name: "Реализация", codeid: 2 },
   { name: "Оплата", codeid: 3 },
-  { name: "Фото отчет", codeid: 4 },
+  { name: "Фото отчёт", codeid: 4 },
   { name: "Задания от руководителя", codeid: 5 },
 ];

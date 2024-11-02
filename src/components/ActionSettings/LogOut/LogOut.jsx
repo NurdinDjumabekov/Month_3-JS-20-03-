@@ -1,6 +1,6 @@
 /////// hooks
-import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 ////// imgs
 import lofOut from "../../../assets/images/logout.png";
@@ -11,13 +11,20 @@ import "./style.scss";
 /////// components
 import { Tooltip } from "@mui/material";
 
+/////// fns
+import { clearDataSave } from "../../../store/reducers/saveDataSlice";
+
 const LogOut = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const logOut = () => {
-    localStorage.clear();
-    window.location.reload();
-    navigate("/");
+    dispatch(clearDataSave());
+
+    setTimeout(() => {
+      navigate("/");
+    }, 300);
+    // window.location.reload();
   };
 
   return (

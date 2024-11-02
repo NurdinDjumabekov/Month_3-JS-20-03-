@@ -5,11 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 ///// fns
-import {
-  addFileInTasks,
-  getTasks,
-  updateTasks,
-} from "../../store/reducers/pointsSlice";
+import { getTasks } from "../../store/reducers/pointsSlice";
 
 ////// style
 import "./style.scss";
@@ -77,35 +73,6 @@ const TasksPage = () => {
     if (!!!active.comm) return myAlert("Введите текст", "error");
 
     const send = { task_guid: data?.guid, comment: active?.comm };
-
-    dispatch(updateTasks({ ...send, status: 1 }));
-
-    setTimeout(async () => {
-      const res = await dispatch(updateTasks({ ...send, status: 2 })).unwrap();
-      if (!!res?.result) {
-        setData({});
-        setActive({ comm: "", filesAgent: [] });
-
-        const formData = new FormData();
-        formData.append("user_guid", dataSave?.guid);
-        formData.append("agent_guid", dataSave?.guid);
-        formData.append("task_guid", data?.guid);
-        formData.append("user_type", dataSave?.user_type);
-        active?.filesAgent?.forEach((file) => {
-          formData.append(`files`, file);
-        });
-
-        const resFile = await dispatch(
-          addFileInTasks({ data: formData })
-        ).unwrap();
-
-        if (!!resFile?.result) {
-          dispatch(
-            getTasks({ agent_guid: dataSave?.guid, point_guid: guid_point })
-          );
-        }
-      }
-    }, 2000);
   };
 
   return (

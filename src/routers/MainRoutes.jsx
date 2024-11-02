@@ -55,37 +55,11 @@ const MainRoutes = () => {
             <Route path="/return/*" element={<ReturnsPages />} />
             <Route path="/leftovers" element={<LeftoversPage />} />
             <Route path="/expense" element={<ExpensePage />} />
+            <Route path="/points/*" element={<ActionsInPointsPage />} />
 
             <Route path="/pay" element={<PayPage />} />
             {/* /// доделать */}
-
-            <Route path="/points/*" element={<ActionsInPointsPage />} />
-
-            <Route path="/camera" element={<CameraPage />} />
-            <Route path="/maps" element={<MapsPage />} />
-            <Route path="/create_points" element={<AddPointsPage />} />
-            <Route path="/add_points_route" element={<AddPointInRoutePage />} />
           </Route>
-          <Route
-            path="/send_app/:route_guid/:guid_point/:type"
-            element={<SendInvoicePage />}
-          />
-          <Route
-            path="/maps_camera/:route_guid/:guid_point/:type"
-            element={<CameraPage />}
-          />
-          <Route
-            path="/take_money/:route_guid/:guid_point/:type"
-            element={<TakeMoneyPage />}
-          />
-          <Route
-            path="/tasks/:route_guid/:guid_point/:type"
-            element={<TasksPage />}
-          />
-          <Route
-            path="/return/:route_guid/:guid_point/:type"
-            element={<ReturnPage />}
-          />
         </>
       )}
       {/* <Route path="*" element={<NotFoundPage />} /> */}
@@ -95,3 +69,4 @@ const MainRoutes = () => {
 
 export default MainRoutes;
 /// user_type 2 - админ, 1 - агент
+/// window.scrollTo({ top: 0, behavior: "smooth" });

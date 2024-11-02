@@ -20,12 +20,14 @@ const InvoiceComponent = (props) => {
         <div className="mainData">
           <p className="indexNums">{index + 1}</p>
           <div>
-            <p className="titleDate role">{item?.[objRole?.[item?.[title]]]}</p>
+            <p className="titleDate role">
+              {item?.[objRole?.[item?.[title]]] || item?.user}
+            </p>
             <p className="titleDate">{item?.date}</p>
           </div>
         </div>
         {!!item?.comment ? (
-          <p className="comments">{item.comment}</p>
+          <p className="comments">{item?.comment}</p>
         ) : (
           <p className="comments"> ...</p>
         )}

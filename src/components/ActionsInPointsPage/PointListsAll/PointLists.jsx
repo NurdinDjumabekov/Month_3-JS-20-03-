@@ -10,8 +10,7 @@ import "./style.scss";
 import NavMenu from "../../../common/NavMenu/NavMenu";
 
 ////// fns
-import { getListRoutes_TA } from "../../../store/reducers/mapSlice";
-import { getEveryRoutes_TA } from "../../../store/reducers/mapSlice";
+import { getListTT } from "../../../store/reducers/standartSlice";
 
 ///// icons
 import arrow from "../../../assets/icons/arrowNav.svg";
@@ -19,39 +18,24 @@ import searchIcon from "../../../assets/icons/searchIcon.png";
 import krest from "../../../assets/icons/krestBlack.svg";
 
 ////// helpers
-import { getMyLocation } from "../../../helpers/GetMyGeo";
 
-const PointLists = () => {
+const PointListsAll = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { everyRoutes_TA } = useSelector((state) => state.mapSlice);
+  const { listAllPointsTA } = useSelector((state) => state.standartSlice);
   const { dataSave } = useSelector((state) => state.saveDataSlice);
-  const filter_list_old = everyRoutes_TA?.filter((i) => !!i?.guid);
+
+  const filter_list_old = listAllPointsTA?.filter((i) => !!i?.guid);
 
   const [search, setSearch] = useState("");
 
-  const getData = async () => {
-    const guid = await dispatch(getListRoutes_TA(dataSave?.guid)).unwrap();
-    if (!!guid) {
-      getMyLocation()
-        .then(({ lat, lng }) => {
-          const myGeo = { lat, lng };
-          dispatch(getEveryRoutes_TA({ route_sheet_guid: guid, myGeo }));
-        })
-        .catch(({ lat, lng }) => {
-          const myGeo = { lat, lng };
-          dispatch(getEveryRoutes_TA({ route_sheet_guid: guid, myGeo }));
-        });
-    }
-  };
-
   useEffect(() => {
-    getData();
+    dispatch(getListTT(dataSave.guid));
   }, []);
 
   const filter_list = filter_list_old?.filter((i) =>
-    i?.point?.toLowerCase()?.includes(search?.toLowerCase())
+    i?.text?.toLowerCase()?.includes(search?.toLowerCase())
   );
 
   const clear = () => setSearch("");
@@ -64,10 +48,10 @@ const PointLists = () => {
     navigate("/points/history", { state: position });
   };
 
-  console.log(filter_list, "filter_list");
+  console.log(filter_list_old);
 
   return (
-    <div className="pointListsMain">
+    <div className="pointListsMain allPoints">
       <NavMenu>
         <div className="sarchBlock">
           <button className="arrow" onClick={() => navigate(-1)}>
@@ -97,7 +81,7 @@ const PointLists = () => {
       <div className="pointLists">
         <div className="pointLists__inner ">
           <div className="pointLists__list">
-            {filter_list?.map((item, index) => (
+            {filter_list?.map((item) => (
               <div
                 className="every"
                 key={item.guid}
@@ -106,13 +90,12 @@ const PointLists = () => {
                 <div
                   className={`logo ${!!item?.result ? "visit" : "no_visit"}`}
                 >
-                  <p>{index + 1}</p>
+                  <p>{getFirstLetter(item?.text)}</p>
                 </div>
                 <div className="content">
                   <div>
-                    <p>{item?.point}</p>
-                    <span>{item?.result || "Не посетил точку "}</span>
-                    <b>Долг: {item?.dolg} сом</b>
+                    <p>{item?.text}</p>
+                    <span>{item?.result || "Не посетил точку"}</span>
                   </div>
                   <div>
                     <p>{item?.start_time || "00:00"}</p>
@@ -128,7 +111,7 @@ const PointLists = () => {
   );
 };
 
-export default PointLists;
+export default PointListsAll;
 
 function getFirstLetter(text) {
   return text?.trim()?.charAt(0) || "";

@@ -1,0 +1,13 @@
+.allPoints {
+  height: 100%;
+
+  .every {
+    .content {
+      > div:first-child {
+        span {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}

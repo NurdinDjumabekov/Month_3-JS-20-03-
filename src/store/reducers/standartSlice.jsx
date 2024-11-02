@@ -11,10 +11,15 @@ const initialState = {
   listProdsNur: [], // список цехов
   listOrdersNur: [],
   listMenu: [...listMenuLocal],
+  listRouteVisit: [], //// список историй посещения точек ТА
   activeSlide: 0,
   inviceData: { return: {}, send: {} }, // возврат,  // приход
   countsPoints: { today_tt: 0, total_tt: 0 },
   reportEveryTT: {}, /// отчет каждой точки
+  reportPayEveryTT: {}, /// отчет оплаты каждой точки
+  listTypesVisit: [], /// Результат не установлен,Успешное посещение"
+  listAllPointsTA: [], /// список всех точек ТА
+  balanceTA: [], /// баласн агента (долги ТТ, долг ТА в цех и нынешнрий балас)
 };
 
 ////// getListWorkShopsNur - get список цехов
@@ -233,6 +238,116 @@ export const getReportEveryTT = createAsyncThunk(
   }
 );
 
+////// getReportPayEveryTT - get данные отчета оплаты каждой ТТ
+export const getReportPayEveryTT = createAsyncThunk(
+  "getReportPayEveryTT",
+  async function (props, { dispatch, rejectWithValue }) {
+    const { date, point_guid } = props;
+    const url = `${REACT_APP_API_URL}/ta/get_point_oplata_report?point_guid=${point_guid}&date=${date}`;
+    try {
+      const response = await axiosInstance(url);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+////// getListVisitPoints - get список посещений точек
+export const getListVisitPoints = createAsyncThunk(
+  "getListVisitPoints",
+  async function (point_guid, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/agent_routes?point_guid=${point_guid}`;
+    // const url = `${REACT_APP_API_URL}/ta/agent_routes`;
+    try {
+      const response = await axiosInstance(url);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+////// actionMyVisitPoints - действия посещения ТА в точке (пришел и ушел)
+export const actionMyVisitPoints = createAsyncThunk(
+  "actionMyVisitPoints",
+  async function (data, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/set_route`;
+    try {
+      const response = await axiosInstance.put(url, data);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+////// getListTypeVisit - get список типов посещений точек (успешно, закрыто и т.д.)
+export const getListTypeVisit = createAsyncThunk(
+  "getListTypeVisit",
+  async function (agent_guid, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/get_comment_type`;
+    try {
+      const response = await axiosInstance(url);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+////// getListTT - get список всех точек у ТА /// check
+export const getListTT = createAsyncThunk(
+  "getListTT",
+  async function (agent_guid, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/get_points?agent_guid=${agent_guid}`;
+    try {
+      const response = await axiosInstance(url);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+////// getBalance - get баланс (все счета агента)
+export const getBalance = createAsyncThunk(
+  "getBalance",
+  async function (agent_guid, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/agent_balance?agent_guid=${agent_guid}`;
+    try {
+      const response = await axiosInstance(url);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const standartSlice = createSlice({
   name: "standartSlice",
   initialState,
@@ -304,10 +419,7 @@ const standartSlice = createSlice({
     ///////////////// getDataInvoiceReturn
     builder.addCase(getDataInvoiceReturn.fulfilled, (state, action) => {
       // state.preloader = false;
-      state.inviceData = {
-        ...state.inviceData,
-        return: action.payload,
-      };
+      state.inviceData = { ...state.inviceData, return: action.payload };
     });
     builder.addCase(getDataInvoiceReturn.rejected, (state, action) => {
       state.error = action.payload;
@@ -321,10 +433,7 @@ const standartSlice = createSlice({
     ///////////////// getDataInvoiceSend
     builder.addCase(getDataInvoiceSend.fulfilled, (state, action) => {
       // state.preloader = false;
-      state.inviceData = {
-        ...state.inviceData,
-        send: action.payload,
-      };
+      state.inviceData = { ...state.inviceData, send: action.payload };
     });
     builder.addCase(getDataInvoiceSend.rejected, (state, action) => {
       state.error = action.payload;
@@ -358,6 +467,71 @@ const standartSlice = createSlice({
       state.preloader = false;
     });
     builder.addCase(getReportEveryTT.pending, (state, action) => {
+      state.preloader = true;
+    });
+
+    ////////////////// getReportPayEveryTT
+    builder.addCase(getReportPayEveryTT.fulfilled, (state, action) => {
+      state.preloader = false;
+      state.reportPayEveryTT = action.payload;
+    });
+    builder.addCase(getReportPayEveryTT.rejected, (state, action) => {
+      state.error = action.payload;
+      state.preloader = false;
+    });
+    builder.addCase(getReportPayEveryTT.pending, (state, action) => {
+      state.preloader = true;
+    });
+
+    /////////////////// getListVisitPoints
+    builder.addCase(getListVisitPoints.fulfilled, (state, action) => {
+      state.preloader = false;
+      state.listRouteVisit = action.payload;
+    });
+    builder.addCase(getListVisitPoints.rejected, (state, action) => {
+      state.error = action.payload;
+      state.preloader = false;
+    });
+    builder.addCase(getListVisitPoints.pending, (state, action) => {
+      state.preloader = true;
+    });
+
+    ///////////////////// getListTypeVisit
+    builder.addCase(getListTypeVisit.fulfilled, (state, action) => {
+      state.preloader = false;
+      state.listTypesVisit = action.payload;
+    });
+    builder.addCase(getListTypeVisit.rejected, (state, action) => {
+      state.error = action.payload;
+      state.preloader = false;
+    });
+    builder.addCase(getListTypeVisit.pending, (state, action) => {
+      state.preloader = true;
+    });
+
+    /////////////////////// getListTT
+    builder.addCase(getListTT.fulfilled, (state, action) => {
+      state.preloader = false;
+      state.listAllPointsTA = action.payload;
+    });
+    builder.addCase(getListTT.rejected, (state, action) => {
+      state.error = action.payload;
+      state.preloader = false;
+    });
+    builder.addCase(getListTT.pending, (state, action) => {
+      state.preloader = true;
+    });
+
+    /////////////////////// getBalance
+    builder.addCase(getBalance.fulfilled, (state, action) => {
+      state.preloader = false;
+      state.balanceTA = action.payload;
+    });
+    builder.addCase(getBalance.rejected, (state, action) => {
+      state.error = action.payload;
+      state.preloader = false;
+    });
+    builder.addCase(getBalance.pending, (state, action) => {
       state.preloader = true;
     });
   },

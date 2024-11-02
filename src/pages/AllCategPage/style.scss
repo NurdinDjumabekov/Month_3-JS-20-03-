@@ -14,10 +14,10 @@
   gap: 8px 8px;
   height: 100%;
   overflow-y: scroll;
-  padding: 30px 3px 10px;
-  background-image: url("../../assets/images/back-d.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
+  padding: 15px 3px 10px;
+  // background-image: url("../../assets/images/back-d.jpg");
+  // background-repeat: no-repeat;
+  // background-size: cover;
 
   .parentCateg {
     width: 45%;
@@ -36,7 +36,7 @@
     width: 100%;
     height: 100%;
     background-color: rgba(15, 15, 16, 0.064);
-    z-index: 10;
+    z-index: 1;
     border-radius: 8px;
   }
 
@@ -46,7 +46,7 @@
     top: 0;
     width: 100%;
     height: 100%;
-    z-index: 11;
+    z-index: 2;
     border-radius: 8px;
     display: flex;
     justify-content: center;
@@ -74,5 +74,100 @@
     top: 0;
     border-radius: 8px;
     object-fit: contain;
+  }
+
+  .parentBlock {
+    min-width: 98%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 10px;
+
+    .balance {
+      width: 100%;
+      margin: 0 auto 10px auto;
+      padding: 10px 15px;
+      background-color: rgba(47, 71, 190, 0.591);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      &__inner {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+
+        > div {
+          border-top: 3px solid #fff;
+          border-right: 3px solid #fff;
+          height: 10px;
+          width: 10px;
+          border-radius: 3px;
+          transform: rotate(45deg);
+          margin-right: 20px;
+        }
+        p {
+          line-height: 18px;
+          font-weight: 700;
+          color: #fff;
+          font-size: 15px;
+        }
+      }
+
+      &__num {
+        font-weight: 500;
+        color: #fff;
+        font-size: 16px;
+        margin-top: 8px;
+      }
+
+      &__history {
+        color: #fff;
+        font-size: 16px;
+        line-height: 20px;
+      }
+    }
+  }
+}
+
+.balanceModal {
+  height: 100%;
+  z-index: 99;
+  position: relative;
+  padding: 5px 16px 20px;
+
+  > div {
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 15px 0 0 0;
+    padding: 15px 25px 15px 15px;
+    border-radius: 5px;
+
+    p {
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+
+  .lookPay {
+    background: rgba(47, 71, 190, 0.591);
+    position: relative;
+
+    p {
+      color: #fff;
+    }
+
+    svg {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+    }
   }
 }

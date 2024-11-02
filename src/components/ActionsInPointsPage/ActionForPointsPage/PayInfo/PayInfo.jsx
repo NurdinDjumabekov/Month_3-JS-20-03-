@@ -11,62 +11,57 @@ import "./style.scss";
 ////// helpers
 import { roundingNum } from "../../../../helpers/totals";
 
-const PayInfo = ({ props, inviceData }) => {
+const PayInfo = ({ props, inviceData, getDataVisit }) => {
   const { point } = props;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const total_price_send = +inviceData?.send?.total_price || 0;
-  const total_price_return = +inviceData?.return?.total_price || 0;
-
-  const dotyPoint = 1000;
-
-  const withoutDoty = total_price_send - total_price_return;
-
-  const withDoty = total_price_send - total_price_return + dotyPoint;
+  const { reportPayEveryTT } = useSelector((state) => state.standartSlice);
 
   const createPay = () => {
     const obj = {
-      action: 1,
-      date_from: "",
-      date_to: "",
+      ...props,
       invoice_guid: "",
-      point,
+      paid: reportPayEveryTT?.paid, /// оплачено
+      tt_dolg: reportPayEveryTT?.tt_dolg, /// долг
+      total_to_pay: reportPayEveryTT?.total_to_pay, /// итого к оплате
     };
     navigate("/points/pay", { state: obj });
   };
+
+  // console.log(reportPayEveryTT, "reportPayEveryTT");
 
   return (
     <div className="mainInfo rerurnProd">
       <div className="mainInfo__inner">
         <div className="info">
           <p>Долг точки: </p>
-          <span>{roundingNum(dotyPoint)} сом</span>
+          <span>{roundingNum(+reportPayEveryTT?.tt_dolg)} сом</span>
         </div>
         <div className="info">
           <p>Остаток на начало: </p>
-          <span>{roundingNum(0)} сом</span>
+          <span>{roundingNum(+reportPayEveryTT?.start_balance)} сом</span>
         </div>
         <div className="info">
           <p>Приход: </p>
-          <span>{roundingNum(total_price_send)} сом</span>
+          <span>{roundingNum(+reportPayEveryTT?.tt_prihod)} сом</span>
         </div>
         <div className="info">
           <p>Возврат: </p>
-          <span>{roundingNum(total_price_return)} сом</span>
+          <span>{roundingNum(+reportPayEveryTT?.tt_vozvrat)} сом</span>
         </div>
         <div className="info">
           <p>К оплате без долга: </p>
-          <span>{roundingNum(withoutDoty)} сом</span>
+          <span>{roundingNum(+reportPayEveryTT?.payment_no_debt)} сом</span>
         </div>
         <div className="info">
           <p>Итого к оплате: </p>
-          <span>{roundingNum(withDoty)} сом</span>
+          <span>{roundingNum(+reportPayEveryTT?.total_to_pay)} сом</span>
         </div>
         <div className="info">
           <p>Оплачено: </p>
-          <span>{roundingNum(0)} сом</span>
+          <span>{roundingNum(+reportPayEveryTT?.paid)} сом</span>
         </div>
       </div>
       <button className="startEndTA" onClick={createPay}>

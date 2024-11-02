@@ -24,9 +24,8 @@ const PayActionPage = () => {
   const location = useLocation();
   const inputRef = useRef(null);
 
-  const { product_name, invoice_guid, workshop_price } = location?.state;
-  const { category_name, product_guid, action } = location?.state;
-  const { count_kg, point } = location?.state;
+  const { paid, tt_dolg, total_to_pay } = location?.state;
+  const { count_kg, point, action } = location?.state;
 
   const [count, setCount] = useState({ returnCount: "", sendCount: "" });
 
@@ -43,23 +42,26 @@ const PayActionPage = () => {
     inputRef?.current.focus();
   }, [action]);
 
-  const createPay = (e) => {};
+  const createPay = (e) => {
+    e.preventDefault();
+    console.log("asdas");
+  };
 
   return (
     <>
       <NavMenu navText={"Назад"} />
-      <div className="payAction">
+      <form className="payAction" onSubmit={createPay}>
         <div className="titles">
           <h3>{point}.</h3>
           <h4></h4>
-          <button onClick={() => navigate(-1)}>
+          <div onClick={() => navigate(-1)}>
             <img src={krest} alt="x" />
-          </button>
+          </div>
         </div>
 
         <div className="info">
           <p>Долг точки: </p>
-          <span>{roundingNum(105)} сом</span>
+          <span>{roundingNum(+tt_dolg)} сом</span>
         </div>
 
         <div className="info inputData">
@@ -89,18 +91,18 @@ const PayActionPage = () => {
         </div>
         <div className="info">
           <p>Оплачено: </p>
-          <span>{roundingNum(105)} сом</span>
+          <span>{roundingNum(+paid)} сом</span>
         </div>
 
         <div className="info result">
           <p>Итого к оплате: </p>
-          <span>{roundingNum(105)} сом</span>
+          <span>{roundingNum(+total_to_pay)} сом</span>
         </div>
 
-        <button className="startEndTA" onClick={createPay}>
+        <button className="startEndTA" type="submit">
           <p>+ Произвести оплату</p>
         </button>
-      </div>
+      </form>
     </>
   );
 };

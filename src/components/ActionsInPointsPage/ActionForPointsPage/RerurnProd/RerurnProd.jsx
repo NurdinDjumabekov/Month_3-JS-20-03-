@@ -20,9 +20,10 @@ const RerurnProd = ({ return_guid }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { listOrdersNur, activeSlide } = useSelector(
+  const { activeSlide, listOrdersNur } = useSelector(
     (state) => state.standartSlice
   );
+  const { reportEveryTT } = useSelector((state) => state.standartSlice);
 
   const getData = () => dispatch(getListProdsInInvoiceNur(return_guid));
   /// список товаров определённой накладной
@@ -55,6 +56,9 @@ const RerurnProd = ({ return_guid }) => {
     navigate("/app/crud_invoice", { state: obj });
   };
 
+  const checkEdit = !!!reportEveryTT?.end_time && !!reportEveryTT?.start_time;
+  //// редактирование и добавление не возможно
+
   return (
     <div className="mainInfo rerurnProd">
       <div className="mainInfo__inner">
@@ -74,9 +78,11 @@ const RerurnProd = ({ return_guid }) => {
           <p>Распечатать накладную возврата</p>
         </button>
       </div>
-      <button className="startEndTA" onClick={createReturn}>
-        <p>+ Оформить возврат</p>
-      </button>
+      {checkEdit && (
+        <button className="startEndTA" onClick={createReturn}>
+          <p>+ Оформить возврат</p>
+        </button>
+      )}
     </div>
   );
 };

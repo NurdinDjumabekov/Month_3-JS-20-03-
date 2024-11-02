@@ -14,8 +14,7 @@ import Preloader from "./common/Preloader/Preloader";
 const App = () => {
   const dispatch = useDispatch();
 
-  const { guid } = useSelector((state) => state.saveDataSlice?.dataSave);
-  const { user_type } = useSelector((state) => state.saveDataSlice?.dataSave);
+  const { guid } = useSelector((state) => state.saveDataSlice.dataSave);
   const { preloader } = useSelector((state) => state.standartSlice);
 
   const isWithinAllowedTime = () => {
@@ -32,7 +31,7 @@ const App = () => {
             const { latitude, longitude } = position.coords;
             dispatch(setMapGeo({ latitude, longitude }));
 
-            if (isWithinAllowedTime()) {
+            if (isWithinAllowedTime() && !!guid) {
               dispatch(sendGeoUser({ guid, latitude, longitude }));
             }
           },

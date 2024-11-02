@@ -12,8 +12,8 @@ import MenuAgents from "../../common/MenuAgents/MenuAgents";
 /////// fns
 import { getListTA } from "../../store/reducers/mainSlice";
 import { getListWorkShop } from "../../store/reducers/mainSlice";
-import { getPointsRouteAgent } from "../../store/reducers/mapSlice";
 import { getActiveRouteList } from "../../store/reducers/photoSlice";
+import { getBalance } from "../../store/reducers/standartSlice";
 
 const MainLayouts = () => {
   const dispatch = useDispatch();
@@ -26,12 +26,12 @@ const MainLayouts = () => {
   useEffect(() => {
     dispatch(getListWorkShop());
     dispatch(getListTA({ first: true }));
-    dispatch(getPointsRouteAgent({ guid, first: true }));
     dispatch(getActiveRouteList(guid)); /// только для ТА
     //// отправляю запрос для получения точек каждого агента
+    dispatch(getBalance(guid));
   }, []);
 
-  const objMenu = { 1: <MenuAgents /> };
+  const objMenu = { 1: <MenuAgents /> }; // delete
   /// user_type - 1 agent 2 admin
 
   const checkMap = "/points/maps" == pathname;

@@ -1,0 +1,16 @@
+.tasksPoint {
+  padding: 10px 0px !important;
+  &__inner {
+    .invoiceParent {
+      .statusSum {
+        .totalPrice {
+          color: transparent !important;
+          &::before {
+            content: "...";
+            color: #222;
+          }
+        }
+      }
+    }
+  }
+}

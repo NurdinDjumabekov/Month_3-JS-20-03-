@@ -32,7 +32,7 @@ const PointsMainPage = () => {
       codeid: 1,
       name: "Список всех торговых точек",
       img: mapIcon,
-      nav: "/sadasd",
+      nav: "/all_list",
       count: countsPoints?.total_tt,
     },
     {
@@ -48,8 +48,24 @@ const PointsMainPage = () => {
       name: "Торговые точки на сегодня",
       more: "список",
       img: mapIcon3,
-      nav: "/list_day",
+      nav: "/list",
       count: countsPoints?.today_tt,
+    },
+    {
+      codeid: 4,
+      name: "Добавить точку в свой маршрут",
+      more: "",
+      img: mapIcon2,
+      nav: "/add_route",
+      count: +1,
+    },
+    {
+      codeid: 5,
+      name: "Добавить данные новой точки",
+      more: "",
+      img: mapIcon2,
+      nav: "/add_route",
+      count: +1,
     },
   ];
 
@@ -71,15 +87,16 @@ const PointsMainPage = () => {
 
   useEffect(() => {
     dispatch(getCountsPoint(dataSave?.guid));
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   return (
     <>
       <NavMenu navText={"Список торговых точек"} />
       <div className="pointsMain">
-        <div className="line1"></div>
+        {/* <div className="line1"></div>
         <div className="line2"></div>
-        <div className="line3"></div>
+        <div className="line3"></div> */}
         <div className="pointsMain__inner">
           {list?.map((i) => (
             <div

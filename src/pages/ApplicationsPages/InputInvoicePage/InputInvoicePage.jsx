@@ -45,7 +45,9 @@ const InputInvoicePage = () => {
   };
 
   useEffect(() => {
-    inputRef?.current.focus();
+    setTimeout(() => {
+      inputRef?.current.focus();
+    }, 300);
 
     switch (action) {
       case 1:

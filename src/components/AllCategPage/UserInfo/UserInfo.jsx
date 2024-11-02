@@ -19,6 +19,7 @@ const UserInfo = () => {
   const [look, setLook] = useState(false);
 
   const { dataSave } = useSelector((state) => state.saveDataSlice);
+  const { balanceTA } = useSelector((state) => state.standartSlice);
 
   return (
     <div className="headerParent">
@@ -26,7 +27,7 @@ const UserInfo = () => {
       <div>
         <p className="userRole">{dataSave?.fio}</p>
         <p onClick={() => setLook(!look)} className="userName">
-          {look ? "Долг: 10000 сом" : dataSave?.phone}
+          ...
         </p>
       </div>
     </div>

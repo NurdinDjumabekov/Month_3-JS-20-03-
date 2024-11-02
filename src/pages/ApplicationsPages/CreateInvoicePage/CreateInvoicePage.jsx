@@ -107,33 +107,38 @@ const CreateInvoicePage = () => {
 
   return (
     <div className="createInvoiceParent">
-      <NavMenu>
-        <div className="sarchBlock">
-          <button className="arrow" onClick={() => navigate(-1)}>
-            <img src={arrow} alt="<" />
-          </button>
-          <form className="search" onSubmit={searchData}>
-            <input
-              type="text"
-              placeholder="Поиск товаров ..."
-              className="searchHeader"
-              onChange={onChangeSearch}
-              value={search}
-              ref={inputRef}
-            />
-            <button className="shadowSearch" type="submit"></button>
-          </form>
-          {checkLength ? (
-            <button className="searchIcon">
-              <img src={searchIcon} alt="<" />
+      {currentSlide == 0 ? (
+        <NavMenu>
+          <div className="sarchBlock">
+            <button className="arrow" onClick={() => navigate(-1)}>
+              <img src={arrow} alt="<" />
             </button>
-          ) : (
-            <button className="searchIcon" onClick={clear}>
-              <img src={krest} alt="<" />
-            </button>
-          )}
-        </div>
-      </NavMenu>
+            <form className="search" onSubmit={searchData}>
+              <input
+                type="text"
+                placeholder="Поиск товаров ..."
+                className="searchHeader"
+                onChange={onChangeSearch}
+                value={search}
+                ref={inputRef}
+              />
+              <button className="shadowSearch" type="submit"></button>
+            </form>
+            {checkLength ? (
+              <button className="searchIcon">
+                <img src={searchIcon} alt="<" />
+              </button>
+            ) : (
+              <button className="searchIcon" onClick={clear}>
+                <img src={krest} alt="<" />
+              </button>
+            )}
+          </div>
+        </NavMenu>
+      ) : (
+        <NavMenu navText={"Список выбранных товаров"} />
+      )}
+
       <div className="createInvoicePage">
         <Slider {...settings}>
           <ListChoiceProds
@@ -146,6 +151,15 @@ const CreateInvoicePage = () => {
           <ListAcceptInvoice invoice_guid={invoice_guid} action={action} />
         </Slider>
       </div>
+
+      {currentSlide == 0 && (
+        <button
+          className="searchBottomIcon"
+          onClick={() => inputRef?.current?.focus()}
+        >
+          <img src={searchIcon} alt="0" />
+        </button>
+      )}
     </div>
   );
 };
