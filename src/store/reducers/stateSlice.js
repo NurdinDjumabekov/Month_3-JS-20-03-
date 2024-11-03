@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import axiosInstance from "../../axiosInstance";
+import { transformActionDate } from "../../helpers/transformDate";
 
 const { REACT_APP_API_URL } = process.env;
 
@@ -50,7 +51,8 @@ export const getListExpense = createAsyncThunk(
 export const getListExpenseTA = createAsyncThunk(
   "getListExpenseTA",
   async function (guid, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/get_expenses?user_guid=${guid}&date_to=2024-10-29&date_from=2024-10-23`;
+    const date = transformActionDate(new Date());
+    const url = `${REACT_APP_API_URL}/ta/get_expenses?user_guid=${guid}&date_to=${date}&date_from=2024-10-01`;
     try {
       const response = await axiosInstance(url);
       if (response.status >= 200 && response.status < 300) {

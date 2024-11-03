@@ -130,7 +130,7 @@ export const getEveryTasks = createAsyncThunk(
     try {
       const response = await axiosInstance(url);
       if (response.status >= 200 && response.status < 300) {
-        return response.data;
+        return response.data?.[0] || {};
       } else {
         throw Error(`Error: ${response.status}`);
       }

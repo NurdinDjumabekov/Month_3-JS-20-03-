@@ -23,12 +23,12 @@ import AllCategPage from "../pages/AllCategPage/AllCategPage";
 import LeftoversPage from "../pages/LeftoversPage/LeftoversPage";
 import ReturnPage from "../pages/ReturnPage/ReturnPage";
 import TasksPage from "../pages/TasksPage/TasksPage";
-import InvoicesPages from "../pages/InvoicesPages/InvoicesPages";
 import ReturnsPages from "../pages/ReturnsPages/ReturnsPages";
 import ExpensePage from "../pages/ExpensePage/ExpensePage";
 import ApplicationsPages from "../pages/ApplicationsPages/ApplicationsPages";
 import PayPage from "../pages/PayPage/PayPage";
 import ActionsInPointsPage from "../pages/ActionsInPointsPage/ActionsInPointsPage";
+import WorkshopPages from "../pages/WorkshopPages/WorkshopPages";
 
 const MainRoutes = () => {
   const dispatch = useDispatch();
@@ -51,13 +51,13 @@ const MainRoutes = () => {
           <Route element={<MainLayouts />}>
             <Route path="/" element={<AllCategPage />} />
             <Route path="/app/*" element={<ApplicationsPages />} />
-            <Route path="/invoice/*" element={<InvoicesPages />} />
-            <Route path="/return/*" element={<ReturnsPages />} />
+            <Route path="/invoice/*" element={<WorkshopPages />} />
             <Route path="/leftovers" element={<LeftoversPage />} />
             <Route path="/expense" element={<ExpensePage />} />
             <Route path="/points/*" element={<ActionsInPointsPage />} />
 
             <Route path="/pay" element={<PayPage />} />
+            <Route path="/return/*" element={<ReturnsPages />} />
             {/* /// доделать */}
           </Route>
         </>

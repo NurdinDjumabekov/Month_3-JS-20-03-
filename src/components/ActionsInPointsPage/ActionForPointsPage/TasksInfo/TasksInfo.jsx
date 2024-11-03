@@ -16,7 +16,7 @@ import InvoiceComponent from "../../../../common/InvoiceComponent/InvoiceCompone
 
 ////// components
 
-const TasksInfo = (props) => {
+const TasksInfo = ({ props, reportEveryTT }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -27,10 +27,12 @@ const TasksInfo = (props) => {
 
   useEffect(() => {
     dispatch(getTasks({ agent_guid: dataSave?.guid, point_guid }));
-  }, []);
+  }, [point_guid]);
 
   const clickInvoice = (item) => {
-    navigate("/points/tasks_perform", { state: item });
+    const checkEdit = !!!reportEveryTT?.end_time && !!reportEveryTT?.start_time;
+
+    navigate("/points/tasks_perform", { state: { ...item, checkEdit } });
   };
 
   const objTypeInvoice = {

@@ -80,9 +80,16 @@ const MainPage = () => {
       if (!!res?.result) {
         const invoice_guid = res?.invoice_guid;
 
-        const obj = { action: 1, date_from, date_to, invoice_guid };
+        const obj = {
+          action: 1,
+          date_from,
+          date_to,
+          invoice_guid,
+          type_unit: 1,
+          checkTypeProds: 0, ///  все товары
+        };
         // 1 - создание
-        navigate("/app/crud_invoice", { state: { ...obj, type_unit: 1 } });
+        navigate("/app/crud_invoice", { state: obj });
       }
     }
   };

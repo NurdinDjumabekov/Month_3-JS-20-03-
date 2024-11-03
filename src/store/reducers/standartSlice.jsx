@@ -26,7 +26,7 @@ const initialState = {
 export const getListWorkShopsNur = createAsyncThunk(
   "getListWorkShopsNur",
   async function ({ link }, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/get_workshop`;
+    const url = `${REACT_APP_API_URL}/ta/${link}`;
     try {
       const response = await axiosInstance(url);
       if (response.status >= 200 && response.status < 300) {

@@ -31,11 +31,16 @@ const CreateInvoicePage = () => {
   const location = useLocation();
   const inputRef = useRef(null);
 
-  const { action, invoice_guid } = location?.state;
+  const { action, invoice_guid, checkTypeProds } = location?.state;
   const type_unit = location?.state?.type_unit || 2;
   /// 1 - шт, 2 кг
 
+  /// checkTypeProds  - 0 все товары
+  /// checkTypeProds  - 1 остатки товара
+
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  const { dataSave } = useSelector((state) => state.saveDataSlice);
 
   const settings = {
     dots: false,
@@ -49,16 +54,23 @@ const CreateInvoicePage = () => {
   };
 
   const getData = async () => {
-    const link = ``;
+    const urlMain = "get_workshop";
+    const urlLeftovers = `get_agent_leftover_workshop?agent_guid=${dataSave?.guid}`;
+    const link = !!checkTypeProds ? urlLeftovers : urlMain;
     const res = await dispatch(getListWorkShopsNur({ link })).unwrap();
     // get список цехов
-    const guid = res?.[0]?.guid;
-    const name = res?.[0]?.name;
-    dispatch(setActiveWorkShop({ label: name, value: guid }));
-    ///// выбор селекта цехов
-    const links = `get_product?workshop_guid=${guid}&type=agent`;
-    dispatch(getListProdsNur({ links, guid }));
-    // get список товаров с категориями
+    const guid = !!checkTypeProds ? res?.[0]?.workshop_guid : res?.[0]?.guid;
+    const name = !!checkTypeProds ? res?.[0]?.workshop_name : res?.[0]?.name;
+
+    if (guid) {
+      dispatch(setActiveWorkShop({ label: name, value: guid }));
+      ///// выбор селекта цехов
+      const urlsMain = `get_product?workshop_guid=${guid}&type=agent`;
+      const urlsLeftovers = `get_agent_leftover?agent_guid=${dataSave?.guid}&workshop_guid=${guid}&type=agent`;
+      const links = !!checkTypeProds ? urlsLeftovers : urlsMain;
+      dispatch(getListProdsNur({ links, guid }));
+      // get список товаров с категориями
+    }
   };
 
   useEffect(() => {
@@ -147,6 +159,7 @@ const CreateInvoicePage = () => {
             invoice_guid={invoice_guid}
             action={action}
             type_unit={type_unit}
+            checkTypeProds={checkTypeProds}
           />
           <ListAcceptInvoice invoice_guid={invoice_guid} action={action} />
         </Slider>

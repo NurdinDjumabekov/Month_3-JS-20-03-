@@ -38,6 +38,27 @@
     }
   }
 
+  .info {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    justify-content: space-between;
+    padding: 10px 10px 5px 0px;
+    border-bottom: 1px solid #e0e6ed;
+
+    p {
+      font-weight: 600;
+      color: #888ea8;
+      font-size: 15px;
+    }
+
+    span {
+      font-size: 14px;
+      font-weight: 500;
+      text-align: right;
+    }
+  }
+
   .price {
     .inputSend {
       margin: 10px 0 0 0;

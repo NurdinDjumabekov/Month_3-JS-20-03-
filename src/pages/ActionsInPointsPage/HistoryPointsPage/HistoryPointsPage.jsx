@@ -19,7 +19,7 @@ const HistoryPointsPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { guid, point, balance, seller_fio, date } = location.state;
+  const { guid, point, balance, seller_fio, date, point_guid } = location.state;
   const { dataSave } = useSelector((state) => state.saveDataSlice);
   const { listRouteVisit } = useSelector((state) => state.standartSlice);
 
@@ -27,8 +27,8 @@ const HistoryPointsPage = () => {
   //   console.log(listRouteVisit, "listRouteVisit");
 
   useEffect(() => {
-    dispatch(getListVisitPoints(guid));
-  }, [guid]);
+    dispatch(getListVisitPoints(point_guid));
+  }, [point_guid]);
 
   const clickPoint = async (position) => {
     //// создание накладной возврата

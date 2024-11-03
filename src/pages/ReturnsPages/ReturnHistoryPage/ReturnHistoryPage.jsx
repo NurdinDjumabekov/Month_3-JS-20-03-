@@ -50,6 +50,7 @@ const ReturnHistoryPage = () => {
         date_from: "",
         date_to: "",
         invoice_guid: item?.invoice_guid,
+        checkTypeProds: 0, /// все товары
       };
       // 1 - создание и редактирование
       navigate("/app/crud_invoice", { state: obj });
@@ -78,6 +79,7 @@ const ReturnHistoryPage = () => {
         date_from: "",
         date_to: "",
         invoice_guid: res?.invoice_guid,
+        checkTypeProds: 0, /// все товары
       };
       // 1 - создание и редактирование
       navigate("/app/crud_invoice", { state: obj });

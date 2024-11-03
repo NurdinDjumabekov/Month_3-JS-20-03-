@@ -34,6 +34,8 @@ const ActionForPointsPage = () => {
   const listActionsRef = useRef(null);
   const menuRefs = useRef([]);
 
+  // console.log(location.state, "location.state");
+
   const { guid, point, balance, seller_fio } = location.state;
   const { route_sheet_guid, seller_guid, seller_number } = location.state;
   const { start_time, end_time, point_guid, date } = location.state;
@@ -132,10 +134,13 @@ const ActionForPointsPage = () => {
               />
             </div>
             <div className="everySlide">
-              <PhotosInfo props={location.state} />
+              <PhotosInfo
+                props={location.state}
+                reportEveryTT={reportEveryTT}
+              />
             </div>
             <div className="everySlide">
-              <TasksInfo props={location.state} />
+              <TasksInfo props={location.state} reportEveryTT={reportEveryTT} />
             </div>
           </Slider>
         </div>

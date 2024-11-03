@@ -19,6 +19,7 @@ import { myAlert } from "../../../helpers/MyAlert";
 import { getListProdsInInvoiceNur } from "../../../store/reducers/standartSlice";
 import { editProdsInInvoiceNur } from "../../../store/reducers/standartSlice";
 import { addProdsInInvoiceNur } from "../../../store/reducers/standartSlice";
+import { roundingNum } from "../../../helpers/totals";
 
 const InputInvoicePage = () => {
   const dispatch = useDispatch();
@@ -31,7 +32,9 @@ const InputInvoicePage = () => {
 
   const { product_name, invoice_guid, workshop_price } = location?.state;
   const { category_name, product_guid, action } = location?.state;
-  const { count_kg, type_unit } = location?.state;
+  const { count_kg, type_unit, checkTypeProds } = location?.state;
+  const amount = location?.state?.amount;
+  const amount_kg = location?.state?.amount_kg;
 
   const [count, setCount] = useState("");
 
@@ -43,6 +46,8 @@ const InputInvoicePage = () => {
       setCount(value);
     }
   };
+
+  console.log(checkTypeProds, "checkTypeProds");
 
   useEffect(() => {
     setTimeout(() => {
@@ -132,10 +137,18 @@ const InputInvoicePage = () => {
             <img src={krest} alt="x" />
           </button>
         </div>
-        {/* <div className="lefttovers">
-          <p>Остаток в кг: 100кг</p>
-          <p>Остаток в шт: 100шт</p>
-        </div> */}
+        {!!checkTypeProds && (
+          <>
+            <div className="info lefttovers">
+              <p>Остаток в кг: </p>
+              <span>{roundingNum(amount_kg)} кг</span>
+            </div>
+            <div className="info lefttovers">
+              <p>Остаток в шт: </p>
+              <span>{roundingNum(amount)} шт</span>
+            </div>
+          </>
+        )}
         <div className="price">
           <div className="inputSend">
             <p>Цена товара</p>

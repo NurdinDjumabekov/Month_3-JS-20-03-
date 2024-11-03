@@ -22,10 +22,10 @@ import "./style.scss";
 
 ////// icons
 import AddIcon from "../../assets/MyIcons/AddIcon";
+import DeleteIcon from "../../assets/MyIcons/DeleteIcon";
 
 ////// helpers
 import { myAlert } from "../../helpers/MyAlert";
-import DeleteIcon from "../../assets/MyIcons/DeleteIcon";
 import { statusExpense } from "../../helpers/objs";
 
 const ExpensePage = () => {

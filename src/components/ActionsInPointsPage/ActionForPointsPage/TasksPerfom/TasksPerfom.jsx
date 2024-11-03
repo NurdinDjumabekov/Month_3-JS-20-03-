@@ -29,7 +29,7 @@ const TasksPerfom = () => {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
-  const { guid } = location.state;
+  const { guid, checkEdit } = location.state;
   //   const { comment, point_guid, filesUser } = location.state;
   //   const { status, filesAgent, comment_agent } = location.state;
 
@@ -54,17 +54,14 @@ const TasksPerfom = () => {
       });
       const res = await dispatch(sendPhotos({ data: formData })).unwrap();
       if (!!res?.result) {
-        // const obj = { point_guid, guid, route_sheet_guid };
-        // dispatch(getListPhotos({ ...obj, agent_guid: dataSave?.guid }));
+        getData();
       } else {
         myAlert("Не удалось загрузить данные!", "error");
       }
     }
   };
 
-  const getData = () => {
-    dispatch(getEveryTasks(guid));
-  };
+  const getData = () => dispatch(getEveryTasks(guid));
 
   useEffect(() => {
     getData();
@@ -76,9 +73,8 @@ const TasksPerfom = () => {
       myAlert("Заполните комментарий", "error");
     }
     const data = {
-      deadline_date: transformDateTime(new Date()),
       task_guid: guid,
-      comment: comments,
+      comment_agent: comments,
       status: 2,
     };
     const res = await dispatch(updateTasksStatus({ data })).unwrap();
@@ -89,6 +85,7 @@ const TasksPerfom = () => {
     }
   };
 
+  console.log(checkEdit, "checkEdit");
   return (
     <>
       <NavMenu navText={"Задание от руководителя"} />
@@ -115,7 +112,7 @@ const TasksPerfom = () => {
               listPhotos={everyTasks?.filesAgent}
               getData={getData}
               keyGuid={"guid_file"}
-              checkDel={everyTasks?.status == 0}
+              checkDel={checkEdit}
             />
           </div>
         </div>

@@ -27,32 +27,22 @@ const MainInfo = (props) => {
 
   const [look, setLook] = useState(false);
 
-  // const objAction = {
-  //   0: (
-  //     <button className="startEndTA">
-  //       <p>+ Начать выгрузку</p>
-  //     </button>
-  //   ),
-  //   1: (
-  //     <button className="startEndTA">
-  //       <p>+ Завершить посещение</p>
-  //     </button>
-  //   ),
-  //   2: "",
-  // };
+  // console.log(reportEveryTT, "reportEveryTT");
 
   const startVisitFN = async () => {
     //// наичнаю работу в этой точке
     const send = {
       route_guid: guid,
       comment: `Начал работу в точке ${point}`,
-      result_guid: "CFFA5F82-882F-4C8D-B77C-DBC2E6FF0F2F",
+      result_guid: "",
+      // result_guid: "CFFA5F82-882F-4C8D-B77C-DBC2E6FF0F2F",
       status: 1,
     };
     const res = await dispatch(actionMyVisitPoints(send)).unwrap();
 
     if (!!res?.result) {
       getDataVisit();
+      myAlert(`Вы пришли на точку ${point}`);
     } else {
       myAlert("Ошибка, попробуйте позже", "error");
     }
@@ -137,7 +127,6 @@ const MainInfo = (props) => {
             <span>{reportEveryTT?.end_time || "..."}</span>
           </div>
 
-          {/* {objAction?.[reportEveryTT?.result_status]} */}
           {!!reportEveryTT?.result ? (
             <>
               {!!reportEveryTT?.end_time ? (

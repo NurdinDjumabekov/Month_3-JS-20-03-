@@ -18,7 +18,7 @@ import { myAlert } from "../../../../helpers/MyAlert";
 ////// components
 import ViewActionPhotos from "../ViewActionPhotos/ViewActionPhotos";
 
-const PhotosInfo = ({ props }) => {
+const PhotosInfo = ({ props, reportEveryTT }) => {
   const { point_guid, route_sheet_guid, guid } = props;
 
   const fileInputRef = useRef(null);
@@ -66,12 +66,15 @@ const PhotosInfo = ({ props }) => {
     }
   };
 
+  const checkEdit = !!!reportEveryTT?.end_time && !!reportEveryTT?.start_time;
+
   return (
     <div className="mainInfo photosPoint">
       <ViewActionPhotos
         listPhotos={listPhotos}
         getData={getData}
         keyGuid={"guid"}
+        checkDel={checkEdit}
       />
       <div className="actionsBtnPhoto">
         <input

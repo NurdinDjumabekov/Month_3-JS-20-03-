@@ -52,6 +52,7 @@ const Realization = ({ send_guid }) => {
       date_from: "",
       date_to: "",
       invoice_guid: send_guid,
+      checkTypeProds: 1, /// остатки товара
     };
     navigate("/app/crud_invoice", { state: obj });
   };

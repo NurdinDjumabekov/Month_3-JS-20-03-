@@ -52,6 +52,7 @@ const RerurnProd = ({ return_guid }) => {
       date_from: "",
       date_to: "",
       invoice_guid: return_guid,
+      checkTypeProds: 0, /// все товары
     };
     navigate("/app/crud_invoice", { state: obj });
   };

@@ -19,9 +19,11 @@ import { getListProdsNur } from "../../store/reducers/standartSlice";
 
 ////// helpers
 import { transformLists } from "../../helpers/transformLists";
+import { roundingNum } from "../../helpers/totals";
 
 const ListChoiceProds = (props) => {
-  const { setSearch, search, invoice_guid, action, type_unit } = props;
+  const { setSearch, search, invoice_guid } = props;
+  const { action, type_unit, checkTypeProds } = props;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,7 +45,17 @@ const ListChoiceProds = (props) => {
   const workShop = transformLists(listWorkShopsNur, "guid", "name");
 
   const clickProd = (obj) => {
-    const send = { ...obj, invoice_guid, action, count_kg: "", type_unit };
+    console.log(obj, "obj");
+    const workshop_price = !!checkTypeProds ? obj?.price : obj?.workshop_price;
+    const send = {
+      ...obj,
+      invoice_guid,
+      action,
+      count_kg: "",
+      type_unit,
+      workshop_price,
+      checkTypeProds,
+    };
     navigate("/app/input_prods", { state: send });
   };
 
@@ -100,14 +112,12 @@ const ListChoiceProds = (props) => {
                         style={{ width: "68%" }}
                       >
                         {row?.product_name}
-                        {/* <div
-                        className={`lineVaakum ${
-                          !!row?.is_vakuum ? "is_vakuum" : ""
-                        }`}
-                      ></div> */}
                       </TableCell>
                       <TableCell align="left" style={{ width: "20%" }}>
-                        {row?.workshop_price} сом
+                        {roundingNum(
+                          !!checkTypeProds ? row?.price : row?.workshop_price
+                        )}{" "}
+                        сом
                       </TableCell>
                     </TableRow>
                   ))}
