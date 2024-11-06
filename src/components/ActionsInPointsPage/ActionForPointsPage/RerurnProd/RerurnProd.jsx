@@ -3,8 +3,6 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-////// components
-
 ////// style
 import "./style.scss";
 
@@ -73,7 +71,7 @@ const RerurnProd = ({ return_guid }) => {
         </div>
         <div className="info">
           <p>Количество возврата: </p>
-          <span>{roundingNum(count)} кг</span>
+          <span>{roundingNum(count)} шт</span>
         </div>
         <button className="pdfBtn">
           <p>Распечатать накладную возврата</p>

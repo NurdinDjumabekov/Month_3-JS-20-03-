@@ -19,12 +19,11 @@ const HistoryPointsPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { guid, point, balance, seller_fio, date, point_guid } = location.state;
+  const { point, point_guid } = location.state;
   const { dataSave } = useSelector((state) => state.saveDataSlice);
   const { listRouteVisit } = useSelector((state) => state.standartSlice);
 
-  // console.log(location.state);
-  //   console.log(listRouteVisit, "listRouteVisit");
+  // console.log(listRouteVisit, "listRouteVisit");
 
   useEffect(() => {
     dispatch(getListVisitPoints(point_guid));

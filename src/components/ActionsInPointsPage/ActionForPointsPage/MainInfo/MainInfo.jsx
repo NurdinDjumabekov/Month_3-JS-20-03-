@@ -20,14 +20,14 @@ import { BottomSheet } from "react-spring-bottom-sheet";
 import ArrowNav from "@mui/icons-material/ArrowForwardIosSharp";
 
 const MainInfo = (props) => {
-  const { reportEveryTT, getDataVisit, guid, point } = props;
+  const { reportEveryTT, getDataVisit, guid, point, position } = props;
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { listTypesVisit } = useSelector((state) => state.standartSlice);
 
   const [look, setLook] = useState(false);
-
-  // console.log(reportEveryTT, "reportEveryTT");
 
   const startVisitFN = async () => {
     //// наичнаю работу в этой точке
@@ -52,7 +52,7 @@ const MainInfo = (props) => {
     //// конец работу в этой точке
     const send = {
       route_guid: guid,
-      comment: `Начал работу в точке ${point}`,
+      comment: `Закончили работу в точке ${point}`,
       result_guid: item?.guid,
       status: 2,
     };
@@ -61,6 +61,8 @@ const MainInfo = (props) => {
     if (!!res?.result) {
       getDataVisit();
       setLook(false);
+      navigate("/points/history", { state: position });
+      myAlert(`Вы закончили работу в точке ${point}`);
     } else {
       myAlert("Ошибка, попробуйте позже", "error");
     }
@@ -102,7 +104,9 @@ const MainInfo = (props) => {
 
           <div className="info">
             <p>Вес возврата: </p>
-            <span>{roundingNum(reportEveryTT?.tt_vozvrat_price || 0)} кг</span>
+            <span>
+              {roundingNum(reportEveryTT?.tt_vozvrat_count_kg || 0)} кг
+            </span>
           </div>
 
           <div className="info">
@@ -114,7 +118,7 @@ const MainInfo = (props) => {
 
           <div className="info">
             <p>Результат посещения: </p>
-            <span>{reportEveryTT?.result || "Не посетил точку"}</span>
+            <span>{reportEveryTT?.result || "..."}</span>
           </div>
 
           <div className="info">
@@ -127,7 +131,7 @@ const MainInfo = (props) => {
             <span>{reportEveryTT?.end_time || "..."}</span>
           </div>
 
-          {!!reportEveryTT?.result ? (
+          {!!reportEveryTT?.start_time ? (
             <>
               {!!reportEveryTT?.end_time ? (
                 ""

@@ -73,7 +73,7 @@ const Realization = ({ send_guid }) => {
         </div>
         <div className="info">
           <p>Количество товара: </p>
-          <span>{roundingNum(count)} кг</span>
+          <span>{roundingNum(count)} шт</span>
         </div>
         <button className="pdfBtn">
           <p>Распечатать накладную отпуска</p>

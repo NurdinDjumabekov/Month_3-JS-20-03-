@@ -13,14 +13,12 @@ const ApplicationsPages = () => {
   const navigate = useNavigate();
 
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<ApplicationsPages />} />
-        <Route path="/main" element={<MainPage />} />
-        <Route path="/crud_invoice" element={<CreateInvoicePage />} />
-        <Route path="/input_prods" element={<InputInvoicePage />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route path="/" element={<ApplicationsPages />} />
+      <Route path="/main" element={<MainPage />} />
+      <Route path="/crud_invoice" element={<CreateInvoicePage />} />
+      <Route path="/input_prods" element={<InputInvoicePage />} />
+    </Routes>
   );
 };
 

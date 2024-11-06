@@ -11,6 +11,8 @@ import MainInfo from "../../../components/ActionsInPointsPage/ActionForPointsPag
 import PayInfo from "../../../components/ActionsInPointsPage/ActionForPointsPage/PayInfo/PayInfo";
 import Realization from "../../../components/ActionsInPointsPage/ActionForPointsPage/Realization/Realization";
 import RerurnProd from "../../../components/ActionsInPointsPage/ActionForPointsPage/RerurnProd/RerurnProd";
+import PhotosInfo from "../../../components/ActionsInPointsPage/ActionForPointsPage/PhotosInfo/PhotosInfo";
+import TasksInfo from "../../../components/ActionsInPointsPage/ActionForPointsPage/TasksInfo/TasksInfo";
 
 ////// style
 import "./style.scss";
@@ -24,8 +26,6 @@ import {
   getReportEveryTT,
   getReportPayEveryTT,
 } from "../../../store/reducers/standartSlice";
-import PhotosInfo from "../../../components/ActionsInPointsPage/ActionForPointsPage/PhotosInfo/PhotosInfo";
-import TasksInfo from "../../../components/ActionsInPointsPage/ActionForPointsPage/TasksInfo/TasksInfo";
 
 const ActionForPointsPage = () => {
   const dispatch = useDispatch();
@@ -33,8 +33,6 @@ const ActionForPointsPage = () => {
   const sliderRef = useRef(null);
   const listActionsRef = useRef(null);
   const menuRefs = useRef([]);
-
-  // console.log(location.state, "location.state");
 
   const { guid, point, balance, seller_fio } = location.state;
   const { route_sheet_guid, seller_guid, seller_number } = location.state;
@@ -118,6 +116,7 @@ const ActionForPointsPage = () => {
                 getDataVisit={getDataVisit}
                 guid={guid}
                 point={point}
+                position={location.state}
               />
             </div>
             <div className="everySlide">
@@ -131,6 +130,7 @@ const ActionForPointsPage = () => {
                 props={location.state}
                 inviceData={inviceData}
                 getDataVisit={getDataVisit}
+                reportEveryTT={reportEveryTT}
               />
             </div>
             <div className="everySlide">

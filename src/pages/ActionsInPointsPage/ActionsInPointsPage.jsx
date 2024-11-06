@@ -20,7 +20,7 @@ const ActionsInPointsPage = () => {
       <Route path="/" element={<ActionsInPointsPage />} />
       <Route path="/main" element={<PointsMainPage />} />
       <Route path="/all_list" element={<PointListsAll />} />
-      {/* <Route path="/maps" element={<RenderGoogleMaps />} /> */}
+      <Route path="/maps" element={<RenderGoogleMaps />} />
       <Route path="/list" element={<PointLists />} />
       <Route path="/history" element={<HistoryPointsPage />} />
       <Route path="/actions" element={<ActionForPointsPage />} />

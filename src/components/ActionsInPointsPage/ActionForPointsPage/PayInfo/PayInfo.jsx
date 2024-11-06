@@ -11,8 +11,8 @@ import "./style.scss";
 ////// helpers
 import { roundingNum } from "../../../../helpers/totals";
 
-const PayInfo = ({ props, inviceData, getDataVisit }) => {
-  const { point } = props;
+const PayInfo = ({ props, inviceData, getDataVisit, reportEveryTT }) => {
+  const { point, point_guid, date } = props;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,11 +26,11 @@ const PayInfo = ({ props, inviceData, getDataVisit }) => {
       paid: reportPayEveryTT?.paid, /// оплачено
       tt_dolg: reportPayEveryTT?.tt_dolg, /// долг
       total_to_pay: reportPayEveryTT?.total_to_pay, /// итого к оплате
+      sum_return: reportEveryTT?.tt_vozvrat_price,
+      sum_accept: reportEveryTT?.tt_prinat_price,
     };
     navigate("/points/pay", { state: obj });
   };
-
-  // console.log(reportPayEveryTT, "reportPayEveryTT");
 
   return (
     <div className="mainInfo rerurnProd">

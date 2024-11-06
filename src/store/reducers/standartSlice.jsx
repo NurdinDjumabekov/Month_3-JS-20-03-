@@ -257,6 +257,24 @@ export const getReportPayEveryTT = createAsyncThunk(
   }
 );
 
+////// sendPayAgent - оплата для всех от ТА(касса и ТТ)
+export const sendPayAgent = createAsyncThunk(
+  "sendPayAgent",
+  async function (data, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/add_oplata`;
+    try {
+      const response = await axiosInstance.post(url, data);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 ////// getListVisitPoints - get список посещений точек
 export const getListVisitPoints = createAsyncThunk(
   "getListVisitPoints",

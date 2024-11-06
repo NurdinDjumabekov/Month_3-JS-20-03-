@@ -22,7 +22,7 @@ import { transformLists } from "../../helpers/transformLists";
 import { roundingNum } from "../../helpers/totals";
 
 const ListChoiceProds = (props) => {
-  const { setSearch, search, invoice_guid } = props;
+  const { setSearch, invoice_guid } = props;
   const { action, type_unit, checkTypeProds } = props;
 
   const dispatch = useDispatch();
@@ -35,17 +35,28 @@ const ListChoiceProds = (props) => {
 
   const onChangeWS = (item) => {
     dispatch(setActiveWorkShop(item)); ///// выбор селекта цехов
-    const links = `get_product?workshop_guid=${item?.value}&type=agent`;
-    dispatch(getListProdsNur({ links, guid: item?.value }));
+
+    const objUrl = {
+      0: `get_product?workshop_guid=${item?.value}&type=agent`,
+      1: `get_agent_leftover?workshop_guid=${item?.value}&type=agent`,
+    };
+
+    dispatch(
+      getListProdsNur({ links: objUrl?.[checkTypeProds], guid: item?.value })
+    );
     // get список товаров с категориями
     setSearch("");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const workShop = transformLists(listWorkShopsNur, "guid", "name");
+  const objType = {
+    0: transformLists(listWorkShopsNur, "guid", "name"),
+    1: transformLists(listWorkShopsNur, "workshop_guid", "workshop_name"),
+  };
+
+  const workShop = objType?.[checkTypeProds];
 
   const clickProd = (obj) => {
-    console.log(obj, "obj");
     const workshop_price = !!checkTypeProds ? obj?.price : obj?.workshop_price;
     const send = {
       ...obj,
@@ -83,10 +94,11 @@ const ListChoiceProds = (props) => {
           </div>
         </div> */}
         <div className="listProdCRUD__inner">
-          {listProdsNur?.map((item) => (
+          {listProdsNur?.map((item, index) => (
             <TableContainer
               component={Paper}
               className="scroll_table standartTable"
+              key={index}
             >
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
@@ -101,7 +113,7 @@ const ListChoiceProds = (props) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {item?.prods?.map((row) => (
+                  {item?.prods?.slice(0, 100)?.map((row) => (
                     <TableRow
                       key={row?.product_guid}
                       onClick={() => clickProd(row)}

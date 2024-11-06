@@ -39,6 +39,7 @@ const CreateInvoicePage = () => {
   /// checkTypeProds  - 1 остатки товара
 
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [search, setSearch] = useState("");
 
   const { dataSave } = useSelector((state) => state.saveDataSlice);
 
@@ -77,14 +78,15 @@ const CreateInvoicePage = () => {
     getData();
   }, []);
 
-  const [search, setSearch] = useState("");
-
   const handleSearch = useCallback(
     //// поиск товара через запрос
     debounce((value) => {
-      const link = `get_product?search=${value}&type=agent`;
-      dispatch(searchListProdsNur({ link }));
-    }, 500),
+      const objUrl = {
+        0: `get_product?search=${value}&type=agent`,
+        1: `get_agent_leftover?search=${value}&type=agent`,
+      };
+      dispatch(searchListProdsNur({ link: objUrl?.[checkTypeProds] }));
+    }, 1000),
     []
   );
 
@@ -112,7 +114,11 @@ const CreateInvoicePage = () => {
     if (inputRef.current) {
       inputRef.current.blur();
     }
-    dispatch(searchListProdsNur(search));
+    const objUrl = {
+      0: `get_product?search=${search}&type=agent`,
+      1: `get_agent_leftover?search=${search}&type=agent`,
+    };
+    dispatch(searchListProdsNur({ link: objUrl?.[checkTypeProds] }));
   };
 
   const checkLength = search?.length === 0;

@@ -28,21 +28,21 @@ const PointsMainPage = () => {
   const { countsPoints } = useSelector((state) => state.standartSlice);
 
   const list = [
-    {
-      codeid: 1,
-      name: "Список всех торговых точек",
-      img: mapIcon,
-      nav: "/all_list",
-      count: countsPoints?.total_tt,
-    },
-    {
-      codeid: 2,
-      name: "Торговые точки на сегодня",
-      more: "карта",
-      img: mapIcon2,
-      nav: "/maps",
-      count: countsPoints?.today_tt,
-    },
+    // {
+    //   codeid: 1,
+    //   name: "Список всех торговых точек",
+    //   img: mapIcon,
+    //   nav: "/all_list",
+    //   count: countsPoints?.total_tt,
+    // },
+    // {
+    //   codeid: 2,
+    //   name: "Торговые точки на сегодня",
+    //   more: "карта",
+    //   img: mapIcon2,
+    //   nav: "/maps",
+    //   count: countsPoints?.today_tt,
+    // },
     {
       codeid: 3,
       name: "Торговые точки на сегодня",
@@ -59,14 +59,14 @@ const PointsMainPage = () => {
       nav: "/add_route",
       count: +1,
     },
-    {
-      codeid: 5,
-      name: "Добавить данные новой точки",
-      more: "",
-      img: mapIcon2,
-      nav: "/add_route",
-      count: +1,
-    },
+    // {
+    //   codeid: 5,
+    //   name: "Добавить данные новой точки",
+    //   more: "",
+    //   img: mapIcon2,
+    //   nav: "/add_route",
+    //   count: +1,
+    // },
   ];
 
   const data = [

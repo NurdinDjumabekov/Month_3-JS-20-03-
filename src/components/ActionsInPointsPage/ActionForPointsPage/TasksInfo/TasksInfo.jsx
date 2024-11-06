@@ -44,17 +44,25 @@ const TasksInfo = ({ props, reportEveryTT }) => {
   return (
     <div className="mainInfo tasksPoint">
       <div className="tasksPoint__inner">
-        {listsTasks?.map((item, index) => (
-          <InvoiceComponent
-            item={item}
-            index={index}
-            objRole={{}}
-            clickInvoice={clickInvoice}
-            objStatus={objTypeInvoice}
-            title={"1"}
-            key={index}
-          />
-        ))}
+        {listsTasks?.length == 0 ? (
+          <div className="emptyList">
+            <p>Задания от руководителя на сегодня отсутствуют ...</p>
+          </div>
+        ) : (
+          <>
+            {listsTasks?.map((item, index) => (
+              <InvoiceComponent
+                item={item}
+                index={index}
+                objRole={{}}
+                clickInvoice={clickInvoice}
+                objStatus={objTypeInvoice}
+                title={"1"}
+                key={index}
+              />
+            ))}
+          </>
+        )}
       </div>
     </div>
   );

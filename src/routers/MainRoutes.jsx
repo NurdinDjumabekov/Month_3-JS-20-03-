@@ -13,16 +13,16 @@ import MainLayouts from "../layouts/MainLayouts/MainLayouts";
 
 /////// pages
 import LoginPage from "../pages/LoginPage/LoginPage";
-import MapsPage from "../pages/MapsPage/MapsPage";
-import CameraPage from "../pages/CameraPage/CameraPage";
-import SendInvoicePage from "../pages/SendInvoicePage/SendInvoicePage";
-import AddPointsPage from "../pages/AddPointsPage/AddPointsPage";
-import AddPointInRoutePage from "../pages/AddPointInRoutePage/AddPointInRoutePage";
-import TakeMoneyPage from "../pages/TakeMoneyPage/TakeMoneyPage";
+import MapsPage from "../pages/MapsPage/MapsPage"; /// delete
+import CameraPage from "../pages/CameraPage/CameraPage"; /// delete
+import SendInvoicePage from "../pages/SendInvoicePage/SendInvoicePage"; /// delete
+import AddPointsPage from "../pages/AddPointsPage/AddPointsPage"; /// delete
+import AddPointInRoutePage from "../pages/AddPointInRoutePage/AddPointInRoutePage"; /// delete
+import TakeMoneyPage from "../pages/TakeMoneyPage/TakeMoneyPage"; /// delete
 import AllCategPage from "../pages/AllCategPage/AllCategPage";
 import LeftoversPage from "../pages/LeftoversPage/LeftoversPage";
-import ReturnPage from "../pages/ReturnPage/ReturnPage";
-import TasksPage from "../pages/TasksPage/TasksPage";
+import ReturnPage from "../pages/ReturnPage/ReturnPage"; /// delete
+import TasksPage from "../pages/TasksPage/TasksPage"; /// delete
 import ReturnsPages from "../pages/ReturnsPages/ReturnsPages";
 import ExpensePage from "../pages/ExpensePage/ExpensePage";
 import ApplicationsPages from "../pages/ApplicationsPages/ApplicationsPages";
@@ -47,20 +47,16 @@ const MainRoutes = () => {
       {!!!dataSave?.guid ? (
         <Route path="/" element={<LoginPage />} />
       ) : (
-        <>
-          <Route element={<MainLayouts />}>
-            <Route path="/" element={<AllCategPage />} />
-            <Route path="/app/*" element={<ApplicationsPages />} />
-            <Route path="/invoice/*" element={<WorkshopPages />} />
-            <Route path="/leftovers" element={<LeftoversPage />} />
-            <Route path="/expense" element={<ExpensePage />} />
-            <Route path="/points/*" element={<ActionsInPointsPage />} />
-
-            <Route path="/pay" element={<PayPage />} />
-            <Route path="/return/*" element={<ReturnsPages />} />
-            {/* /// доделать */}
-          </Route>
-        </>
+        <Route element={<MainLayouts />}>
+          <Route path="/" element={<AllCategPage />} />
+          <Route path="/app/*" element={<ApplicationsPages />} />
+          <Route path="/invoice/*" element={<WorkshopPages />} />
+          <Route path="/leftovers" element={<LeftoversPage />} />
+          <Route path="/expense" element={<ExpensePage />} />
+          <Route path="/points/*" element={<ActionsInPointsPage />} />
+          <Route path="/pay" element={<PayPage />} />
+          <Route path="/return/*" element={<ReturnsPages />} />
+        </Route>
       )}
       {/* <Route path="*" element={<NotFoundPage />} /> */}
     </Routes>
