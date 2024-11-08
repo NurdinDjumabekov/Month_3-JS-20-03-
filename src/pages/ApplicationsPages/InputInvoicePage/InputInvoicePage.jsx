@@ -14,12 +14,12 @@ import krest from "../../../assets/icons/krest.svg";
 
 ///// helpers
 import { myAlert } from "../../../helpers/MyAlert";
+import { roundingNum } from "../../../helpers/totals";
 
 ///// fns
 import { getListProdsInInvoiceNur } from "../../../store/reducers/standartSlice";
 import { editProdsInInvoiceNur } from "../../../store/reducers/standartSlice";
 import { addProdsInInvoiceNur } from "../../../store/reducers/standartSlice";
-import { roundingNum } from "../../../helpers/totals";
 
 const InputInvoicePage = () => {
   const dispatch = useDispatch();
@@ -46,8 +46,6 @@ const InputInvoicePage = () => {
       setCount(value);
     }
   };
-
-  console.log(checkTypeProds, "checkTypeProds");
 
   useEffect(() => {
     setTimeout(() => {
@@ -79,10 +77,29 @@ const InputInvoicePage = () => {
     const data = { invoice_guid, comment: "...", products };
     const res = await dispatch(addProdsInInvoiceNur({ data })).unwrap();
 
-    if (!!res?.results?.[0]) {
-      /// список товаров определённого заказа
+    console.log(res?.results?.[0]);
+    /// список товаров определённого заказа
+    if (res?.results?.[0] == 1) {
       dispatch(getListProdsInInvoiceNur(invoice_guid));
       navigate(-1);
+    }
+    if (res?.results?.[0] == -2) {
+      myAlert("Вакуммный товар не может быть добавлен на завтра", "error");
+      // navigate(-1);
+    }
+    if (res?.results?.[0] == -3) {
+      myAlert(
+        "В список вакуумных товаров нельзя добавить без вакуум, создайте новую заявку!",
+        "error"
+      );
+      // navigate(-1);
+    }
+    if (res?.results?.[0] == -4) {
+      myAlert(
+        "В список без вакуумных товаров нельзя добавить вакуум, создайте новую заявку!",
+        "error"
+      );
+      // navigate(-1);
     }
   };
 

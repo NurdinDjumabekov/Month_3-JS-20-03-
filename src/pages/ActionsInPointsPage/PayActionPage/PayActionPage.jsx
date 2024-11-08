@@ -40,8 +40,6 @@ const PayActionPage = () => {
     }
   };
 
-  console.log(location?.state);
-
   useEffect(() => {
     setCount({ returnCount: sum_return, sendCount: sum_accept });
     setTimeout(() => {

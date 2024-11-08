@@ -61,7 +61,7 @@ const MainInfo = (props) => {
     if (!!res?.result) {
       getDataVisit();
       setLook(false);
-      navigate("/points/history", { state: position });
+      navigate("/points/list");
       myAlert(`Вы закончили работу в точке ${point}`);
     } else {
       myAlert("Ошибка, попробуйте позже", "error");

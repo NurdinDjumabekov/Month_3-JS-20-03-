@@ -16,6 +16,7 @@ import "./style.scss";
 
 ////// img
 import findIcon from "../../../../assets/icons/findMe.svg";
+import NavMenu from "../../../../common/NavMenu/NavMenu";
 
 const containerStyle = { width: "100%", height: "100%" };
 
@@ -69,6 +70,7 @@ export const GoogleMapsRoute = (props) => {
 
   return (
     <div className="mapContainer">
+      <NavMenu navText={"Торговые точки на сегодня"} />
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}

@@ -101,12 +101,13 @@ const CreateInvoicePage = () => {
   const onChangeSearch = (e) => {
     const value = e?.target?.value;
     setSearch(value);
+    // handleSearch(value);
 
-    if (value?.length === 0) {
-      getData();
-    } else {
-      handleSearch(value);
-    }
+    // if (value?.length === 0) {
+    //   getData();
+    // } else {
+    //   handleSearch(value);
+    // }
   };
 
   const searchData = (e) => {
@@ -114,11 +115,16 @@ const CreateInvoicePage = () => {
     if (inputRef.current) {
       inputRef.current.blur();
     }
-    const objUrl = {
-      0: `get_product?search=${search}&type=agent`,
-      1: `get_agent_leftover?search=${search}&type=agent`,
-    };
-    dispatch(searchListProdsNur({ link: objUrl?.[checkTypeProds] }));
+
+    if (search?.length == 0 || search?.length == 1) {
+      getData();
+    } else {
+      const objUrl = {
+        0: `get_product?search=${search}&type=agent`,
+        1: `get_agent_leftover?search=${search}&type=agent`,
+      };
+      dispatch(searchListProdsNur({ link: objUrl?.[checkTypeProds] }));
+    }
   };
 
   const checkLength = search?.length === 0;
@@ -177,6 +183,11 @@ const CreateInvoicePage = () => {
           onClick={() => inputRef?.current?.focus()}
         >
           <img src={searchIcon} alt="0" />
+        </button>
+      )}
+      {currentSlide == 0 && (
+        <button className="searchBottomIcon krest" onClick={clear}>
+          <img src={krest} alt="x" />
         </button>
       )}
     </div>

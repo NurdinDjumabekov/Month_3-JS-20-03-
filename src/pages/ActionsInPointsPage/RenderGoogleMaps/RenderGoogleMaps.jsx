@@ -31,7 +31,7 @@ const RenderGoogleMaps = () => {
   const [directions, setDirections] = useState(null);
   const [zoom, setZoom] = useState(15);
 
-  const libraries = useMemo(() => ["places", "directions"], []);
+  const libraries = useMemo(() => ["places"], []);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -44,7 +44,7 @@ const RenderGoogleMaps = () => {
 
     const origin = everyRoutes_TA?.[0];
     const destination = everyRoutes_TA?.[everyRoutes_TA?.length - 1];
-    const waypoints = everyRoutes_TA?.slice(1, -1).map((location) => ({
+    const waypoints = everyRoutes_TA?.slice(1, -1)?.map((location) => ({
       location,
       stopover: true,
     }));
@@ -100,7 +100,7 @@ const RenderGoogleMaps = () => {
 
   return (
     <div>
-      <Autocomplete isLoaded={isLoaded} onPlaceSelect={setCenter} />
+      {/* <Autocomplete isLoaded={isLoaded} onPlaceSelect={setCenter} /> */}
       {isLoaded ? (
         <GoogleMapsRoute
           center={center}

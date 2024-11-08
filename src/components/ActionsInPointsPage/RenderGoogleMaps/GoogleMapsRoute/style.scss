@@ -1,4 +1,6 @@
 .mapContainer {
+  position: relative;
+
   .findGeoMe {
     position: fixed;
     z-index: 15;

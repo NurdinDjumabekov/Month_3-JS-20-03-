@@ -58,6 +58,8 @@ const RerurnProd = ({ return_guid }) => {
   const checkEdit = !!!reportEveryTT?.end_time && !!reportEveryTT?.start_time;
   //// редактирование и добавление не возможно
 
+  console.log(listOrdersNur, "listOrdersNur");
+
   return (
     <div className="mainInfo rerurnProd">
       <div className="mainInfo__inner">

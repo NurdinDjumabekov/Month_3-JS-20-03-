@@ -120,7 +120,7 @@ const ListAcceptProd = ({ invoice_guid }) => {
                   style={{ width: "20%" }}
                   onClick={() => editProd(row)}
                 >
-                  {roundingNum(row?.count_kg)} кг
+                  {row?.count_kg} кг
                 </TableCell>
                 <TableCell
                   align="left"

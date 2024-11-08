@@ -56,15 +56,13 @@ const PointLists = () => {
 
   const clear = () => setSearch("");
 
-  const onChangeSearch = (e) => setSearch(e.target.value);
+  const onChangeSearch = (e) => setSearch(e.target?.value);
 
   const checkLength = search?.length === 0;
 
   const clickPoint = (position) => {
     navigate("/points/history", { state: position });
   };
-
-  // console.log(filter_list, "filter_list");
 
   return (
     <div className="pointListsMain">
@@ -104,14 +102,16 @@ const PointLists = () => {
                 onClick={() => clickPoint(item)}
               >
                 <div
-                  className={`logo ${!!item?.result ? "visit" : "no_visit"}`}
+                  className={`logo ${
+                    !!item?.start_time ? "visit" : "no_visit"
+                  }`}
                 >
                   <p>{index + 1}</p>
                 </div>
                 <div className="content">
                   <div>
                     <p>{item?.point}</p>
-                    <span>{item?.result || "Не посетил точку "}</span>
+                    <span>{item?.result || "..."}</span>
                     <b>Долг: {item?.dolg} сом</b>
                   </div>
                   <div>
