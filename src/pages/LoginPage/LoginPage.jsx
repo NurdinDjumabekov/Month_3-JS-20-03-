@@ -17,6 +17,9 @@ import { logInAccount } from "../../store/reducers/mainSlice";
 ////fns
 // import { authLogin } from "../../store/reducers/authSlice";
 
+//// icons
+import AddBusinessIcon from "@mui/icons-material/AddBusiness";
+
 const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -55,42 +58,46 @@ const LoginPage = () => {
 
   return (
     <div className="vantaMain" id="vanta">
-      <form onSubmit={sendLogIn}>
-        <div className="blockLogo">
-          <img src={logo} alt="logo" />
-        </div>
+      <div className="centerLogin">
+        <form onSubmit={sendLogIn}>
+          <div className="blockLogo">
+            <img src={logo} alt="logo" />
+          </div>
 
-        <input
-          required
-          placeholder="Логин"
-          name="login"
-          onChange={changeInput}
-          value={login.login}
-        />
+          <input
+            required
+            placeholder="Логин"
+            name="login"
+            onChange={changeInput}
+            value={login.login}
+          />
 
-        <input
-          type="password"
-          required
-          placeholder="Пароль"
-          name="password"
-          onChange={changeInput}
-          value={login.password}
-        />
+          <input
+            type="password"
+            required
+            placeholder="Пароль"
+            name="password"
+            onChange={changeInput}
+            value={login.password}
+          />
 
-        <button className="actionLogin" type="submit">
-          Войти
-        </button>
-        <div className="links">
-          <p>Цифровые решения от: </p>
-          <a href="https://www.333.kg/" target="_blank">
-            www.333.kg
-          </a>
-        </div>
+          <button className="actionLogin" type="submit">
+            <AddBusinessIcon />
+            <p>Войти</p>
+          </button>
+          <div className="links">
+            <p>Цифровые решения от: </p>
+            <a href="https://www.333.kg/" target="_blank">
+              www.333.kg
+            </a>
+          </div>
 
-        <p>+996(555)-954-120 admin@333.kg</p>
-        <p>+996(552)-708-701 altynsuleimankg@gmail.com</p>
-        <p></p>
-      </form>
+          <p>+996(555)-954-120 admin@333.kg</p>
+          <p>+996(552)-708-701 altynsuleimankg@gmail.com</p>
+          <p></p>
+        </form>
+        <div className="shadow"></div>
+      </div>
     </div>
   );
 };
