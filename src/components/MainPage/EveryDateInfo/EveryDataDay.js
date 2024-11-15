@@ -13,8 +13,8 @@ import { Tooltip, tooltipClasses } from "@mui/material";
 import { objStatusOrders } from "../../../helpers/objs";
 
 /////// fns
-import { getEveryDataDay } from "../../../store/reducers/mainSlice";
-import { setInvoiceInfo } from "../../../store/reducers/mainSlice";
+import { getEveryDataDay } from "../../../store/reducers/orderSlice";
+import { setInvoiceInfo } from "../../../store/reducers/orderSlice";
 import { searchActiveOrdersTA } from "../../../helpers/searchActiveOrdersTA";
 import { roundingNum } from "../../../helpers/totals";
 import { setActiveTA } from "../../../store/reducers/selectsSlice";
@@ -44,8 +44,8 @@ const EveryDataDay = ({ content }) => {
   const { invoice_guid, date_from } = content?.event?._def?.extendedProps;
   const { list_workshop } = content?.event?._def?.extendedProps;
 
-  const { listTA } = useSelector((state) => state.mainSlice);
-  const { listOrders } = useSelector((state) => state.mainSlice);
+  const { listTA } = useSelector((state) => state.orderSlice);
+  const { listOrders } = useSelector((state) => state.orderSlice);
 
   const dispatch = useDispatch();
 

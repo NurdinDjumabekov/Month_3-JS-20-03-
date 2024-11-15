@@ -13,17 +13,8 @@ import MainLayouts from "../layouts/MainLayouts/MainLayouts";
 
 /////// pages
 import LoginPage from "../pages/LoginPage/LoginPage";
-import MapsPage from "../pages/MapsPage/MapsPage"; /// delete
-import CameraPage from "../pages/CameraPage/CameraPage"; /// delete
-import SendInvoicePage from "../pages/SendInvoicePage/SendInvoicePage"; /// delete
-import AddPointsPage from "../pages/AddPointsPage/AddPointsPage"; /// delete
-import AddPointInRoutePage from "../pages/AddPointInRoutePage/AddPointInRoutePage"; /// delete
-import TakeMoneyPage from "../pages/TakeMoneyPage/TakeMoneyPage"; /// delete
 import AllCategPage from "../pages/AllCategPage/AllCategPage";
 import LeftoversPage from "../pages/LeftoversPage/LeftoversPage";
-import ReturnPage from "../pages/ReturnPage/ReturnPage"; /// delete
-import TasksPage from "../pages/TasksPage/TasksPage"; /// delete
-import ReturnsPages from "../pages/ReturnsPages/ReturnsPages";
 import ExpensePage from "../pages/ExpensePage/ExpensePage";
 import ApplicationsPages from "../pages/ApplicationsPages/ApplicationsPages";
 import PayPage from "../pages/PayPage/PayPage";
@@ -36,11 +27,10 @@ const MainRoutes = () => {
   const location = useLocation();
 
   const { dataSave } = useSelector((state) => state.saveDataSlice);
-  const { listProds, listTA } = useSelector((state) => state.mainSlice);
-  const { listTitleOrders } = useSelector((state) => state.mainSlice);
-  const { listOrders, invoiceInfo } = useSelector((state) => state.mainSlice);
+  const { listProds, listTA } = useSelector((state) => state.orderSlice);
+  const { listTitleOrders } = useSelector((state) => state.orderSlice);
+  const { listOrders, invoiceInfo } = useSelector((state) => state.orderSlice);
   const { activeRouteList } = useSelector((state) => state.photoSlice);
-  const { mapGeo, listRouteAllTA } = useSelector((state) => state.mapSlice);
 
   return (
     <Routes>
@@ -55,7 +45,6 @@ const MainRoutes = () => {
           <Route path="/expense" element={<ExpensePage />} />
           <Route path="/points/*" element={<ActionsInPointsPage />} />
           <Route path="/pay" element={<PayPage />} />
-          <Route path="/return/*" element={<ReturnsPages />} />
         </Route>
       )}
       {/* <Route path="*" element={<NotFoundPage />} /> */}

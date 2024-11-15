@@ -22,12 +22,10 @@ import { listStatusOrders } from "../../helpers/objs";
 import { checkDates } from "../../helpers/validations";
 
 ////// fns
-import { editInvoice } from "../../store/reducers/mainSlice";
-import { setActiveDate } from "../../store/reducers/mainSlice";
-import { getListOrders } from "../../store/reducers/mainSlice";
-import { createInvoice } from "../../store/reducers/mainSlice";
-
-////// icons
+import { editInvoice } from "../../store/reducers/orderSlice";
+import { setActiveDate } from "../../store/reducers/orderSlice";
+import { getListOrders } from "../../store/reducers/orderSlice";
+import { createInvoice } from "../../store/reducers/orderSlice";
 
 /////// style
 import "./style.scss";
@@ -39,9 +37,9 @@ const MainPage = () => {
   const calendarRef = useRef(null);
 
   const { user_type } = useSelector((state) => state.saveDataSlice?.dataSave);
-  const { listOrders, activeDate } = useSelector((state) => state.mainSlice);
-  const { listTitleOrders } = useSelector((state) => state.mainSlice);
-  const { listTA } = useSelector((state) => state.mainSlice);
+  const { listOrders, activeDate } = useSelector((state) => state.orderSlice);
+  const { listTitleOrders } = useSelector((state) => state.orderSlice);
+  const { listTA } = useSelector((state) => state.orderSlice);
 
   const addTodo = async (selectInfo) => {
     ////// from date

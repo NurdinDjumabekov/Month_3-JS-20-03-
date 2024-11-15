@@ -22,7 +22,7 @@ const AllCategPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { balanceTA } = useSelector((state) => state.standartSlice);
+  const { balanceTA } = useSelector((state) => state.paySlice);
 
   const [look, setLook] = useState(false);
 

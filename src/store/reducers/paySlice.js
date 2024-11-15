@@ -9,6 +9,7 @@ const initialState = {
   debtEveryTA: { vozvrat: [], dolg: [] }, /// долг каждого агента
   dataPay: { comment: "", amount: "", user_guid_to: "", user_type_to: "" },
   listPaysTA: [], /// список оплат ТА
+  balanceTA: [], /// баласн агента (долги ТТ, долг ТА в цех и нынешнрий балас)
 };
 
 ////// getEveryDebt - get список долгов каждого ТА
@@ -69,6 +70,25 @@ export const getListPayTA = createAsyncThunk(
     }
   }
 );
+
+////// getBalance - get баланс (все счета агента)
+export const getBalance = createAsyncThunk(
+  "getBalance",
+  async function (agent_guid, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/agent_balance?agent_guid=${agent_guid}`;
+    try {
+      const response = await axiosInstance(url);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const paySlice = createSlice({
   name: "paySlice",
   initialState,
@@ -114,6 +134,19 @@ const paySlice = createSlice({
       state.preloader = false;
     });
     builder.addCase(getListPayTA.pending, (state, action) => {
+      state.preloader = true;
+    });
+
+    /////////////////////// getBalance
+    builder.addCase(getBalance.fulfilled, (state, action) => {
+      state.preloader = false;
+      state.balanceTA = action.payload;
+    });
+    builder.addCase(getBalance.rejected, (state, action) => {
+      state.error = action.payload;
+      state.preloader = false;
+    });
+    builder.addCase(getBalance.pending, (state, action) => {
       state.preloader = true;
     });
   },

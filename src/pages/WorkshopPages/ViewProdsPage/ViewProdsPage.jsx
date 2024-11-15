@@ -4,18 +4,18 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 ////// fns
-import { getMyEveryInvoice } from "../../../store/reducers/invoiceSlice";
+import { getMyEveryInvoice } from "../../../store/reducers/standartSlice";
 
 ////// components
 import NavMenu from "../../../common/NavMenu/NavMenu";
 import ViewProds from "../../../common/ViewProds/ViewProds";
+import AcceptInvvoiceWorkShop from "../../../components/InvoicesPages/AcceptInvvoiceWorkShop/AcceptInvvoiceWorkShop";
 
 ////// style
 import "./style.scss";
 
 //// icons
 import SummarizeIcon from "@mui/icons-material/Summarize";
-import AcceptInvvoiceWorkShop from "../../../components/InvoicesPages/AcceptInvvoiceWorkShop/AcceptInvvoiceWorkShop";
 
 const ViewProdsPage = () => {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const ViewProdsPage = () => {
   const { guid, codeid, file, invoice_guid, action } = location.state;
   //// хранятся данные накладной
 
-  const { listProdEveryInvoice } = useSelector((state) => state.invoiceSlice);
+  const { listProdsNur } = useSelector((state) => state.standartSlice);
 
   useEffect(() => {
     if (!!guid) {
@@ -54,7 +54,7 @@ const ViewProdsPage = () => {
       <div className={`viewProdsPage ${check ? "" : "allViewAction"}`}>
         <NavMenu navText={`Накладная №${codeid}`} />
         <div className="viewProdsPage__inner">
-          <ViewProds list={listProdEveryInvoice} keys={keys} />
+          <ViewProds list={listProdsNur} keys={keys} />
           <a className="lookPdf" href={file}>
             <SummarizeIcon />
           </a>

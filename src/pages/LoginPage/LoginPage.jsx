@@ -14,7 +14,7 @@ import logo from "../../assets/images/rihaLogo.png";
 import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 
 ////fns
-import { logInAccount } from "../../store/reducers/mainSlice";
+import { logInAccount } from "../../store/reducers/orderSlice";
 
 const LoginPage = () => {
   const navigate = useNavigate();

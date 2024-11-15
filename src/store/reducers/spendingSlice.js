@@ -6,7 +6,6 @@ import { transformActionDate } from "../../helpers/transformDate";
 const { REACT_APP_API_URL } = process.env;
 
 const initialState = {
-  stateLoad: true, /// всегда меняю его с true на false и наоборот (нужен для перезагрузки карт)
   listExpense: [], // список типов трат
   listExpenseTA: [], /// список трат ТА
 };
@@ -102,14 +101,10 @@ export const delExpenseTA = createAsyncThunk(
   }
 );
 
-const stateSlice = createSlice({
-  name: "stateSlice",
+const spendingSlice = createSlice({
+  name: "spendingSlice",
   initialState,
-  reducers: {
-    asdas: (state, action) => {
-      state.stateLoad = action?.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     ////////////// getListExpense
     builder.addCase(getListExpense.fulfilled, (state, action) => {
@@ -139,6 +134,6 @@ const stateSlice = createSlice({
   },
 });
 
-export const { asdas } = stateSlice.actions;
+export const { asdas } = spendingSlice.actions;
 
-export default stateSlice.reducer;
+export default spendingSlice.reducer;

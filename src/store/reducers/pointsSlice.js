@@ -1,9 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { clearAddPoints, clearPositionPoints } from "../../helpers/clear";
-import axios from "axios";
 import axiosInstance from "../../axiosInstance";
 import { myAlert } from "../../helpers/MyAlert";
-import { setStateLoad } from "./mapSlice";
 import { transformDate } from "../../helpers/transformDate";
 
 const { REACT_APP_API_URL, REACT_APP_MAP_KEY } = process.env;
@@ -33,27 +31,6 @@ const initialState = {
   everyTasks: {}, /// каждая задача
 };
 
-////// getAddres - get наименование точки
-export const getAddres = createAsyncThunk(
-  "getAddres",
-  async function (infoNewPoint, { dispatch, rejectWithValue }) {
-    const { lon, lat } = infoNewPoint;
-    const url = `https://catalog.api.2gis.com/3.0/items/geocode?lon=${lat}&lat=${lon}&fields=items.point&key=${REACT_APP_MAP_KEY}`;
-    try {
-      const response = await axiosInstance(url);
-      if (response.status >= 200 && response.status < 300) {
-        const address = response.data?.result?.items?.[0]?.full_name;
-        dispatch(setInfoNewPoint({ ...infoNewPoint, address }));
-        return response.data;
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
 ////// addNewPonts - создаю новую точку от имени ТА
 export const addNewPonts = createAsyncThunk(
   "addNewPonts",
@@ -68,9 +45,6 @@ export const addNewPonts = createAsyncThunk(
     try {
       const response = await axiosInstance.post(url, data);
       if (response.status >= 200 && response.status < 300) {
-        if (response.data?.result == 1) {
-          dispatch(setStateLoad()); // (нужен для перезагрузки карт)
-        }
         return {
           result: response.data?.result,
           navigate: props?.navigate,

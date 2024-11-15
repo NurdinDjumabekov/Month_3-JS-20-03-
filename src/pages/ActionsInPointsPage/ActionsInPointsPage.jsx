@@ -12,7 +12,6 @@ import HistoryPointsPage from "./HistoryPointsPage/HistoryPointsPage";
 import PointListsAll from "../../components/ActionsInPointsPage/PointListsAll/PointLists";
 import TasksPerfom from "../../components/ActionsInPointsPage/ActionForPointsPage/TasksPerfom/TasksPerfom";
 import AddPointInRoutePage from "../AddPointInRoutePage/AddPointInRoutePage";
-import AddPointsPage from "../AddPointsPage/AddPointsPage";
 
 const ActionsInPointsPage = () => {
   return (
@@ -27,7 +26,7 @@ const ActionsInPointsPage = () => {
       <Route path="/pay" element={<PayActionPage />} />
       <Route path="/tasks_perform" element={<TasksPerfom />} />
       <Route path="/add_route" element={<AddPointInRoutePage />} />
-      <Route path="/create_new" element={<AddPointsPage />} />
+      {/* <Route path="/create_new" element={< />} /> */}
     </Routes>
   );
 };

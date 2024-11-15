@@ -14,17 +14,17 @@ import NavMenu from "../../../common/NavMenu/NavMenu";
 import InvoiceComponent from "../../../common/InvoiceComponent/InvoiceComponent";
 
 ////// fns
-import { getMyInvoice } from "../../../store/reducers/invoiceSlice";
+import { getInvoiceWorkShop } from "../../../store/reducers/standartSlice";
 
 const MyInvoicePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { dataSave } = useSelector((state) => state.saveDataSlice);
-  const { listInvoice } = useSelector((state) => state.invoiceSlice);
+  const { listInvoice } = useSelector((state) => state.standartSlice);
 
   useEffect(() => {
-    dispatch(getMyInvoice(dataSave?.guid));
+    dispatch(getInvoiceWorkShop(dataSave?.guid));
   }, []);
 
   const objRole = { 1: "reciever", 2: "sender" };

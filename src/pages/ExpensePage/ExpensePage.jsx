@@ -10,11 +10,11 @@ import {
   delExpenseTA,
   getListExpense,
   getListExpenseTA,
-} from "../../store/reducers/stateSlice";
+} from "../../store/reducers/spendingSlice";
 
 /////// components
 import NavMenu from "../../common/NavMenu/NavMenu";
-import Modals from "../../components/Modals/Modals";
+import Modals from "../../common/Modals/Modals";
 import SendInput from "../../common/SendInput/SendInput";
 
 ////// style
@@ -33,7 +33,7 @@ const ExpensePage = () => {
 
   const [data, setData] = useState({ amount: "", comment: "" });
 
-  const { listExpenseTA } = useSelector((state) => state.stateSlice);
+  const { listExpenseTA } = useSelector((state) => state.spendingSlice);
   const { dataSave } = useSelector((state) => state.saveDataSlice);
 
   useEffect(() => {

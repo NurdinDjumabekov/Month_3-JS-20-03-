@@ -7,7 +7,7 @@ import { TableContainer, TableHead } from "@mui/material";
 import { TableRow, Paper } from "@mui/material";
 
 /////// fns
-import { changeCountCheckedListProds } from "../../../store/reducers/mainSlice";
+import { changeCountCheckedListProds } from "../../../store/reducers/orderSlice";
 
 ////// helpers
 import { validNums } from "../../../helpers/validations";

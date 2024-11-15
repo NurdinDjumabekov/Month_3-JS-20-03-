@@ -13,8 +13,9 @@ import NavMenu from "../../common/NavMenu/NavMenu";
 import ViewProds from "../../common/ViewProds/ViewProds";
 
 ////// fns
-import { getListCategs, getListProds } from "../../store/reducers/invoiceSlice";
-import { getListWorkShop } from "../../store/reducers/invoiceSlice";
+import { getListProds } from "../../store/reducers/leftoversSlice";
+import { getListCategs } from "../../store/reducers/leftoversSlice";
+import { getListWorkShop } from "../../store/reducers/leftoversSlice";
 import { setActiveWorkShop } from "../../store/reducers/selectsSlice";
 import { setActiveCategs } from "../../store/reducers/selectsSlice";
 
@@ -28,9 +29,9 @@ const LeftoversPage = () => {
   const { guid } = useSelector((state) => state.saveDataSlice?.dataSave);
   const { activeCategs } = useSelector((state) => state.selectsSlice);
   const { activeWorkShop } = useSelector((state) => state.selectsSlice);
-  const { listCategsSI } = useSelector((state) => state.invoiceSlice);
-  const { listWorkshopSI } = useSelector((state) => state.invoiceSlice);
-  const { listProdsSI } = useSelector((state) => state.invoiceSlice);
+  const { listCategsSI } = useSelector((state) => state.leftoversSlice);
+  const { listWorkshopSI } = useSelector((state) => state.leftoversSlice);
+  const { listProdsSI } = useSelector((state) => state.leftoversSlice);
 
   const text = "workshop_guid";
   const workShop = transformLists(listWorkshopSI, text, "workshop_name");

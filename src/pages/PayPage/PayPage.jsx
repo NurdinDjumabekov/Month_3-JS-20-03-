@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearDataPay } from "../../store/reducers/paySlice";
 import { getListPayTA } from "../../store/reducers/paySlice";
 import { setDataPay } from "../../store/reducers/paySlice";
-import { getWorkPlanEveryTA } from "../../store/reducers/mainSlice";
 import { getPointsRouteAgent } from "../../store/reducers/mapSlice";
 
 ////// components
@@ -32,7 +31,6 @@ const PayPage = () => {
   const { listPaysTA } = useSelector((state) => state.paySlice);
 
   useEffect(() => {
-    dispatch(getWorkPlanEveryTA({ guid }));
     dispatch(getListPayTA({ agent_guid: guid }));
 
     dispatch(clearDataPay()); /// clear поля ввода данных для оплаты

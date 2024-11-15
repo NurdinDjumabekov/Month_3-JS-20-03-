@@ -8,7 +8,6 @@ import { useJsApiLoader } from "@react-google-maps/api";
 import "./style.scss";
 
 ////// components
-import Preloader from "../../../common/Preloader/Preloader";
 import Autocomplete from "../../../components/ActionsInPointsPage/RenderGoogleMaps/Autocomplete/Autocomplete";
 import GoogleMapsRoute from "../../../components/ActionsInPointsPage/RenderGoogleMaps/GoogleMapsRoute/GoogleMapsRoute";
 
@@ -18,6 +17,7 @@ import { getEveryRoutes_TA } from "../../../store/reducers/mapSlice";
 
 /////// helpers
 import { defaultCenter, getMyLocation } from "../../../helpers/GetMyGeo";
+import { Preloader } from "../../../common/Preloader/Preloader";
 
 const RenderGoogleMaps = () => {
   const googleMapsApiKey = "AIzaSyD8hB-KDvF4vITv4idoxn2DqqMdJffJGd8";

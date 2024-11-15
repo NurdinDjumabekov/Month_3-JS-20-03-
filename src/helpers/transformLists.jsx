@@ -19,17 +19,6 @@ export const transformListsProds = (list) => {
   return newList;
 };
 
-export const transformListsWH = (list) => {
-  ///// убираю лишние ключи
-  const newList = list
-    ?.filter(({ is_checked }) => is_checked)
-    ?.map(({ product_guid, count, price }) => {
-      return { product_guid, count, workshop_price: price };
-    });
-
-  return newList;
-};
-
 export const transformListsProdsEdit = (list) => {
   // Фильтруем список, оставляя только те элементы, у которых is_checked = true
   const newList = list
@@ -40,3 +29,4 @@ export const transformListsProdsEdit = (list) => {
 
   return newList;
 };
+//// checkcheck

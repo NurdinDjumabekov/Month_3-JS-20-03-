@@ -4,16 +4,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 ///// components
+import ConfirmModal from "../../../common/ConfirmModal/ConfirmModal";
 
 ///// fns
-// import { changePreloader } from "../../../store/reducers/requestSlice";
-// import { clearLogin } from "../../../store/reducers/stateSlice";
-// import { clearLocalData } from "../../../store/reducers/saveDataSlice";
+import { clearDataSave } from "../../../store/reducers/saveDataSlice";
 
 ////style
 import "./style.scss";
-import ConfirmModal from "../../../common/ConfirmModal/ConfirmModal";
-import { clearDataSave } from "../../../store/reducers/saveDataSlice";
 
 export const LogOut = () => {
   const dispatch = useDispatch();

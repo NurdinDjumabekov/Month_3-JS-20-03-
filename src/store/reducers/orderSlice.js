@@ -1,26 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { setDataSave } from "./saveDataSlice";
-import axios from "axios";
 import { myAlert } from "../../helpers/MyAlert";
 import axiosInstance from "../../axiosInstance";
-import { searchActiveOrdersTA } from "../../helpers/searchActiveOrdersTA";
 import { setActiveCategs, setActiveWorkShop } from "./selectsSlice";
-import { transformListsProdsEdit } from "../../helpers/transformLists";
-import { transformListsProds } from "../../helpers/transformLists";
-import {
-  generateNowWeek,
-  transformActionDate,
-} from "../../helpers/transformDate";
-import { objStatusText } from "../../helpers/objs";
 
 const { REACT_APP_API_URL } = process.env;
 
 const initialState = {
-  allProds: [],
-  listWorkshop: [],
-  listCategs: [],
-  listProds: [],
-  listTA: [],
   listOrders: [], //// список заказов на каждый час
   listTitleOrders: [], //// список итоговых заказов на целый день
   listSendOrders: [], //// временный список для хранения списка заказа ТА
@@ -29,10 +15,6 @@ const initialState = {
   /// guid заявки и действие 1 - создание, 2 - редактирование, 3 - простое чтение
   activeDate: { date_from: "", date_to: "" },
   // Состояние для диапазона активной недели
-  checkInvoice: true, //// можно ли редактировать накладную
-  listWorkPlan: [], //// данные для графиков плана работы
-  activeDateHistory: transformActionDate(new Date()), /// активная дата для историй заявок
-  activeInvoiceHistory: "", /// активная накладная для историй заявок
 };
 
 ////// logInAccount - логинизация
@@ -150,47 +132,6 @@ export const searchListProds = createAsyncThunk(
   }
 );
 
-////// getListTA - список Тоговых агентов
-export const getListTA = createAsyncThunk(
-  "getListTA",
-  async function ({ first }, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/get_agent`;
-    try {
-      const response = await axiosInstance(url);
-      if (response.status >= 200 && response.status < 300) {
-        if (first) {
-          const agents_guid = searchActiveOrdersTA(response?.data);
-          const weekNow = generateNowWeek();
-          dispatch(getListOrders({ ...weekNow, agents_guid })); /// данные заказов по часам в течении дня
-        }
-        return response?.data;
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-////// searchTA - поиск Тоговых агентов
-export const searchTA = createAsyncThunk(
-  "searchTA",
-  async function (search, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/get_agent?search=${search}`;
-    try {
-      const response = await axiosInstance(url);
-      if (response.status >= 200 && response.status < 300) {
-        return response?.data;
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
 ////// getListOrders - список заказов
 export const getListOrders = createAsyncThunk(
   "getListOrders",
@@ -269,7 +210,7 @@ export const getListProdsInInvoice = createAsyncThunk(
       return rejectWithValue(error.message);
     }
   }
-);
+); /// checkcheck
 
 ////// createInvoice - создание заявок
 export const createInvoice = createAsyncThunk(
@@ -287,26 +228,7 @@ export const createInvoice = createAsyncThunk(
       return rejectWithValue(error.message);
     }
   }
-);
-
-////// createInvoiceAdmin - создание заявок админом
-export const createInvoiceAdmin = createAsyncThunk(
-  "createInvoiceAdmin",
-  async function (data, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/create_application`;
-    try {
-      const response = await axiosInstance.post(url, data);
-      if (response.status >= 200 && response.status < 300) {
-        const guid = response?.data?.invoice_guid;
-        dispatch(setInvoiceInfoReturn({ guid }));
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
+); /// checkcheck
 
 ////// editInvoice - редактирование и удаление заявок
 export const editInvoice = createAsyncThunk(
@@ -332,158 +254,8 @@ export const editInvoice = createAsyncThunk(
   }
 );
 
-////// createEditProdInInvoice - добавление и редактирование товаров в заявок
-export const createEditProdInInvoice = createAsyncThunk(
-  "createEditProdInInvoice",
-  async function (props, { dispatch, rejectWithValue }) {
-    const { forGetInvoice, forCreate, invoiceInfo } = props;
-
-    const { listProds, comment } = forCreate;
-    const { activeDate, listTA } = forGetInvoice;
-    const { action, guid } = invoiceInfo;
-
-    const urlCreate = `${REACT_APP_API_URL}/ta/create_application_product`;
-    const urlEdit = `${REACT_APP_API_URL}/ta/update_application_product`;
-
-    const objUrl = { 1: urlCreate, 2: urlEdit }; /// 1 - создание, 2 - редактирование
-    const typeReq = { 1: "post", 2: "put" };
-
-    const fnType = {
-      1: transformListsProds(listProds),
-      2: transformListsProdsEdit(listProds),
-    };
-
-    const obj = { invoice_guid: guid, comment };
-    const data = { ...obj, products: fnType?.[action], status: 0 };
-
-    try {
-      const response = await axiosInstance?.[typeReq?.[action]](
-        objUrl?.[action],
-        data
-      );
-      if (response.status >= 200 && response.status < 300) {
-        // dispatch(setInvoiceInfo({ guid: "", action: 0 })); //// для закрытия модалки добавления
-        myAlert(objStatusText?.[action]);
-        ///// для get обновленных данных с добавленной заявкой
-        const agents_guid = searchActiveOrdersTA(listTA);
-        dispatch(getListOrders({ ...activeDate, agents_guid }));
-        dispatch(getListProdsInInvoice(guid));
-        dispatch(getDefaultList()); //// очищаю counts всего списка
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-////// delProdInInvoice - удаление товаров с заявок
-export const delProdInInvoice = createAsyncThunk(
-  "delProdInInvoice",
-  async function (props, { dispatch, rejectWithValue }) {
-    const { data, action, listTA, activeDate, guid } = props;
-    const url = `${REACT_APP_API_URL}/ta/update_application_product`;
-    try {
-      const response = await axiosInstance.put(url, data);
-      if (response.status >= 200 && response.status < 300) {
-        myAlert(objStatusText?.[action]);
-        ///// для get обновленных данных с добавленной заявкой
-        const agents_guid = searchActiveOrdersTA(listTA);
-        dispatch(getListOrders({ ...activeDate, agents_guid }));
-        dispatch(getListProdsInInvoice(guid));
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-////// addEveryProd - добавление товаров в заявку по одному
-export const addEveryProd = createAsyncThunk(
-  "addEveryProd",
-  async function ({ data, updateData }, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/create_application_product`;
-    try {
-      const response = await axiosInstance.post(url, data);
-      if (response.status >= 200 && response.status < 300) {
-        myAlert("Товар успешно добавлен!");
-        dispatch(getEveryDataDay(updateData)); //// get данные всего дня
-        dispatch(getDefaultList()); //// очищаю counts всего списка
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-////// actionsInvoiceAllDay - изменение статуса заявок целого дня
-export const actionsInvoiceAllDay = createAsyncThunk(
-  "actionsInvoiceAllDay",
-  async function ({ data, props }, { dispatch, rejectWithValue }) {
-    const { activeDate, agents_guid } = props;
-    const url = `${REACT_APP_API_URL}/ta/application_status`;
-    try {
-      const response = await axiosInstance.put(url, data);
-      if (response.status >= 200 && response.status < 300) {
-        dispatch(setInvoiceInfo({ guid: "", action: 0, listInvoice: [] }));
-        //// для закрытия модалки добавления
-        dispatch(getListOrders({ ...activeDate, agents_guid }));
-        myAlert("Заявка отправлена в производство!");
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-////// getWorkPlanEveryTA - get рабочий план каждого ТА
-export const getWorkPlanEveryTA = createAsyncThunk(
-  "getWorkPlanEveryTA",
-  async function ({ guid }, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/get_work_plan?agent_guid=${guid}`;
-    try {
-      const response = await axiosInstance(url);
-      if (response.status >= 200 && response.status < 300) {
-        return response?.data;
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-////// getHistoryInvoice - get список историй заявок
-export const getHistoryInvoice = createAsyncThunk(
-  "getHistoryInvoice",
-  async function (data, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/get_applications`;
-    try {
-      const response = await axiosInstance.post(url, data);
-      if (response.status >= 200 && response.status < 300) {
-        const firstGuid = response?.data?.[0]?.invoice_guid;
-        dispatch(getListProdsInInvoice(firstGuid)); //// для получения товаров
-        dispatch(setActiveInvoiceHistory(firstGuid)); /// для активной накладной
-        return response?.data;
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-const mainSlice = createSlice({
-  name: "mainSlice",
+const orderSlice = createSlice({
+  name: "orderSlice",
   initialState,
   reducers: {
     editListAgents: (state, action) => {
@@ -555,11 +327,6 @@ const mainSlice = createSlice({
       state.activeDate = action.payload;
     },
 
-    //// меняется возможность редактирования данных
-    setCheckInvoice: (state, action) => {
-      state.checkInvoice = action.payload;
-    },
-
     //// сброс cgeckbox и count в списке
     getDefaultList: (state, action) => {
       state.listProds = state.listProds?.map((i) => ({
@@ -567,20 +334,6 @@ const mainSlice = createSlice({
         count: "",
         is_checked: false,
       }));
-    },
-
-    setListWorkPlan: (state, action) => {
-      state.listWorkPlan = action.payload;
-    },
-
-    /////  активная дата для историй заявок
-    setActiveDateHistory: (state, action) => {
-      state.activeDateHistory = action.payload;
-    },
-
-    /////  активная накладная для историй заявок
-    setActiveInvoiceHistory: (state, action) => {
-      state.activeInvoiceHistory = action.payload;
     },
   },
 
@@ -654,32 +407,6 @@ const mainSlice = createSlice({
       state.preloader = true;
     });
 
-    ////////////// getListTA
-    builder.addCase(getListTA.fulfilled, (state, action) => {
-      state.preloader = false;
-      state.listTA = action.payload;
-    });
-    builder.addCase(getListTA.rejected, (state, action) => {
-      state.error = action.payload;
-      state.preloader = false;
-    });
-    builder.addCase(getListTA.pending, (state, action) => {
-      state.preloader = true;
-    });
-
-    ////////////// searchTA
-    builder.addCase(searchTA.fulfilled, (state, action) => {
-      state.preloader = false;
-      state.listTA = action.payload;
-    });
-    builder.addCase(searchTA.rejected, (state, action) => {
-      state.error = action.payload;
-      state.preloader = false;
-    });
-    builder.addCase(searchTA.pending, (state, action) => {
-      state.preloader = true;
-    });
-
     ////////////// getListOrders
     builder.addCase(getListOrders.fulfilled, (state, action) => {
       state.preloader = false;
@@ -741,33 +468,6 @@ const mainSlice = createSlice({
     builder.addCase(getListProdsInInvoice.pending, (state, action) => {
       state.preloader = true;
     });
-
-    //////////// getWorkPlanEveryTA
-    builder.addCase(getWorkPlanEveryTA.fulfilled, (state, action) => {
-      state.preloader = false;
-      state.listWorkPlan = action.payload;
-    });
-    builder.addCase(getWorkPlanEveryTA.rejected, (state, action) => {
-      state.error = action.payload;
-      state.preloader = false;
-    });
-    builder.addCase(getWorkPlanEveryTA.pending, (state, action) => {
-      state.preloader = true;
-    });
-
-    ////////////// getHistoryInvoice
-    builder.addCase(getHistoryInvoice.fulfilled, (state, action) => {
-      state.preloader = false;
-      state.listOrders = action.payload;
-    });
-    builder.addCase(getHistoryInvoice.rejected, (state, action) => {
-      state.error = action.payload;
-      state.preloader = false;
-      // state.listOrders = [];
-    });
-    builder.addCase(getHistoryInvoice.pending, (state, action) => {
-      state.preloader = true;
-    });
   },
 });
 
@@ -782,12 +482,9 @@ export const {
   setInvoiceInfo,
   setInvoiceInfoReturn,
   setActiveDate,
-  setCheckInvoice,
   getDefaultList,
   setListWorkPlan,
   clearOrders,
-  setActiveDateHistory,
-  setActiveInvoiceHistory,
-} = mainSlice.actions;
+} = orderSlice.actions;
 
-export default mainSlice.reducer;
+export default orderSlice.reducer;

@@ -19,7 +19,6 @@ const UserInfo = () => {
   const [look, setLook] = useState(false);
 
   const { dataSave } = useSelector((state) => state.saveDataSlice);
-  const { balanceTA } = useSelector((state) => state.standartSlice);
 
   return (
     <div className="headerParent">

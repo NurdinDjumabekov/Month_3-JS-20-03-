@@ -1,18 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { setDataSave } from "./saveDataSlice";
-import axios from "axios";
-import { myAlert } from "../../helpers/MyAlert";
 import axiosInstance from "../../axiosInstance";
-import {
-  transformActionDate,
-  transformDateTime,
-} from "../../helpers/transformDate";
 import { setActiveTTForPhoto } from "./photoSlice";
-import {
-  clearActiveMap,
-  clearEveryListRoute,
-  clearRoute,
-} from "../../helpers/clear";
+import { clearRoute } from "../../helpers/clear";
 import { pastGeoData } from "../../helpers/LocalData";
 
 const { REACT_APP_API_URL, REACT_APP_MAP_KEY } = process.env;
@@ -24,48 +13,12 @@ const initialState = {
   key: REACT_APP_MAP_KEY,
 
   //////////////////////////////////////// для админа
-  dateRoute: transformActionDate(new Date()), /// для активной даты (выбор маршрутов)
   listPointsEveryTA: [], /// сипсок точек каждого агента
-  listRouteEveryTA: [], /// сипсок координат каждого агента
-  listRouteAllTA: [], /// сипсок координат всех агентов
   listRoadRouteEveryTA: [], /// список маршрутов для обьезда каждого ТА
-  routeCRUD: {
-    //// список дней маршрута (1-30)
-    actionType: 0,
-    number: 0,
-    comment: "",
-    is_active: 0,
-    agent_select: {},
-    route_sheet_guid: "",
-  },
   roadRouteEveryTA: [], /// маршрут c точками для обьезда каждого ТА
-  everyListRouteCRUD: {
-    actionType: 0,
-    route_guid: "",
-    route_sheet_guid: "",
-    point_guid: "",
-    start_time: transformDateTime(new Date()),
-    end_time: transformDateTime(new Date()),
-    comment: "",
-    ordering: 0,
-    status: 0,
-    seller_select: {},
-  }, //// список маршрутов каждого дня
   activeRoute: { guid: "" },
-  activeViewMap: { guid: "", lat: "", lon: "", actionType: 0, listRoute: [] },
-  // 1 - просто выбор точки админом, 2 - выбор координат админом,
-  // для откыртия и редактирования координат маршрутов
-
-  //////////////////////////////////////// для агента
-  //// check
-  listRoute_TA: [], /// список маршрутов для ТА
   everyRoutes_TA: [], /// каждый маршрут для ТА (от первой точки до последней)
-  activeActions_TA: { guid_point: "", point: "", actionType: 0 },
-  // 1 - модалка для  действий (сфотать, отпустить накладную и т.д.)
-  listHistoryRoute: [], //// история списка маршрутов ТА
   listTA_RouteNoPlan: [], //// список коориднат по которым ехал Та(типо сам, не по плану)
-  stateLoad: true, /// всегда меняю его с true на false и наоборот (нужен для перезагрузки карт)
-  //// check
 };
 
 ////// sendGeoUser - отправка геолокации пользователя(агента)
@@ -137,42 +90,6 @@ export const getListRoute = createAsyncThunk(
   }
 );
 
-////// ListRouteCRUD - create, edit, del списка для данных координат обьезда у каждого ТА
-export const ListRouteCRUD = createAsyncThunk(
-  "ListRouteCRUD",
-  async function (data, { dispatch, rejectWithValue }) {
-    const { activeTA, actionType, noneAlert } = data;
-    const objReq = { 1: "post", 2: "put", 3: "put" };
-    const objurl = {
-      1: "create_route_sheet",
-      2: "update_route_sheet",
-      3: "update_route_sheet",
-    };
-    const url = `${REACT_APP_API_URL}/ta/${objurl?.[actionType]}`;
-
-    try {
-      const response = await axiosInstance[objReq?.[actionType]](url, data);
-      if (response.status >= 200 && response.status < 300) {
-        if (response.data?.result == 1) {
-          if (!noneAlert) {
-            //// разрешаю выводить alert только в edit
-            myAlert(response.data?.msg);
-          }
-          dispatch(clearRouteCRUD()); /// очищаю state для заркытия модалки
-          dispatch(getListRoute({ agent_guid: activeTA?.value })); /// обновляю список маршрутов
-        } else {
-          myAlert(response.data?.msg, "error");
-        }
-        return response.data;
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
 ////// getEveryRouteWithTT - get данных координат для обьезда у каждого ТА c точками
 export const getEveryRouteWithTT = createAsyncThunk(
   "getEveryRouteWithTT",
@@ -190,24 +107,7 @@ export const getEveryRouteWithTT = createAsyncThunk(
     }
   }
 );
-
-////// getListRoutesForMap - get данных координат точек для карт (cпец-но два запроса сделал)
-export const getListRoutesForMap = createAsyncThunk(
-  "getListRoutesForMap",
-  async function (invoice_guid, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/get_route?route_sheet_guid=${invoice_guid}`;
-    try {
-      const response = await axiosInstance(url);
-      if (response.status >= 200 && response.status < 300) {
-        return { listRoute: response.data, invoice_guid };
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
+//// check
 
 ////// getListRoutes_TA - get данных координат точек определенного агента
 export const getListRoutes_TA = createAsyncThunk(
@@ -246,25 +146,6 @@ export const getEveryRoutes_TA = createAsyncThunk(
   }
 );
 
-////// sendCommentInRoute - отправка комментарий к отпредеденному маршруту от ТА
-export const sendCommentInRoute = createAsyncThunk(
-  "sendCommentInRoute",
-  async function (data, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/set_route`;
-    try {
-      const response = await axiosInstance.put(url, data);
-      if (response.status >= 200 && response.status < 300) {
-        myAlert("Комментарий успешно отправлен");
-        return response.data;
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
 const mapSlice = createSlice({
   name: "mapSlice",
   initialState,
@@ -272,43 +153,13 @@ const mapSlice = createSlice({
     setMapGeo: (state, action) => {
       state.mapGeo = action?.payload;
     },
-    setDateRoute: (state, action) => {
-      state.dateRoute = action?.payload;
-    },
+
     setListPointsEveryTA: (state, action) => {
       state.listPointsEveryTA = action?.payload;
     },
-    setListRouteEveryTA: (state, action) => {
-      state.listRouteEveryTA = action?.payload;
-    },
-    setListRouteAllTA: (state, action) => {
-      state.listRouteAllTA = action?.payload;
-    },
-    setRouteCRUD: (state, action) => {
-      state.routeCRUD = action?.payload;
-    },
-    clearRouteCRUD: (state, action) => {
-      state.routeCRUD = clearRoute;
-    },
+
     setActiveRoute: (state, action) => {
       state.activeRoute = action?.payload;
-    },
-
-    setEveryListRouteCRUD: (state, action) => {
-      state.everyListRouteCRUD = action?.payload;
-    },
-    clearEveryListRouteCRUD: (state, action) => {
-      state.everyListRouteCRUD = clearEveryListRoute;
-    },
-    setActiveViewMap: (state, action) => {
-      state.activeViewMap = action?.payload;
-    },
-    setActiveActions_TA: (state, action) => {
-      state.activeActions_TA = action?.payload;
-    },
-
-    setStateLoad: (state, action) => {
-      state.stateLoad = !state.stateLoad;
     },
   },
 
@@ -353,25 +204,6 @@ const mapSlice = createSlice({
       state.roadRouteEveryTA = [];
     });
     builder.addCase(getEveryRouteWithTT.pending, (state, action) => {
-      state.preloader = true;
-    });
-
-    //////////////// getListRoutesForMap
-    builder.addCase(getListRoutesForMap.fulfilled, (state, action) => {
-      state.preloader = false;
-      const nesList = action.payload?.listRoute?.filter(
-        (item) => item?.status == 1
-      );
-      const obj = { ...state.activeViewMap, listRoute: nesList };
-      const data = { guid: action.payload?.invoice_guid };
-      state.activeViewMap = { ...obj, ...data, actionType: 2 };
-    });
-    builder.addCase(getListRoutesForMap.rejected, (state, action) => {
-      state.error = action.payload;
-      state.preloader = false;
-      state.activeViewMap = [];
-    });
-    builder.addCase(getListRoutesForMap.pending, (state, action) => {
       state.preloader = true;
     });
 
@@ -430,20 +262,7 @@ const mapSlice = createSlice({
   },
 });
 
-export const {
-  setMapGeo,
-  setDateRoute,
-  setListPointsEveryTA,
-  setListRouteEveryTA,
-  setListRouteAllTA,
-  setRouteCRUD,
-  clearRouteCRUD,
-  setActiveRoute,
-  setEveryListRouteCRUD,
-  clearEveryListRouteCRUD,
-  setActiveViewMap,
-  setActiveActions_TA,
-  setStateLoad,
-} = mapSlice.actions;
+export const { setMapGeo, setListPointsEveryTA, setActiveRoute } =
+  mapSlice.actions;
 
 export default mapSlice.reducer;

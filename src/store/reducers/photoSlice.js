@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { transformActionDate } from "../../helpers/transformDate";
-import { getEveryRoutes_TA, setStateLoad } from "./mapSlice";
+import { getEveryRoutes_TA } from "./mapSlice";
 import axiosInstance from "../../axiosInstance";
 
 const { REACT_APP_API_URL } = process.env;

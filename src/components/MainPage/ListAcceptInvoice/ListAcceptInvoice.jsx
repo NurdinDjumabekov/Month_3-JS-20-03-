@@ -10,8 +10,7 @@ import ListAcceptProd from "../ListAcceptProd/ListAcceptProd";
 import { searchActiveOrdersTA } from "../../../helpers/searchActiveOrdersTA";
 
 ////// fns
-import { editInvoice } from "../../../store/reducers/mainSlice";
-import { createEditProdInInvoice } from "../../../store/reducers/mainSlice";
+import { editInvoice } from "../../../store/reducers/orderSlice";
 
 ////// icons
 import ConfirmModal from "../../../common/ConfirmModal/ConfirmModal";
@@ -24,8 +23,8 @@ const ListAcceptInvoice = ({ invoice_guid }) => {
 
   const [delInvoice, setDelInvoice] = useState(false);
 
-  const { listTA } = useSelector((state) => state.mainSlice);
-  const { activeDate } = useSelector((state) => state.mainSlice);
+  const { listTA } = useSelector((state) => state.orderSlice);
+  const { activeDate } = useSelector((state) => state.orderSlice);
 
   const delIInvoice = () => {
     const agents_guid = searchActiveOrdersTA(listTA);

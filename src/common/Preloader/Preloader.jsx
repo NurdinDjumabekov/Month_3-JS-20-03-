@@ -1,26 +1,24 @@
 import React from "react";
-
-//// icons
-import logo from "../../assets/images/rihaLogo.png";
-
-////// style
 import "./style.scss";
+import { useSelector } from "react-redux";
 
-const Preloader = () => {
-  const text = "Загрузка ...";
+export const Preloader = () => {
+  const { preloader } = useSelector((state) => state.standartSlice);
 
-  return (
-    <div className="preloader">
-      <img src={logo} alt="Логотип" className="pulse" />
-      <p className="loading-text">
-        {text.split("").map((letter, index) => (
-          <span key={index} style={{ animationDelay: `${index * 0.1}s` }}>
-            {letter}
-          </span>
-        ))}
-      </p>
-    </div>
-  );
+  if (preloader) {
+    return (
+      <div className="preloader">
+        <div className="lds-roller">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    );
+  }
 };
-
-export default Preloader;

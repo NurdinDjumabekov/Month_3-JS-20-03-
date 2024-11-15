@@ -5,10 +5,12 @@ import { listMenuLocal } from "../../helpers/LocalData";
 
 const { REACT_APP_API_URL } = process.env;
 
+////// standartSlice
+
 const initialState = {
   preloader: false,
   listWorkShopsNur: [], // список цехов
-  listProdsNur: [], // список цехов
+  listProdsNur: [], // список товаров
   listOrdersNur: [],
   listMenu: [...listMenuLocal],
   listRouteVisit: [], //// список историй посещения точек ТА
@@ -19,8 +21,63 @@ const initialState = {
   reportPayEveryTT: {}, /// отчет оплаты каждой точки
   listTypesVisit: [], /// Результат не установлен,Успешное посещение"
   listAllPointsTA: [], /// список всех точек ТА
-  balanceTA: [], /// баласн агента (долги ТТ, долг ТА в цех и нынешнрий балас)
+  listInvoice: [], /// список накладных отпущенных админом и возврат, которй оформил ТА
 };
+
+////// getInvoiceWorkShop - get список накладных отпущенных админом
+export const getInvoiceWorkShop = createAsyncThunk(
+  "getInvoiceWorkShop",
+  async function (guid, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/get_invoices?date=0&reciever_guid=${guid}&page=all_workshop`;
+    try {
+      const response = await axiosInstance(url);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+////// acceptInvoice - принятие накладной отпущенной цехом
+export const acceptInvoice = createAsyncThunk(
+  "acceptInvoice",
+  async function ({ data }, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/update_invoice`;
+    try {
+      const response = await axiosInstance.put(url, data);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+////// getInvoiceReturn - get накладные возврата оформленные от ТА
+export const getInvoiceReturn = createAsyncThunk(
+  "getInvoiceReturn",
+  async function (props, { dispatch, rejectWithValue }) {
+    const { sender_guid } = props;
+    const url = `${REACT_APP_API_URL}/ta/get_return_invoice?sender_guid=${sender_guid}&is_admin=1&page=main`;
+    try {
+      const response = await axiosInstance(url);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 ////// getListWorkShopsNur - get список цехов
 export const getListWorkShopsNur = createAsyncThunk(
@@ -63,6 +120,24 @@ export const getListProdsNur = createAsyncThunk(
   "getListProdsNur",
   async function ({ links, guid }, { dispatch, rejectWithValue }) {
     const url = `${REACT_APP_API_URL}/ta/${links}`;
+    try {
+      const response = await axiosInstance(url);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+////// getMyEveryInvoice - get список товаров накладных отпущенных админом
+export const getMyEveryInvoice = createAsyncThunk(
+  "getMyEveryInvoice",
+  async function (guid, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/get_invoice?invoice_guid=${guid}`;
     try {
       const response = await axiosInstance(url);
       if (response.status >= 200 && response.status < 300) {
@@ -348,24 +423,6 @@ export const getListTT = createAsyncThunk(
   }
 );
 
-////// getBalance - get баланс (все счета агента)
-export const getBalance = createAsyncThunk(
-  "getBalance",
-  async function (agent_guid, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/agent_balance?agent_guid=${agent_guid}`;
-    try {
-      const response = await axiosInstance(url);
-      if (response.status >= 200 && response.status < 300) {
-        return response?.data;
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
 const standartSlice = createSlice({
   name: "standartSlice",
   initialState,
@@ -381,6 +438,32 @@ const standartSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    ///////////// getInvoiceWorkShop
+    builder.addCase(getInvoiceWorkShop.fulfilled, (state, action) => {
+      state.preloader = false;
+      state.listInvoice = action.payload;
+    });
+    builder.addCase(getInvoiceWorkShop.rejected, (state, action) => {
+      state.error = action.payload;
+      state.preloader = false;
+    });
+    builder.addCase(getInvoiceWorkShop.pending, (state, action) => {
+      state.preloader = true;
+    });
+
+    ///////////// getInvoiceReturn
+    builder.addCase(getInvoiceReturn.fulfilled, (state, action) => {
+      state.preloader = false;
+      state.listInvoice = action.payload;
+    });
+    builder.addCase(getInvoiceReturn.rejected, (state, action) => {
+      state.error = action.payload;
+      state.preloader = false;
+    });
+    builder.addCase(getInvoiceReturn.pending, (state, action) => {
+      state.preloader = true;
+    });
+
     ////////////// getListWorkShopsNur
     builder.addCase(getListWorkShopsNur.fulfilled, (state, action) => {
       state.preloader = false;
@@ -418,6 +501,19 @@ const standartSlice = createSlice({
     });
     builder.addCase(getListProdsNur.pending, (state, action) => {
       // state.preloader = true;
+    });
+
+    ///////////// getMyEveryInvoice
+    builder.addCase(getMyEveryInvoice.fulfilled, (state, action) => {
+      state.preloader = false;
+      state.listProdsNur = action.payload;
+    });
+    builder.addCase(getMyEveryInvoice.rejected, (state, action) => {
+      state.error = action.payload;
+      state.preloader = false;
+    });
+    builder.addCase(getMyEveryInvoice.pending, (state, action) => {
+      state.preloader = true;
     });
 
     ///////////// getListProdsInInvoiceNur
@@ -537,19 +633,6 @@ const standartSlice = createSlice({
       state.preloader = false;
     });
     builder.addCase(getListTT.pending, (state, action) => {
-      state.preloader = true;
-    });
-
-    /////////////////////// getBalance
-    builder.addCase(getBalance.fulfilled, (state, action) => {
-      state.preloader = false;
-      state.balanceTA = action.payload;
-    });
-    builder.addCase(getBalance.rejected, (state, action) => {
-      state.error = action.payload;
-      state.preloader = false;
-    });
-    builder.addCase(getBalance.pending, (state, action) => {
       state.preloader = true;
     });
   },

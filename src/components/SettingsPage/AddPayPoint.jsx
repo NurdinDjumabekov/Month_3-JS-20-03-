@@ -13,7 +13,7 @@ import {
 
 ////// components
 import SendInput from "../../common/SendInput/SendInput";
-import Modals from "../../components/Modals/Modals";
+import Modals from "../../common/Modals/Modals";
 import Select from "react-select";
 
 ////// style

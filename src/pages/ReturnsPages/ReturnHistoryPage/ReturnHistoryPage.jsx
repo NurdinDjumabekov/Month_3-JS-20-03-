@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import NavMenu from "../../../common/NavMenu/NavMenu";
 
 /////// fns
-import { getInvoiceReturn } from "../../../store/reducers/invoiceSlice";
+import { getInvoiceReturn } from "../../../store/reducers/standartSlice";
 import { createInvoice } from "../../../store/reducers/standartSlice";
 
 ////// helpers
@@ -24,17 +24,10 @@ const ReturnHistoryPage = () => {
   const navigate = useNavigate();
 
   const { dataSave } = useSelector((state) => state.saveDataSlice);
-  const { listInvoiceReturn } = useSelector((state) => state.invoiceSlice);
+  const { listInvoice } = useSelector((state) => state.standartSlice);
 
   useEffect(() => {
-    const data = {
-      reciever_guid: "b85094a9-d70a-46ab-a724-5f3d7a506b37",
-      sender_guid: dataSave?.guid,
-      date_from: "2024-09-10",
-      date_to: "2024-10-23",
-      reciever_type: 3,
-    };
-    dispatch(getInvoiceReturn(data));
+    dispatch(getInvoiceReturn({ sender_guid: dataSave?.guid }));
   }, []);
 
   const objType = {
@@ -91,7 +84,7 @@ const ReturnHistoryPage = () => {
       <NavMenu navText={"История возврата"} />
       <div className="returnHistoryPage">
         <div className="listBlock">
-          {listInvoiceReturn?.map((item, index) => (
+          {listInvoice?.map((item, index) => (
             <button
               className="invoiceParent"
               onClick={() => clickInvoice(item)}

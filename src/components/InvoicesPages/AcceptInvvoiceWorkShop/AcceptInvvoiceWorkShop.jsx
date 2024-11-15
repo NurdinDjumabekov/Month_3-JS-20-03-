@@ -10,10 +10,8 @@ import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import ConfirmModal from "../../../common/ConfirmModal/ConfirmModal";
 
 ///// store
-import {
-  acceptInvoice,
-  getMyInvoice,
-} from "../../../store/reducers/invoiceSlice";
+import { acceptInvoice } from "../../../store/reducers/standartSlice";
+import { getInvoiceWorkShop } from "../../../store/reducers/standartSlice";
 
 ////// helpers
 import { transformDateTime } from "../../../helpers/transformDate";
@@ -40,7 +38,7 @@ const AcceptInvvoiceWorkShop = ({ invoice_guid }) => {
     };
     const res = await dispatch(acceptInvoice({ data, navigate })).unwrap();
     if (!!res?.result) {
-      dispatch(getMyInvoice(data?.user_guid));
+      dispatch(getInvoiceWorkShop(data?.user_guid));
       navigate(-1);
       myAlert("Накладная принята");
     }

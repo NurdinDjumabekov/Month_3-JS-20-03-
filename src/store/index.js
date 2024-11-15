@@ -12,29 +12,25 @@ import {
 import storage from "redux-persist/lib/storage";
 
 //// slice
-import stateSlice from "./reducers/stateSlice";
+import spendingSlice from "./reducers/spendingSlice";
 import saveDataSlice from "./reducers/saveDataSlice";
-import mainSlice from "./reducers/mainSlice";
+import orderSlice from "./reducers/orderSlice";
 import selectsSlice from "./reducers/selectsSlice";
-import wareHouseSlice from "./reducers/wareHouseSlice";
-import productionSlice from "./reducers/productionSlice";
 import mapSlice from "./reducers/mapSlice";
 import photoSlice from "./reducers/photoSlice";
-import invoiceSlice from "./reducers/invoiceSlice";
+import leftoversSlice from "./reducers/leftoversSlice";
 import paySlice from "./reducers/paySlice";
 import pointsSlice from "./reducers/pointsSlice";
 import standartSlice from "./reducers/standartSlice";
 
 const reducer = combineReducers({
-  mainSlice,
-  stateSlice,
+  orderSlice,
+  spendingSlice,
   saveDataSlice,
   selectsSlice,
-  wareHouseSlice,
-  productionSlice,
   mapSlice,
   photoSlice,
-  invoiceSlice,
+  leftoversSlice,
   paySlice,
   pointsSlice,
   standartSlice,
