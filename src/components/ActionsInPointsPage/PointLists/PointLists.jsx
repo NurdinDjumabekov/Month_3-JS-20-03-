@@ -103,7 +103,7 @@ const PointLists = () => {
               >
                 <div
                   className={`logo ${
-                    !!item?.start_time ? "visit" : "no_visit"
+                    !!item?.set_start_time ? "visit" : "no_visit"
                   }`}
                 >
                   <p>{index + 1}</p>

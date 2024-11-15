@@ -4,32 +4,22 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 ////// fns
-import {
-  clearDataPay,
-  getEveryDebt,
-  getListPayTA,
-  sendPayFN,
-  setDataPay,
-} from "../../store/reducers/paySlice";
-import {
-  getWorkPlanEveryTA,
-  setListWorkPlan,
-} from "../../store/reducers/mainSlice";
+import { clearDataPay } from "../../store/reducers/paySlice";
+import { getListPayTA } from "../../store/reducers/paySlice";
+import { setDataPay } from "../../store/reducers/paySlice";
+import { getWorkPlanEveryTA } from "../../store/reducers/mainSlice";
+import { getPointsRouteAgent } from "../../store/reducers/mapSlice";
 
 ////// components
-import SendInput from "../../common/SendInput/SendInput";
-import Modals from "../../components/Modals/Modals";
+import NavMenu from "../../common/NavMenu/NavMenu";
+import AddPayPoint from "../../components/SettingsPage/AddPayPoint";
 
 ////// style
 import "./style.scss";
 
 ////// icons
 import PaymentsIcon from "@mui/icons-material/Payments";
-
 import CreditScoreIcon from "@mui/icons-material/CreditScore";
-import NavMenu from "../../common/NavMenu/NavMenu";
-import AddPayPoint from "../../components/SettingsPage/AddPayPoint";
-import { getPointsRouteAgent } from "../../store/reducers/mapSlice";
 
 const PayPage = () => {
   const navigate = useNavigate();
@@ -114,7 +104,6 @@ const PayPage = () => {
             </div>
           )}
         </div>
-        {/* <GraphicsEveryTA /> */}
       </div>
       <AddPayPoint viewApp={viewApp} setViewApp={setViewApp} />
     </>

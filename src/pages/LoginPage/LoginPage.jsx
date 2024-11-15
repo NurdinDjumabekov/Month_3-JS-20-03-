@@ -1,24 +1,20 @@
+////hooks
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
 /////style
 import "./style.scss";
 
 //// helpers
 import CLOUDS from "vanta/src/vanta.net";
 
-////hooks
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-
 ////img
 import logo from "../../assets/images/rihaLogo.png";
-import { logInAccount } from "../../store/reducers/mainSlice";
+import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 
 ////fns
-// import { authLogin } from "../../store/reducers/authSlice";
-
-//// icons
-import AddBusinessIcon from "@mui/icons-material/AddBusiness";
+import { logInAccount } from "../../store/reducers/mainSlice";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -49,10 +45,10 @@ const LoginPage = () => {
       minWidth: 200.0,
       scale: 1.0,
       scaleMobile: 1.0,
-      color: 0xff0000, // Change this to match your theme, e.g., red dots in the image
-      backgroundColor: 0xfff3e0, // Light, clean background similar to the image
-      maxDistance: 15.0, // Reducing distance between points to make it subtle
-      spacing: 20.0, // Increase spacing if needed for a cleaner look
+      color: 0xff0000,
+      backgroundColor: 0xfff3e0,
+      maxDistance: 15.0,
+      spacing: 20.0,
     });
   }, []);
 

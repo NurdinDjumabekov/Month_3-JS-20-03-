@@ -28,13 +28,13 @@ const PointsMainPage = () => {
   const { countsPoints } = useSelector((state) => state.standartSlice);
 
   const list = [
-    // {
-    //   codeid: 1,
-    //   name: "Список всех торговых точек",
-    //   img: mapIcon,
-    //   nav: "/all_list",
-    //   count: countsPoints?.total_tt,
-    // },
+    {
+      codeid: 1,
+      name: "Список всех торговых точек",
+      img: mapIcon,
+      nav: "/all_list",
+      count: countsPoints?.total_tt,
+    },
     {
       codeid: 2,
       name: "Торговые точки на сегодня",

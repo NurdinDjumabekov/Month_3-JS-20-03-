@@ -76,7 +76,9 @@ const Realization = ({ send_guid }) => {
           <span>{roundingNum(count)} шт</span>
         </div>
         <button className="pdfBtn">
-          <p>Распечатать накладную отпуска</p>
+          <a href={listOrdersNur?.[0]?.file}>
+            <p>Распечатать накладную отпуска</p>
+          </a>
         </button>
       </div>
       {checkEdit && (

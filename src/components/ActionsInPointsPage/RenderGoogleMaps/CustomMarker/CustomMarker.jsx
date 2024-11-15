@@ -47,7 +47,7 @@ const CustomMarker = ({ position, index, setCenter, setZoom }) => {
         label={{
           text: `${index + 1}. ${position?.point}`,
           className: `textMaps ${
-            !!position?.start_time ? "visitMap" : "no_visit_map"
+            !!position?.set_start_time ? "visitMap" : "no_visit_map"
           }`,
           fontWeight: "600",
           fontSize: "10px",
