@@ -44,11 +44,13 @@ const PointListsAll = () => {
 
   const checkLength = search?.length === 0;
 
-  const clickPoint = (position) => {
-    navigate("/points/history", { state: position });
+  const clickPoint = ({ guid, text }) => {
+    const obj = {
+      point: text,
+      point_guid: guid,
+    };
+    navigate("/points/history", { state: obj });
   };
-
-  console.log(filter_list_old);
 
   return (
     <div className="pointListsMain allPoints">
@@ -81,7 +83,7 @@ const PointListsAll = () => {
       <div className="pointLists">
         <div className="pointLists__inner ">
           <div className="pointLists__list">
-            {filter_list?.map((item) => (
+            {filter_list?.map((item, index) => (
               <div
                 className="every"
                 key={item.guid}
@@ -90,12 +92,13 @@ const PointListsAll = () => {
                 <div
                   className={`logo ${!!item?.result ? "visit" : "no_visit"}`}
                 >
-                  <p>{getFirstLetter(item?.text)}</p>
+                  {/* <p>{getFirstLetter(item?.text)}</p> */}
+                  <p>{index + 1}</p>
                 </div>
                 <div className="content">
                   <div>
                     <p>{item?.text}</p>
-                    <span>{item?.result || "Не посетил точку"}</span>
+                    <b>Долг: {item?.balance} сом</b>
                   </div>
                   <div>
                     <p>{item?.start_time || "00:00"}</p>

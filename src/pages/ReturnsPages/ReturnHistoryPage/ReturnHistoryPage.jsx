@@ -32,7 +32,7 @@ const ReturnHistoryPage = () => {
 
   const objType = {
     0: { text: "Ожидание", color: "red" },
-    1: { text: "Отгружено", color: "red" },
+    1: { text: "Отгружено", color: "#4361ee" },
     2: { text: "Принято", color: "green" },
   };
 
@@ -44,6 +44,7 @@ const ReturnHistoryPage = () => {
         date_to: "",
         invoice_guid: item?.invoice_guid,
         checkTypeProds: 0, /// все товары
+        returnCheck: true,
       };
       // 1 - создание и редактирование
       navigate("/app/crud_invoice", { state: obj });
@@ -73,6 +74,7 @@ const ReturnHistoryPage = () => {
         date_to: "",
         invoice_guid: res?.invoice_guid,
         checkTypeProds: 0, /// все товары
+        returnCheck: true,
       };
       // 1 - создание и редактирование
       navigate("/app/crud_invoice", { state: obj });

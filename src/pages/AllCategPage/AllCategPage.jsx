@@ -17,6 +17,7 @@ import ArrowNav from "@mui/icons-material/ArrowForwardIosSharp";
 
 ////// styles
 import "./style.scss";
+import { myAlert } from "../../helpers/MyAlert";
 
 const AllCategPage = () => {
   const dispatch = useDispatch();
@@ -36,6 +37,10 @@ const AllCategPage = () => {
       name: obj?.name,
       pathApi: obj?.pathApi,
     });
+  };
+
+  const lookHistoryPay = () => {
+    myAlert("Скоро мы добавим этот функционал)");
   };
 
   return (
@@ -88,7 +93,7 @@ const AllCategPage = () => {
           <div>
             <p>Долги торговых точек: {balanceTA?.dolg_tt || 0} сом</p>
           </div>
-          <div className="lookPay">
+          <div className="lookPay" onClick={lookHistoryPay}>
             <p>Посмотреть историю платежей ...</p>
             <ArrowNav sx={{ color: "#fff" }} />
           </div>

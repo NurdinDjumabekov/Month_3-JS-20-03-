@@ -1,11 +1,19 @@
 .allPoints {
   height: 100%;
 
-  .every {
-    .content {
-      > div:first-child {
-        span {
-          font-size: 12px;
+  .pointLists {
+    &__list {
+      .every {
+        .logo {
+          background: #299b31 !important;
+        }
+
+        .content {
+          > div:first-child {
+            span {
+              font-size: 12px;
+            }
+          }
         }
       }
     }

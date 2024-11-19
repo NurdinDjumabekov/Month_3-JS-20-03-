@@ -25,9 +25,10 @@ const PayActionPage = () => {
   const location = useLocation();
   const inputRef = useRef(null);
 
-  const { paid, tt_dolg, total_to_pay } = location?.state;
-  const { count_kg, point, action, point_guid } = location?.state;
-  const { sum_accept, sum_return } = location?.state;
+  const { paid, tt_dolg } = location?.state;
+  const { point, action, point_guid } = location?.state;
+  const { sum_accept, sum_return, type } = location?.state;
+  //// type - 1 (принимаем оплату у ТТ), 2 (отправялем оплату у в цех)
 
   const [count, setCount] = useState({ returnCount: "", sendCount: "" });
 
@@ -47,18 +48,18 @@ const PayActionPage = () => {
     }, 200);
   }, [action]);
 
+  const user_guid_to =
+    type == 1 ? point_guid : "3D45D963-2979-4A80-8EC2-043A38DB571E";
+  const user_type_to = type == 1 ? 4 : 2;
+
   const createPay = async (e) => {
     e.preventDefault();
 
-    if (!!!count?.sendCount || !!!count?.returnCount) {
-      myAlert("Поля не могут быть пустыми, введите значение '0'", "error");
-      return;
-    }
     const send = {
-      user_guid_to: point_guid,
-      user_type_to: 4,
-      amount: count?.sendCount,
-      return_amount: count?.returnCount,
+      user_guid_to,
+      user_type_to,
+      amount: count?.sendCount || 0,
+      return_amount: count?.returnCount || 0,
       comment: "Оплачиваю",
     };
     const res = await dispatch(sendPayAgent(send)).unwrap();
@@ -66,6 +67,21 @@ const PayActionPage = () => {
       myAlert("Оплата прошла успешно");
       navigate(-1);
     }
+  };
+
+  const objDoty = {
+    1: (
+      <div className="info">
+        <p>Долг точки: </p>
+        <span>{roundingNum(+tt_dolg)} сом</span>
+      </div>
+    ),
+    2: (
+      <div className="info">
+        <p>Ваш долг цеху: </p>
+        <span>{roundingNum(+tt_dolg)} сом</span>
+      </div>
+    ),
   };
 
   return (
@@ -79,12 +95,7 @@ const PayActionPage = () => {
             <img src={krest} alt="x" />
           </div>
         </div>
-
-        <div className="info">
-          <p>Долг точки: </p>
-          <span>{roundingNum(+tt_dolg)} сом</span>
-        </div>
-
+        {objDoty?.[type]}
         <div className="info inputData">
           <p>Сумма возврата: </p>
           <span>
@@ -110,16 +121,16 @@ const PayActionPage = () => {
             />
           </span>
         </div>
-        <div className="info result">
-          <p>Оплачено: </p>
-          <span>{roundingNum(+paid)} сом</span>
-        </div>
-
+        {!!paid && (
+          <div className="info result">
+            <p>Оплачено: </p>
+            <span>{roundingNum(+paid)} сом</span>
+          </div>
+        )}
         {/* <div className="info result">
           <p>Итого к оплате: </p>
           <span>{roundingNum(+total_to_pay)} сом</span>
         </div> */}
-
         <button className="startEndTA" type="submit">
           <p>+ Произвести оплату</p>
         </button>

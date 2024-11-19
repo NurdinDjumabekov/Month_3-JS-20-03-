@@ -28,6 +28,7 @@ const PayInfo = ({ props, inviceData, getDataVisit, reportEveryTT }) => {
       total_to_pay: reportPayEveryTT?.total_to_pay, /// итого к оплате
       sum_return: reportEveryTT?.tt_vozvrat_price,
       sum_accept: reportEveryTT?.tt_prinat_price,
+      type: 1,
     };
     navigate("/points/pay", { state: obj });
   };

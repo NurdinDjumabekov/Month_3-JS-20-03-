@@ -22,6 +22,7 @@ const initialState = {
   listTypesVisit: [], /// Результат не установлен,Успешное посещение"
   listAllPointsTA: [], /// список всех точек ТА
   listInvoice: [], /// список накладных отпущенных админом и возврат, которй оформил ТА
+  reportInvoice: {}, /// тут кол-во отпусткных накладных ТА и кол-во Возврата
 };
 
 ////// getInvoiceWorkShop - get список накладных отпущенных админом
@@ -423,6 +424,24 @@ export const getListTT = createAsyncThunk(
   }
 );
 
+////// getCountInvoice - get список кол-ва накладных ТА (отпустк и возврат)
+export const getCountInvoice = createAsyncThunk(
+  "getCountInvoice",
+  async function (agent_guid, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/agent_invoice_count?agent_guid=${agent_guid}`;
+    try {
+      const response = await axiosInstance(url);
+      if (response.status >= 200 && response.status < 300) {
+        return response?.data;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const standartSlice = createSlice({
   name: "standartSlice",
   initialState,
@@ -633,6 +652,19 @@ const standartSlice = createSlice({
       state.preloader = false;
     });
     builder.addCase(getListTT.pending, (state, action) => {
+      state.preloader = true;
+    });
+
+    ////////////////////////// getCountInvoice
+    builder.addCase(getCountInvoice.fulfilled, (state, action) => {
+      state.preloader = false;
+      state.reportInvoice = action.payload;
+    });
+    builder.addCase(getCountInvoice.rejected, (state, action) => {
+      state.error = action.payload;
+      state.preloader = false;
+    });
+    builder.addCase(getCountInvoice.pending, (state, action) => {
       state.preloader = true;
     });
   },

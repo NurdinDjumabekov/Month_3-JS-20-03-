@@ -1,8 +1,10 @@
 ////// hooks
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 ////// fns
+import { getCountInvoice } from "../../../store/reducers/standartSlice";
 
 ////// components
 import NavMenu from "../../../common/NavMenu/NavMenu";
@@ -17,13 +19,21 @@ const ActionsInvoicePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const { dataSave } = useSelector((state) => state.saveDataSlice);
+  const { reportInvoice } = useSelector((state) => state.standartSlice);
+  const { balanceTA } = useSelector((state) => state.paySlice);
+
+  useEffect(() => {
+    dispatch(getCountInvoice(dataSave?.guid));
+  }, []);
+
   const list = [
     {
       codeid: 1,
       name: "Накладные отпуска",
       img: "https://img.freepik.com/free-vector/flat-university-concept_23-2148184535.jpg?t=st=1714467037~exp=1714470637~hmac=5c4ad18c3bd18c0d4b01c395340bf0b264b4c3ec37090fd429ec276be7a41b7d&w=900",
       nav: "/history_accept",
-      count: 1,
+      count: reportInvoice?.ta_otpusk,
     },
     {
       codeid: 2,
@@ -31,19 +41,32 @@ const ActionsInvoicePage = () => {
       more: "",
       img: "https://img.freepik.com/free-vector/balance-sheet-cartoon-web-icon-accounting-process-finance-analyst-calculating-tools-financial-consulting-idea-bookkeeping-service_335657-2313.jpg?t=st=1711965019~exp=1711968619~hmac=635d5b94c27cf917e8532dfd722c44aba43db051d262065031cdac53408da1ab&w=900",
       nav: "/history_return",
-      count: 1,
+      count: reportInvoice?.ta_vozvrat,
     },
     {
       codeid: 3,
       name: "Оплатить в кассу",
       more: "",
       img: "https://img.freepik.com/free-vector/euro-coins-concept-illustration_114360-15485.jpg?t=st=1710925698~exp=1710929298~hmac=4fb3746133437b6b0ca94daa3d06c8c634817a0562bb3e4ac1df5e613f3512bd&w=740",
-      nav: "/history_return",
+      nav: "/points/pay",
       count: 1,
     },
   ];
 
-  const clickTypePoint = ({ nav }) => navigate(`/invoice${nav}`);
+  const clickTypePoint = ({ nav, codeid }) => {
+    if (codeid == 3) {
+      const obj = {
+        point: "Оплата в цех",
+        tt_dolg: balanceTA?.dold_workshop,
+        sum_return: 0,
+        sum_accept: 1000,
+        type: 2,
+      };
+      navigate("/points/pay", { state: obj });
+    } else {
+      navigate(`/invoice${nav}`);
+    }
+  };
 
   return (
     <>

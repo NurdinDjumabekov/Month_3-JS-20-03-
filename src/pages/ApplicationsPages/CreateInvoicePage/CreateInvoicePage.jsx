@@ -31,12 +31,13 @@ const CreateInvoicePage = () => {
   const location = useLocation();
   const inputRef = useRef(null);
 
-  const { action, invoice_guid, checkTypeProds } = location?.state;
+  const { action, invoice_guid, checkTypeProds, returnCheck } = location?.state;
   const type_unit = location?.state?.type_unit || 2;
   /// 1 - шт, 2 кг
 
   /// checkTypeProds  - 0 все товары
   /// checkTypeProds  - 1 остатки товара
+  /// returnCheck - для подтверждения накладной отпуска
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [search, setSearch] = useState("");
@@ -173,7 +174,11 @@ const CreateInvoicePage = () => {
             type_unit={type_unit}
             checkTypeProds={checkTypeProds}
           />
-          <ListAcceptInvoice invoice_guid={invoice_guid} action={action} />
+          <ListAcceptInvoice
+            invoice_guid={invoice_guid}
+            action={action}
+            returnCheck={returnCheck}
+          />
         </Slider>
       </div>
 
