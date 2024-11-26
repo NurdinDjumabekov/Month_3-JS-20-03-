@@ -67,7 +67,7 @@ const EveryDataDay = ({ content }) => {
 
   return (
     <div className="everyOrder day" onClick={readAllInvoiceEveryDay}>
-      <CustomWidthTooltip
+      {/* <CustomWidthTooltip
         disableInteractive
         title={
           <ul
@@ -115,7 +115,7 @@ const EveryDataDay = ({ content }) => {
             </Tooltip>
           </div>
         </div>
-      </CustomWidthTooltip>
+      </CustomWidthTooltip> */}
     </div>
   );
 };

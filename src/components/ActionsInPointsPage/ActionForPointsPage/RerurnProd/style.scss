@@ -3,5 +3,23 @@
     margin: 20px 0;
     text-decoration: underline;
     background: #fff;
+    a {
+      p {
+        color: #2f5ae9;
+        text-decoration: underline;
+        text-decoration-color: #2f5ae9;
+      }
+    }
+  }
+
+  .viewProd {
+    margin: 0 !important;
+    a {
+      p {
+        color: #2f5ae9;
+        text-decoration: underline;
+        text-decoration-color: #2f5ae9;
+      }
+    }
   }
 }

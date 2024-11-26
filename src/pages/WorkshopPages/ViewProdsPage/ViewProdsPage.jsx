@@ -55,7 +55,7 @@ const ViewProdsPage = () => {
         <NavMenu navText={`Накладная №${codeid}`} />
         <div className="viewProdsPage__inner">
           <ViewProds list={listProdsNur} keys={keys} />
-          <a className="lookPdf" href={file}>
+          <a className="lookPdf" href={file} target="_blank">
             <SummarizeIcon />
           </a>
         </div>

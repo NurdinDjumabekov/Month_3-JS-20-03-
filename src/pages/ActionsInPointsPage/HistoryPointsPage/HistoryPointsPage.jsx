@@ -23,7 +23,7 @@ const HistoryPointsPage = () => {
   const { dataSave } = useSelector((state) => state.saveDataSlice);
   const { listRouteVisit } = useSelector((state) => state.standartSlice);
 
-  // console.log(listRouteVisit, "listRouteVisit");
+  console.log(listRouteVisit, "listRouteVisit");
 
   useEffect(() => {
     dispatch(getListVisitPoints(point_guid));
@@ -78,8 +78,8 @@ const HistoryPointsPage = () => {
               <span>{item?.date || "..."}</span>
             </div>
             <div className="info">
-              <p>Долг точки: </p>
-              <span>{item?.tt_oplata || 0} сом</span>
+              <p>Долг точки в момент реализации: </p>
+              <span>{item?.dolg || 0} сом</span>
             </div>
 
             <div className="info">

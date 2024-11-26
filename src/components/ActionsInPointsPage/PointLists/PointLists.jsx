@@ -64,6 +64,8 @@ const PointLists = () => {
     navigate("/points/history", { state: position });
   };
 
+  console.log(filter_list, "filter_list");
+
   return (
     <div className="pointListsMain">
       <NavMenu>

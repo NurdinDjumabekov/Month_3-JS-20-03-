@@ -60,6 +60,11 @@ const Realization = ({ send_guid }) => {
   const checkEdit = !!!reportEveryTT?.end_time && !!reportEveryTT?.start_time;
   //// редактирование и добавление не возможно
 
+  const viewProds = async () => {
+    const res = await dispatch(getDataInvoiceSend(send_guid)).unwrap();
+    navigate(`/invoice/view`, { state: res });
+  };
+
   return (
     <div className="mainInfo rerurnProd">
       <div className="mainInfo__inner">
@@ -76,8 +81,13 @@ const Realization = ({ send_guid }) => {
           <span>{roundingNum(count)} шт</span>
         </div>
         <button className="pdfBtn">
-          <a href={listOrdersNur?.[0]?.file}>
+          <a href={listOrdersNur?.[0]?.file} target="_blank">
             <p>Распечатать накладную отпуска</p>
+          </a>
+        </button>
+        <button className="pdfBtn viewProd">
+          <a onClick={viewProds}>
+            <p>Посмотреть товары</p>
           </a>
         </button>
       </div>

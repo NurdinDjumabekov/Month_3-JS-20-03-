@@ -1,6 +1,6 @@
 ////// hooks
 import { useEffect, useRef, useState, useCallback } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 ////// style
@@ -58,7 +58,10 @@ const RerurnProd = ({ return_guid }) => {
   const checkEdit = !!!reportEveryTT?.end_time && !!reportEveryTT?.start_time;
   //// редактирование и добавление не возможно
 
-  console.log(listOrdersNur, "listOrdersNur");
+  const viewProds = async () => {
+    const res = await dispatch(getDataInvoiceReturn(return_guid)).unwrap();
+    navigate(`/invoice/view`, { state: res });
+  };
 
   return (
     <div className="mainInfo rerurnProd">
@@ -76,8 +79,13 @@ const RerurnProd = ({ return_guid }) => {
           <span>{roundingNum(count)} шт</span>
         </div>
         <button className="pdfBtn">
-          <a href={listOrdersNur?.[0]?.file}>
+          <a href={listOrdersNur?.[0]?.file} target="_blank">
             <p>Распечатать накладную возврата</p>
+          </a>
+        </button>
+        <button className="pdfBtn viewProd">
+          <a onClick={viewProds}>
+            <p>Посмотреть товары</p>
           </a>
         </button>
       </div>

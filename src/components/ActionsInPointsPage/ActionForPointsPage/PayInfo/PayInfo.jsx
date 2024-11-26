@@ -41,7 +41,7 @@ const PayInfo = ({ props, inviceData, getDataVisit, reportEveryTT }) => {
           <span>{roundingNum(+reportPayEveryTT?.tt_dolg)} сом</span>
         </div>
         <div className="info">
-          <p>Остаток на начало: </p>
+          <p>Долг точки в момент реализации: </p>
           <span>{roundingNum(+reportPayEveryTT?.start_balance)} сом</span>
         </div>
         <div className="info">

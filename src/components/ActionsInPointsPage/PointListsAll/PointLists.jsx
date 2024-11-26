@@ -45,10 +45,7 @@ const PointListsAll = () => {
   const checkLength = search?.length === 0;
 
   const clickPoint = ({ guid, text }) => {
-    const obj = {
-      point: text,
-      point_guid: guid,
-    };
+    const obj = { point: text, point_guid: guid };
     navigate("/points/history", { state: obj });
   };
 
