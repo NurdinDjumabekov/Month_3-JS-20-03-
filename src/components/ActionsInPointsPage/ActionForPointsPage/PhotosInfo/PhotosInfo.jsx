@@ -28,7 +28,7 @@ const PhotosInfo = ({ props, reportEveryTT }) => {
   const { dataSave } = useSelector((state) => state.saveDataSlice);
 
   const getData = () => {
-    const obj = { point_guid, guid, route_sheet_guid };
+    const obj = { point_guid, guid, route_sheet_guid: guid };
     dispatch(getListPhotos({ ...obj, agent_guid: dataSave?.guid }));
   };
 
@@ -47,7 +47,7 @@ const PhotosInfo = ({ props, reportEveryTT }) => {
       const formData = new FormData();
       formData.append("agent_guid", dataSave?.guid);
       formData.append("point_guid", point_guid);
-      formData.append("route_guid", route_sheet_guid);
+      formData.append("route_guid", guid);
 
       // Перебор файлов и добавление каждого файла в formData
       Array.from(files).forEach((file) => {
@@ -58,7 +58,7 @@ const PhotosInfo = ({ props, reportEveryTT }) => {
       const res = await dispatch(sendPhotos({ data: formData })).unwrap();
 
       if (!!res?.result) {
-        const obj = { point_guid, guid, route_sheet_guid };
+        const obj = { point_guid, guid, route_sheet_guid: guid };
         dispatch(getListPhotos({ ...obj, agent_guid: dataSave?.guid }));
       } else {
         myAlert("Не удалось загрузить данные!", "error");

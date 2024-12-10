@@ -25,6 +25,7 @@ export const logInAccount = createAsyncThunk(
     const url = `${REACT_APP_API_URL}/ta/login`;
     try {
       const response = await axiosInstance.post(url, data);
+      console.log(response, "response");
       if (response.status >= 200 && response.status < 300) {
         const { result, guid, fio, user_type, token, phone } = response?.data;
         if (result == 1 && !!guid) {

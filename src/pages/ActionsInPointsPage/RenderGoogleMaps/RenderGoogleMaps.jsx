@@ -18,9 +18,9 @@ import { getEveryRoutes_TA } from "../../../store/reducers/mapSlice";
 /////// helpers
 import { defaultCenter, getMyLocation } from "../../../helpers/GetMyGeo";
 import { Preloader } from "../../../common/Preloader/Preloader";
+const { REACT_APP_MAP_KEY } = process.env;
 
 const RenderGoogleMaps = () => {
-  const googleMapsApiKey = "AIzaSyD8hB-KDvF4vITv4idoxn2DqqMdJffJGd8";
   const dispatch = useDispatch();
 
   const { dataSave } = useSelector((state) => state.saveDataSlice);
@@ -35,7 +35,7 @@ const RenderGoogleMaps = () => {
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey,
+    googleMapsApiKey: REACT_APP_MAP_KEY,
     libraries,
   });
 
