@@ -79,18 +79,6 @@ const CreateInvoicePage = () => {
     getData();
   }, []);
 
-  const handleSearch = useCallback(
-    //// поиск товара через запрос
-    debounce((value) => {
-      const objUrl = {
-        0: `get_product?search=${value}&type=agent`,
-        1: `get_agent_leftover?search=${value}&type=agent`,
-      };
-      dispatch(searchListProdsNur({ link: objUrl?.[checkTypeProds] }));
-    }, 1000),
-    []
-  );
-
   const clear = () => {
     setSearch("");
     getData();
@@ -102,13 +90,6 @@ const CreateInvoicePage = () => {
   const onChangeSearch = (e) => {
     const value = e?.target?.value;
     setSearch(value);
-    // handleSearch(value);
-
-    // if (value?.length === 0) {
-    //   getData();
-    // } else {
-    //   handleSearch(value);
-    // }
   };
 
   const searchData = (e) => {

@@ -45,7 +45,7 @@ const ActionsInvoicePage = () => {
     },
     {
       codeid: 3,
-      name: "Оплатить в кассу",
+      name: "Оплата в кассу",
       more: "",
       img: "https://img.freepik.com/free-vector/euro-coins-concept-illustration_114360-15485.jpg?t=st=1710925698~exp=1710929298~hmac=4fb3746133437b6b0ca94daa3d06c8c634817a0562bb3e4ac1df5e613f3512bd&w=740",
       nav: "/points/pay",
@@ -55,14 +55,8 @@ const ActionsInvoicePage = () => {
 
   const clickTypePoint = ({ nav, codeid }) => {
     if (codeid == 3) {
-      const obj = {
-        point: "Оплата в цех",
-        tt_dolg: balanceTA?.dold_workshop,
-        sum_return: 0,
-        sum_accept: 1000,
-        type: 2,
-      };
-      navigate("/points/pay", { state: obj });
+      const obj = { balanceTA: balanceTA?.dold_workshop };
+      navigate("/invoice/pay", { state: obj });
     } else {
       navigate(`/invoice${nav}`);
     }

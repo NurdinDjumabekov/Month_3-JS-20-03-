@@ -14,6 +14,8 @@ import MyInvoicePage from "./MyInvoicePage/MyInvoicePage";
 import ViewProdsPage from "./ViewProdsPage/ViewProdsPage";
 import ReturnHistoryPage from "../ReturnsPages/ReturnHistoryPage/ReturnHistoryPage";
 import ActionsInvoicePage from "./ActionsInvoicePage/ActionsInvoicePage";
+import PayInWhPage from "./PayInWhPage/PayInWhPage";
+import HistoryPayPage from "./HistoryPayPage/HistoryPayPage";
 
 const WorkshopPages = () => {
   const dispatch = useDispatch();
@@ -27,6 +29,8 @@ const WorkshopPages = () => {
         <Route path="history_accept" element={<MyInvoicePage />} />
         <Route path="history_return" element={<ReturnHistoryPage />} />
         <Route path="view" element={<ViewProdsPage />} />
+        <Route path="pay" element={<PayInWhPage />} />
+        <Route path="pay_history" element={<HistoryPayPage />} />
       </Routes>
     </>
   );

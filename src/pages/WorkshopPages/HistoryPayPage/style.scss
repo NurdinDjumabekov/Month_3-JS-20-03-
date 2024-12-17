@@ -1,0 +1,20 @@
+.payHistory {
+  // .list {
+  //   > div {
+  //     padding: 10px !important;
+  //   }
+  // }
+
+  .file {
+    position: absolute;
+    right: 15px;
+    top: 17px;
+    background: transparent;
+
+    svg {
+      width: 19px;
+      height: 19px;
+      fill: rgba(128, 128, 128, 0.623);
+    }
+  }
+}

@@ -3,23 +3,18 @@ import React from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-//// pages
-import MainLayouts from "../layouts/MainLayouts/MainLayouts";
-
 //// components
-// import { Preloader } from "../components/Preloader/Preloader";
-
-////fns
-
-/////// pages
+import MainLayouts from "../layouts/MainLayouts/MainLayouts";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import AllCategPage from "../pages/AllCategPage/AllCategPage";
 import LeftoversPage from "../pages/LeftoversPage/LeftoversPage";
 import ExpensePage from "../pages/ExpensePage/ExpensePage";
 import ApplicationsPages from "../pages/ApplicationsPages/ApplicationsPages";
-import PayPage from "../pages/PayPage/PayPage";
 import ActionsInPointsPage from "../pages/ActionsInPointsPage/ActionsInPointsPage";
 import WorkshopPages from "../pages/WorkshopPages/WorkshopPages";
+// import { Preloader } from "../components/Preloader/Preloader";
+
+////fns
 
 const MainRoutes = () => {
   const dispatch = useDispatch();
@@ -44,7 +39,6 @@ const MainRoutes = () => {
           <Route path="/leftovers" element={<LeftoversPage />} />
           <Route path="/expense" element={<ExpensePage />} />
           <Route path="/points/*" element={<ActionsInPointsPage />} />
-          <Route path="/pay" element={<PayPage />} />
         </Route>
       )}
       {/* <Route path="*" element={<NotFoundPage />} /> */}

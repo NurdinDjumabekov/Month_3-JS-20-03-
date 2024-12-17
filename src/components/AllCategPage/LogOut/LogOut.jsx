@@ -21,7 +21,7 @@ export const LogOut = () => {
   const logOut = () => {
     dispatch(clearDataSave());
     navigate("/");
-    window.location.reload();
+    // window.location.reload();
   };
 
   return (

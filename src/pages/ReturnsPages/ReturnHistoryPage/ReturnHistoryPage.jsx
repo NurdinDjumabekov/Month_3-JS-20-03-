@@ -81,6 +81,8 @@ const ReturnHistoryPage = () => {
     }
   };
 
+  const objText = { 3: "В", 4: "С точки " };
+
   return (
     <>
       <NavMenu navText={"История возврата"} />
@@ -96,7 +98,9 @@ const ReturnHistoryPage = () => {
                 <div className="mainData">
                   <p className="indexNums">{index + 1}</p>
                   <div>
-                    <p className="role">{item?.reciever || "..."}</p>
+                    <p className="role">
+                      {objText?.[item?.reciever_type]} "{item?.reciever}"
+                    </p>
                     <p className="titleDate">{item?.date}</p>
                   </div>
                 </div>

@@ -42,8 +42,6 @@ const ListAcceptInvoice = ({ invoice_guid, returnCheck }) => {
     dispatch(editInvoice(send));
   };
 
-  console.log(!!returnCheck, "returnCheck");
-
   const confirmInvoice = async () => {
     // подтверждение накладной агентом
     const data = {

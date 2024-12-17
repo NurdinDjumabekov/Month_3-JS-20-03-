@@ -174,3 +174,9 @@ export const statusExpense = {
   1: { text: "Принят", color: "green" },
   2: { text: "Отклонён", color: "red" },
 };
+
+export const statusPay = {
+  0: { text: "Ожидание", color: "red" },
+  1: { text: "Оплата принята", color: "green" },
+  2: { text: "Оплата отклонена", color: "red" },
+};
