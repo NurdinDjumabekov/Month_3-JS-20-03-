@@ -166,6 +166,13 @@ export const addToDateFN = (dateTime) => {
   return date_to;
 };
 
+export const simpleDate = (inputDate) => {
+  /// 18-12-2024 16:42 => 13.12.2024
+  const [datePart] = inputDate?.split(" ");
+  const [day, month, year] = datePart?.split("-");
+  return `${day}.${month}.${year}`;
+};
+
 export const formatDateMonth = (dateString) => {
   ///// 2024-09-13 => "13 сентября 2024 года"
   const months = [

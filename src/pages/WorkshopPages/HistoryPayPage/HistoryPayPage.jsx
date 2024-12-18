@@ -1,6 +1,5 @@
 ////hooks
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
@@ -19,6 +18,7 @@ import FileOpenIcon from "@mui/icons-material/FileOpen";
 
 ////// helpers
 import { statusPay } from "../../../helpers/objs";
+import { roundingNum } from "../../../helpers/totals";
 
 const HistoryPayPage = () => {
   const dispatch = useDispatch();
@@ -33,8 +33,6 @@ const HistoryPayPage = () => {
   }, []);
 
   const length = listHistoryPaysInWH?.length == 0;
-
-  console.log(pdf, "pdfa");
 
   return (
     <>
@@ -61,9 +59,9 @@ const HistoryPayPage = () => {
                     >
                       {statusPay?.[item?.status]?.text || "Ожидание"}
                     </p>
-                    <p>{item?.amount} сом</p>
-                    {/* {item?.status == 0 && (
-                    )} */}
+                    <p>{roundingNum(item?.amount)} сом</p>
+                    {/* {item?.status == 1 && (
+                        )} */}
                     <button className="file" onClick={() => setPdf(item)}>
                       <FileOpenIcon />
                     </button>

@@ -28,6 +28,8 @@ Font.register({
 });
 
 export const styles = StyleSheet.create({
+  main: { display: "flex", gap: 5 },
+
   page: {
     padding: 10,
     paddingVertical: 30,
@@ -38,6 +40,7 @@ export const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     gap: 10,
+    height: "49%",
   },
 
   //////////////////////// left
@@ -75,6 +78,7 @@ export const styles = StyleSheet.create({
     border: 1,
     width: 70,
     height: 14,
+    borderBottom: 0,
   },
 
   leftInner: {
@@ -233,4 +237,6 @@ export const styles = StyleSheet.create({
   tableColBottom: {
     height: 30,
   },
+
+  shadow: { width: "100%", height: "49%" },
 });
