@@ -119,12 +119,15 @@ const ActionForPointsPage = () => {
                 position={location.state}
               />
             </div>
+
             <div className="everySlide">
               <RerurnProd return_guid={return_guid} />
             </div>
+
             <div className="everySlide">
               <Realization send_guid={send_guid} />
             </div>
+
             <div className="everySlide">
               <PayInfo
                 props={location.state}
@@ -133,12 +136,14 @@ const ActionForPointsPage = () => {
                 reportEveryTT={reportEveryTT}
               />
             </div>
+
             <div className="everySlide">
               <PhotosInfo
                 props={location.state}
                 reportEveryTT={reportEveryTT}
               />
             </div>
+
             <div className="everySlide">
               <TasksInfo props={location.state} reportEveryTT={reportEveryTT} />
             </div>

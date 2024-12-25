@@ -557,7 +557,7 @@ const standartSlice = createSlice({
     builder.addCase(getDataInvoiceReturn.rejected, (state, action) => {
       state.error = action.payload;
       // state.preloader = false;
-      state.listSendOrders = [];
+      state.inviceData = { ...state.inviceData, return: {} };
     });
     builder.addCase(getDataInvoiceReturn.pending, (state, action) => {
       // state.preloader = true;
@@ -571,7 +571,7 @@ const standartSlice = createSlice({
     builder.addCase(getDataInvoiceSend.rejected, (state, action) => {
       state.error = action.payload;
       // state.preloader = false;
-      state.listSendOrders = [];
+      state.inviceData = { ...state.inviceData, send: {} };
     });
     builder.addCase(getDataInvoiceSend.pending, (state, action) => {
       // state.preloader = true;

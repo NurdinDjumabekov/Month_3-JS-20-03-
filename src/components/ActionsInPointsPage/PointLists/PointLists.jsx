@@ -64,8 +64,6 @@ const PointLists = () => {
     navigate("/points/history", { state: position });
   };
 
-  console.log(filter_list, "filter_list");
-
   return (
     <div className="pointListsMain">
       <NavMenu>
@@ -117,8 +115,8 @@ const PointLists = () => {
                     <b>Долг: {item?.dolg} сом</b>
                   </div>
                   <div>
-                    <p>{item?.start_time || "00:00"}</p>
-                    <span></span>
+                    <p>{item?.start_time}</p>
+                    <span>{item?.type_point_text || "..."}</span>
                   </div>
                 </div>
               </div>

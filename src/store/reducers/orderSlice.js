@@ -199,7 +199,8 @@ export const getEveryDataDay = createAsyncThunk(
 export const getListProdsInInvoice = createAsyncThunk(
   "getListProdsInInvoice",
   async function (guid, { dispatch, rejectWithValue }) {
-    const url = `${REACT_APP_API_URL}/ta/get_application?invoice_guid=${guid}`;
+    // const url = `${REACT_APP_API_URL}/ta/get_application?invoice_guid=${guid}`;
+    const url = `${REACT_APP_API_URL}/ta/get_appl`;
     try {
       const response = await axiosInstance(url);
       if (response.status >= 200 && response.status < 300) {

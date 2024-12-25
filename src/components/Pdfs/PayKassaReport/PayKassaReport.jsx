@@ -9,21 +9,17 @@ import { styles } from "./style";
 import "./style.scss";
 
 ////// helpers
+import { simpleDate } from "../../../helpers/transformDate";
 
 ////// components
-import Modals from "../../../common/Modals/Modals";
 import { Document, Page, Text, pdf } from "@react-pdf/renderer";
-import { View, PDFViewer } from "@react-pdf/renderer";
+import { View } from "@react-pdf/renderer";
 
 ////// icons
-import FileCopyIcon from "@mui/icons-material/FileCopy";
 import ConfirmModal from "../../../common/ConfirmModal/ConfirmModal";
-import { simpleDate } from "../../../helpers/transformDate";
 
 const PayKassaReport = ({ pdf: pdfData, setPdf }) => {
   const { state } = useLocation();
-
-  console.log(pdfData);
 
   const { dataSave } = useSelector((state) => state.saveDataSlice);
 
