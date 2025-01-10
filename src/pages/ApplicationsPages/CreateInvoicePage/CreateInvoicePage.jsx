@@ -8,7 +8,6 @@ import "./style.scss";
 
 ////// components
 import NavMenu from "../../../common/NavMenu/NavMenu";
-import debounce from "debounce";
 import ListChoiceProds from "../../../common/ListChoiceProds/ListChoiceProds";
 import Slider from "react-slick";
 import ListAcceptInvoice from "../../../components/MainPage/ListAcceptInvoice/ListAcceptInvoice";
@@ -24,12 +23,15 @@ import { setActiveWorkShop } from "../../../store/reducers/selectsSlice";
 import { searchListProdsNur } from "../../../store/reducers/standartSlice";
 import { getListWorkShopsNur } from "../../../store/reducers/standartSlice";
 import { getListProdsNur } from "../../../store/reducers/standartSlice";
+import { confirmInvoiceReq } from "../../../store/reducers/orderSlice";
+import { format } from "date-fns";
 
 const CreateInvoicePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const inputRef = useRef(null);
+  // console.log(location?.state?.type_point_text, "location");
 
   const { action, invoice_guid, checkTypeProds, returnCheck } = location?.state;
   const type_unit = location?.state?.type_unit || 2;
@@ -77,6 +79,22 @@ const CreateInvoicePage = () => {
 
   useEffect(() => {
     getData();
+
+    return async () => {
+      if (location?.state?.type_point_text == "ФТ") {
+        /// это нужно только для ФТ
+        const send = {
+          invoice_guid,
+          date_from: format(new Date(), "yyyy-MM-dd HH:mm"),
+          date_to: format(new Date(), "yyyy-MM-dd HH:mm"),
+          status: 2, // по умолчанию 0, если удаление -1, 1 - потвержден оператором, 2 подтвержден агентом
+          user_guid: dataSave?.guid,
+          user_type: 1, // 1 agent 2 admin
+          user_type1: 1, // 1 agent 2 admin
+        };
+        dispatch(confirmInvoiceReq(send));
+      }
+    };
   }, []);
 
   const clear = () => {

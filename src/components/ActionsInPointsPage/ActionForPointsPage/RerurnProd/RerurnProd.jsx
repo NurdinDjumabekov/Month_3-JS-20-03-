@@ -17,6 +17,7 @@ import { roundingNum } from "../../../../helpers/totals";
 const RerurnProd = ({ return_guid }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { activeSlide, listOrdersNur } = useSelector(
     (state) => state.standartSlice
@@ -51,7 +52,9 @@ const RerurnProd = ({ return_guid }) => {
       date_to: "",
       invoice_guid: return_guid,
       checkTypeProds: 0, /// все товары
+      type_point_text: location.state?.type_point_text, /// для типов точек (нужен только для ФТ)
     };
+
     navigate("/app/crud_invoice", { state: obj });
   };
 

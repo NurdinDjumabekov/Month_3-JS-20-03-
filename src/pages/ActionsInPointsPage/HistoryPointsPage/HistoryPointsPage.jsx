@@ -23,8 +23,6 @@ const HistoryPointsPage = () => {
   const { dataSave } = useSelector((state) => state.saveDataSlice);
   const { listRouteVisit } = useSelector((state) => state.standartSlice);
 
-  console.log(listRouteVisit, "listRouteVisit");
-
   useEffect(() => {
     dispatch(getListVisitPoints(point_guid));
   }, [point_guid]);

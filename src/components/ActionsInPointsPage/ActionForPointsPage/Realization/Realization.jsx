@@ -19,6 +19,7 @@ import { roundingNum } from "../../../../helpers/totals";
 const Realization = ({ send_guid }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { reportEveryTT } = useSelector((state) => state.standartSlice);
   const { listOrdersNur, activeSlide } = useSelector(
@@ -53,6 +54,7 @@ const Realization = ({ send_guid }) => {
       date_to: "",
       invoice_guid: send_guid,
       checkTypeProds: 1, /// остатки товара
+      type_point_text: location.state?.type_point_text, /// для типов точек (нужен только для ФТ)
     };
     navigate("/app/crud_invoice", { state: obj });
   };

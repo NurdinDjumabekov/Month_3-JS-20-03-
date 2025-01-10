@@ -25,7 +25,6 @@ export const logInAccount = createAsyncThunk(
     const url = `${REACT_APP_API_URL}/ta/login`;
     try {
       const response = await axiosInstance.post(url, data);
-      console.log(response, "response");
       if (response.status >= 200 && response.status < 300) {
         const { result, guid, fio, user_type, token, phone } = response?.data;
         if (result == 1 && !!guid) {
@@ -247,6 +246,24 @@ export const editInvoice = createAsyncThunk(
           dispatch(setInvoiceInfo({ guid: "", action: 0 })); //// для закрытия модалки добавления
           myAlert("Заявка удалена!");
         }
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+////// confirmInvoiceReq - обновление статуса всех накладных
+export const confirmInvoiceReq = createAsyncThunk(
+  "confirmInvoiceReq",
+  async function (data, { dispatch, rejectWithValue }) {
+    const url = `${REACT_APP_API_URL}/ta/update_invoice`;
+    try {
+      const response = await axiosInstance.put(url, data);
+      if (response.status >= 200 && response.status < 300) {
+        return response.data;
       } else {
         throw Error(`Error: ${response.status}`);
       }
